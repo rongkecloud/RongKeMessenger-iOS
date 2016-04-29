@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutSoftWareViewController">
+            <connections>
+                <outlet property="labelVersion" destination="8Td-YD-MNr" id="QRG-0C-cTF"/>
+                <outlet property="logoImageView" destination="PdC-Ac-O5S" id="YAz-Al-oGB"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="PdC-Ac-O5S">
+                    <rect key="frame" x="255" y="25" width="90" height="90"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="30d-UJ-kfr"/>
+                        <constraint firstAttribute="width" constant="90" id="dOm-My-2Ml"/>
+                    </constraints>
+                </imageView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cH-kd-FKX">
+                    <rect key="frame" x="8" y="156" width="584" height="153"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="191" id="EKz-0c-lGM"/>
+                        <constraint firstAttribute="height" constant="153" id="miG-LZ-1az"/>
+                        <constraint firstAttribute="height" constant="94" id="qKP-DA-nIk"/>
+                    </constraints>
+                    <string key="text">       融科通是基于云视互动打造的前、后完全开源的APP，除完善的APP框架和后台设计外，还涵盖了注册、登录、通讯录管理、单聊、群聊、音视频通话、多人语音聊天室等即时通讯互动功能，陆续融科通还会逐步推出朋友圈、附近的人、多媒体客服等高级功能，旨在帮助广大开发者能够基于融科通开源代码上最低成本快速实现自身的产品。</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="EKz-0c-lGM"/>
+                            <exclude reference="qKP-DA-nIk"/>
+                        </mask>
+                    </variation>
+                </textView>
+                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="©2014-2016 云视互动 All Rights Reserver." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itZ-d5-sOy">
+                    <rect key="frame" x="8" y="503" width="584" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="dUi-ru-qIj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="融科通(V1.0.5)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Td-YD-MNr">
+                    <rect key="frame" x="220" y="127" width="161" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="6Pz-sH-VIi"/>
+                        <constraint firstAttribute="width" constant="161" id="MWU-Nj-ej7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="西安融科通信技术有限公司" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdb-gq-T0W">
+                    <rect key="frame" x="8" y="476" width="584" height="25"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="Ici-Hz-XaS"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xl3-RN-Mj3">
+                    <rect key="frame" x="8" y="302" width="584" height="83"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="83" id="Muz-1J-a1X"/>
+                    </constraints>
+                    <string key="text">       技术客服QQ群：389706118                               商务联系：service@rongkecloud.com 
+       技术支持：support@rongkecloud.com                                  官网：www.rongkecloud.com</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="PdC-Ac-O5S" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="25" id="AZ5-MW-pA4"/>
+                <constraint firstItem="4cH-kd-FKX" firstAttribute="top" secondItem="8Td-YD-MNr" secondAttribute="bottom" constant="8" id="Al9-Hl-fQu"/>
+                <constraint firstItem="8Td-YD-MNr" firstAttribute="top" secondItem="PdC-Ac-O5S" secondAttribute="bottom" constant="12" id="DIj-qa-D5V"/>
+                <constraint firstItem="4cH-kd-FKX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="DhI-YK-LBH"/>
+                <constraint firstAttribute="trailing" secondItem="4cH-kd-FKX" secondAttribute="trailing" constant="8" id="I6K-hg-Sj5"/>
+                <constraint firstItem="fdb-gq-T0W" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="L98-AK-iL5"/>
+                <constraint firstItem="itZ-d5-sOy" firstAttribute="top" secondItem="fdb-gq-T0W" secondAttribute="bottom" constant="2" id="N8a-ce-djQ"/>
+                <constraint firstAttribute="trailing" secondItem="xl3-RN-Mj3" secondAttribute="trailing" constant="8" id="Tbv-vn-FST"/>
+                <constraint firstItem="xl3-RN-Mj3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Urw-Nw-DLy"/>
+                <constraint firstAttribute="centerX" secondItem="PdC-Ac-O5S" secondAttribute="centerX" id="Uuf-Rt-Afn"/>
+                <constraint firstAttribute="bottom" secondItem="fdb-gq-T0W" secondAttribute="bottom" constant="24" id="csN-SM-D8d"/>
+                <constraint firstItem="itZ-d5-sOy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="eI9-OC-bZN"/>
+                <constraint firstAttribute="centerX" secondItem="8Td-YD-MNr" secondAttribute="centerX" constant="-0.5" id="i6Q-2l-7TP"/>
+                <constraint firstAttribute="trailing" secondItem="itZ-d5-sOy" secondAttribute="trailing" constant="8" id="oBt-AS-U6L"/>
+                <constraint firstAttribute="bottom" secondItem="itZ-d5-sOy" secondAttribute="bottom" constant="8" id="pW5-yV-zre"/>
+                <constraint firstItem="xl3-RN-Mj3" firstAttribute="top" secondItem="4cH-kd-FKX" secondAttribute="bottom" constant="-7" id="vQz-mL-GPH"/>
+                <constraint firstAttribute="trailing" secondItem="fdb-gq-T0W" secondAttribute="trailing" constant="8" id="wcG-WA-zkA"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="csN-SM-D8d"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="436" y="371"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="logo" width="200" height="200"/>
+    </resources>
+</document>

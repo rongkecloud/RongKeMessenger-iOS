@@ -1,0 +1,536 @@
+/* 
+  Localizable.strings
+  RongKeMessenger
+
+  Created by WangGray on 15/7/9.
+  Copyright (c) 2015年 西安融科通信技术有限公司. All rights reserved.
+*/
+
+//*******************************************************************************
+// 提示信息字符串
+"PROMPT_NETWORK_ERROR" = "无法连接网络，请检查您的数据网络连接...";
+"PROMPT_CREATE_MULTI_CHAT" = "正在创建群...";
+"PROMPT_LOGINING" = "登录中...";
+"PROMPT_LOGIN_TIMEOUT" = "登录超时，请重试。";
+"PROMPT_LOGIN_PASSWORD_ERROR" = "密码错误，请重试";
+"PROMPT_REPEATLOGIN_WARNING" = "您的帐号在其它地点登录，已被迫下线。点击“确定”重新激活。";
+"PROMPT_UPDATE_VERSION" = "您的软件版本过低，可能会导致软件无法正常使用，请点击“立即更新”升级至最新版本。";
+"PROMPT_PUSH_NOTIFICATIONS_DISABLED" = "为了您能正常使用云视互动，请您启用推送通知。要启用推送通知，请在您手机的[设置]->[通知]->[云视互动]选项中开启所有选项。";
+"PROMPT_SYSTEM_ERROR_OTHER" = "服务器无响应，请稍候再试。";
+"PROMPT_LATER_ON" = "请稍后。。。";
+"PROMPT_ADD_FRIEND_SUCCESSFUL" = "添加成功";
+"PROMPT_ADD_FRIEND_FAIL" = "添加失败";
+"PROMPT_LOADING" = "正在加载。。。";
+"PROMPT_FIXING" = "处理中，请稍后";
+"PROMPT_WAITING_RESPONSE" = "耐心等待对方验证";
+"PROMPT_VALIDATE_CONTENT" = "您需要发送验证请求，并在对方通过后才能成为好友";
+"PROMPT_VALIDATE_APPLY" = "验证申请";
+"PROMPT_MODIFY_FAIL" = "修改失败";
+"PROMPT_MODIFY_SUCCESSFUL" = "修改成功";
+"PROMPT_UNSUPPORT_CAMERA" = "您的设备不支持摄像头";
+"PROMPT_UNSUPPORT_FORMAT" = "格式不支持，无法打开";
+"PROMPT_COMING_SOON" = "敬请期待！";
+"PROMPT_REGISTER_REMOTE_PUSH_FAIL" = "通知无法注册，暂时无法使用！请检查证书是否正确？";
+"PROMPT_SAVE_SUCCESS" = "保存成功";
+"PROMPT_LOGIN_USER_NAME_CHECK" = "用户名不能为空且由6-20位字母或数字组成，且第一位必须为字母";
+"PROMPT_REGISTER_PWD_CHECK" = "密码格式不正确或者密码不能为空，是6-20位数字或字母";
+"PROMPT_PASSWORD_NOT_SAME" = "两次输入密码不一致，请重新输入";
+"PROMPT_INPUT_PASSWORD_ERROR" = "用户名或密码不匹配，请重新输入";
+"PROMPT_WAITING_VALIDATION" = "等待对方验证中";
+"PROMPT_WAITING_VALIDATION_TITLE" = "等待验证";
+"PROMPT_VALIDATION_TITLE" = "通过验证";
+"PROMPT_HAVED_BECOME_FRIEND" = "互为好友";
+"PROMPT_HAVED_ADD" = "已添加";
+"PROMPT_OPERTION_FAUILT" = "操作失败";
+"PROMPT_GROUP_NAME_FALSE" = "分组名称不能为空";
+"PROMPT_REMARK_NAME_TOO_LONG" = "备注名不能超过30位且不能为空";
+"PROMPT_CONTENT_TOO_LONG" = "申请信息过长";
+"PROMPT_FRIEND_OPERATION_DELETE_FRIEND" = "确定删除好友？";
+"PROMPT_SEND_MESSAGE_CONTENT_LIMIT" = "发送消息不能为空或全为空格";
+//*******************************************************************************
+// 按钮文本或常用短语字符串
+"STR_LOGIN" = "登录";
+"STR_EDIT" = "编辑";
+"STR_FINISH" = "完成";
+"STR_CLOSE" = "关闭";
+"STR_OK" = "确定";
+"STR_CANCEL" = "取消";
+"STR_BACK" = "返回";
+"STR_AGREE" = "同意";
+"STR_NO_AGREE" = "不同意";
+"STR_SEND" = "发送";
+"STR_COPY" = "拷贝";
+"STR_USE" = "使用";
+"STR_EXIT" = "退出登录";
+"STR_UPDATE" = "立即更新";
+"STR_START_USING" = "启用";
+"STR_MONDAY" = "星期一";
+"STR_TUESDAY" = "星期二";
+"STR_WEDNESDAY" = "星期三";
+"STR_THURSDAY" = "星期四";
+"STR_FRIDAY" = "星期五";
+"STR_SATURDAY" = "星期六";
+"STR_SUNDAY" = "星期日";
+"STR_MORNING" = "上午";
+"STR_AFTERNOON" = "下午";
+"STR_YESTERDAY" = "昨天";
+"STR_TODAY" = "今天";
+"STR_YEAR" = "年";
+"STR_MONTH" = "月";
+"STR_DAY" = "日";
+"STR_SECONDS" = "秒钟";
+"STR_MINUTES" = "分钟";
+"STR_TEMP_GROUP_NAME" = "临时群";
+"STR_SMS_CONTENT" = "XXXXXX";
+"STR_WARNING_UNSMS" = "该设备无法发送短信";
+"STR_NEW_FRIEND" = "新的朋友";
+"STR_YOU" = "你";
+"STR_AND" = "和";
+"STR_COMMA" = "、";
+"STR_ADD" = "添加";
+"STR_INVITE" = "邀请";
+"STR_NO_REGISTER_YI_XIN" = "还未开通云视互动";
+"STR_DELETE_ALL" = "清空";
+"STR_WAITING" = "请稍候...";
+"STR_TAKEPHONE" = "照相";
+"STR_ALBUM" = "相册";
+"STR_MICROPHONE_CLOSED" = "麦克风已关闭";
+"STR_OPEN_MICROPHONE_GUIDE" = "请在[设置]>[隐私]>[麦克风]中开启[融科通]访问权限";
+"STR_OPEN_CAMERA_GUIDE" = "请在[设置]>[隐私]>[相机]中开启融科通访问权限";
+"STR_OKAY" = "好的";
+"STR_PUBLISH" = "发表";
+"STR_DRAFTS" = "待发";
+"STR_SENT" = "已发";
+"STR_RESENT_MANUALLY" = "重发";
+"STR_DOWNLOAD_FAILED" = "下载失败，点击重新下载";
+"STR_READ" = "已读";
+"STR_ARRIVED" = "送达";
+"STR_DOWNLOADING" = "下载中...";
+"STR_CLICK_PLAY" = "点击播放";
+"STR_PLAY_FAILURE" = "文件错误，播放失败";
+"STR_CREAT_CHAT" = "发起群聊";
+"STR_PLAYING" = "播放中，点击停止";
+"STR_RECOIL" = "后退";
+"STR_HOLD_RECORDING" = "按住说话";
+"STR_HAND_FREE_RECORDING" = "松开结束";
+"STR_NO_AUDIO_INPUT" = "  没有音频输入设备";
+"STR_PRESS_TIME_SHORT" = "按键时间太短";
+"STR_DELETE" = "删除";
+"STR_IMAGE_DESCRIBE" = "图片";
+"STR_VOICE_DESCRIBE" = "语音";
+"STR_FILE_DESCRIBE" = "文件";
+"STR_SAVE_PHOTO" = "保存到相册";
+"STR_MULTI_CHAT" = "群会话";
+"STR_FORWARD" = "转发";
+"STR_USER_NAME" = "用户名";
+"STR_PASSWORD" = "密码";
+"STR_MY_FRIENDS" = "我的好友";
+"STR_CONTACT_LIST" = "通讯录";
+"STR_ADD_NEW_CONTACT" = "新的朋友";
+"STR_GROUP_CHAT" = "群聊";
+"STR_CONTACT_GROUP" = "好友分组";
+"STR_TAP_EDIT_CONTACT_EDIT" = "点击编辑分组";
+"STR_ADD_COTANT_GROUP_NAME" = "添加分组";
+"STR_ADD_COTANT_GROUP_MASSAGE" = "请输入新分组的名称";
+"STR_COTANT_GROUP_CREAT" = "创建分组";
+"STR_COTANT_GROUP_SELECT" = "选择好友";
+"STR_COTANT_GROUP_CHANGE" = "修改分组";
+"STR_COTANT_GROUP_DELETE" = "删除分组";
+"STR_COTANT_GROUP_DELETE_TITLE" = "删除分组";
+"STR_COTANT_GROUP_SEARCH_CONTACT" = "搜索好友";
+"STR_FRIEND_OPERATION_CHART" = "发消息";
+"STR_FRIEND_OPERATION_VIDIO" = "发起视频通话";
+"STR_FRIEND_OPERATION_AUDIO" = "发起语音通话";
+"STR_CALL_BUTTON_ANSWER" = "接  听";
+"STR_CALL_BUTTON_HANGUP" = "取  消";
+"STR_CALL_BUTTON_MUTE" = "静  音";
+"STR_CALL_BUTTON_SWITCH_CAMERA" = "切换摄像头";
+"STR_CALL_BUTTON_SWITCH_AUDIO_CHAT" = "切到语音聊天";
+"STR_CALL_BUTTON_HANDS_FREE" = "免  提";
+"STR_GROUP_CREAT_BY_ME" = "我创建的群";
+"STR_GROUP_CREAT_WITH_ME" = "我参与的群";
+"STR_SELECT_FRIENDS" = "选择好友";
+"STR_ME" = "我";
+"STR_EMPTY" = "[空]";
+"STR_TAKE_PHOTO" = "拍照";
+"STR_TAKE_VIDEO" = "小视频";
+"STR_ALUMB" = "相册";
+"STR_CONNECT_FAIL_RETRY" = "连接失败，请重试";
+"STR_DRAFT_DESCRIBE" = "草稿";
+
+//*******************************************************************************
+// 标题文本字符串
+"TITLE_CREATE_MULTI_USER_GROUP" = "创建群";
+"TITLE_SETTINGS" = "设置";
+"TITLE_LOGIN_ERROR"	= "登录失败";
+"TITLE_UPLOAD_ADDRESSBOOK" = "使用本机通讯录";
+"TITLE_ADDRESSBOOK_DISABLED" = "系统通讯录不可用";
+"TITLE_PUSH_NOTIFICATIONS_DISABLED" = "推送通知已禁用";
+"TITLE_CONTACT_DETAIL_INFO" = "详细信息";
+"TITLE_ADDRESSBOOK" = "通讯录";
+"TITLE_SELECT_CONTACT_MEMBER" = "选择成员";
+"TITLE_RESET_USER_ID" = "正在登出...";
+"TITLE_LOCAL_ADDRESS_BOOK" = "查看通讯录";
+"TITLE_ADD_FREIND_FROM_LOCAL_ADDRESS_BOOK" = "从手机通讯录添加";
+"TITLE_ADD_FREIND" = "添加好友";
+"TITLE_MODIFY_REMARK" = "修改备注";
+"TITLE_YU_SHI_HU_DONG" = "云视互动";
+"TITLE_MEETING_AUDIO" = "多人语音";
+"TITLE_MESSAGE_SESSION" = "会话";
+"TITLE_ADD_CONTACT_TITLE" = "对方需要验证";
+"TITLE_ADD_CONTACT_TITLE_MESSAGE" = "请输入验证信息";
+"TITLE_ADD_CONTACT_TITLE_MESSAGE" = "请输入验证信息";
+"TITLE_CHECK_USER_ACCOUNT" = "请检账户格式是否正确？";
+"TITLE_FRIEND_OPERATION_DELETE_FRIEND" = "删除好友";
+"TITLE_RONG_KE_SERVICE" = "云视互动小秘书";
+"TITLE_CANCEL_BACKGROUND" = "取消背景";
+"TITLE_SEARCH_FRIEND" = "搜索好友";
+
+//*******************************************************************************
+// RKCloud SDK API Error Code汇总
+// 返回值           含义
+"ERROR_1001" = "云视互动初始化失败";
+"ERROR_1002" = "云视互动初始化认证失败";
+"ERROR_1003" = "账号或密码不匹配";
+"ERROR_1004" = "用户名已经存在";
+"ERROR_1005" = "初始化失败,用户被禁";
+"ERROR_1006" = "用户角色不对";
+"ERROR_1007" = "短信验证码错误";
+"ERROR_1008" = "短信验证码过期";
+"ERROR_1009" = "短信发送次数超限";
+"ERROR_1010" = "账号或密码不正确";
+"ERROR_1011" = "无效的session";
+"ERROR_1012" = "没有发现更新";
+"ERROR_1013" = "手机号码格式不对";
+"ERROR_1014" = "手机号码不存在";
+"ERROR_1015" = "忘记密码每天不能超过2次";
+"ERROR_1016" = "忘记密码操作次数超限";
+"ERROR_1017" = "email格式不对";
+"ERROR_1018" = "该email账号不存在";
+"ERROR_1019" = "旧密码错误";
+"ERROR_1020" = "用户名或密码错误";
+"ERROR_1021" = "账号类型错误";
+"ERROR_1022" = "分配服务器地址错误";
+"ERROR_1023" = "个人信息版本号一致";
+"ERROR_1024" = "个人图像版本号一致";
+"ERROR_1025" = "图像下载失败";
+"ERROR_1026" = "图像上传失败";
+"ERROR_1027" = "通讯录格式不对";
+"ERROR_1028" = "通讯录上传失败";
+"ERROR_1029" = "删除联系人失败";
+"ERROR_1031" = "该用户需要验证";
+"ERROR_1032" = "好友uid不存在";
+"ERROR_1033" = "等待验证";
+"ERROR_1998" = "账号已被使用";
+"ERROR_1999" = "此用户已被禁止";
+"ERROR_2001" = "文件大小超过限制";
+"ERROR_2002" = "发送消息失败";
+"ERROR_2003" = "获取消息失败";
+"ERROR_2004" = "ack响应失败";
+"ERROR_2005" = "ack响应队列中还有消息，需要用户再取一次";
+"ERROR_2006" = "文件不存在";
+"ERROR_2007" = "ack响应队列中还有消息，需要用户再取一次";
+"ERROR_3001" = "超过最大群用户上限";
+"ERROR_3002" = "超过最大群个数限制";
+"ERROR_3003" = "创建群失败";
+"ERROR_3004" = "群号码不存在";
+"ERROR_3005" = "加入群失败";
+"ERROR_3006" = "非群用户";
+"ERROR_3007" = "不允许执行离开操作";
+"ERROR_3008" = "没有踢人权限";
+"ERROR_3009" = "没有邀请权限";
+
+"ERROR_9998" = "系统错误";
+"ERROR_9999" = "参数错误";
+"ERROR_90001" = "DeviceToken没有获取到,是否签名证书问题";
+"ERROR_90002" = "已经初始化过云视互动服务";
+"ERROR_90005" = "无法给本机发送消息";
+
+//*******************************************************************************
+// 格式输出字符串
+"STR_INVITER_MESSAGE" = "%@邀请了%@加入了群";
+"STR_LEAVE_MESSAGE" = "%@离开了群";
+
+//*******************************************************************************
+// APNS Push通知字符串
+"A" = "接听";
+"V" = "查看";
+"C" = "%@ 呼叫您";
+"M" = "您有 %@ 个未接来电";
+"N" = "您有 %@ 条未读信息";
+"O" = "您有 %@ 个未接来电，%@ 条未读信息";
+
+//*******************************************************************************
+// 表情符号转义字符对应的多语言
+"~:a0~" = "[微笑]";
+"~:a1~" = "[开怀大笑]";
+"~:a2~" = "[目瞪口呆]";
+"~:a3~" = "[难过]";
+"~:a4~" = "[无言]";
+"~:a5~" = "[抽烟]";
+"~:a6~" = "[小天使]";
+"~:a7~" = "[疑问]";
+"~:a8~" = "[流汗]";
+"~:a9~" = "[惊恐]";
+"~:b0~" = "[偷笑]";
+"~:b1~" = "[吐舌头]";
+"~:b2~" = "[愤怒]";
+"~:b3~" = "[想睡觉]";
+"~:b4~" = "[大哭]";
+"~:b5~" = "[扁嘴]";
+"~:b6~" = "[感动]";
+"~:b7~" = "[接吻]";
+"~:b8~" = "[病恹恹]";
+"~:b9~" = "[再见]";
+"~:c0~" = "[赞(向上)]";
+"~:c1~" = "[赞(向下)]";
+"~:c2~" = "[OK]";
+"~:c3~" = "[胜利]";
+
+//*******************************************************************************
+// 登录注册
+"TITLE_LOGIN" = "登录";
+"TITLE_REGISTER" = "新用户注册";
+
+//*******************************************************************************
+// 设置界面
+"TITLE_SETTING" = "设置";
+"TITLE_CHANGE_SECRET" = "修改密码";
+"TITLE_SETTING_MESSAGE" = "消息设置";
+"TITLE_SETTING_NEW_MESSAGE" = "新消息设置";
+"TITLE_CLEAN_CHAT_RECORD" = "清空消息";
+"TITLE_LOGIN_ACCOUNNT" = "登录账号";
+"TITLE_FEEDBACK_ADVICE" = "意见反馈";
+"TITLE_ABOUT_RONGKE" = "关于融科通";
+"TITLE_FEEDBACK_CATEGORY" = "反馈类型";
+"TITLE_SELECT" = "请选择";
+"TITLE_SOFTWARE_QUESTION" = "软件问题";
+"TITLE_UIDESIGN_QUESTION" = "界面问题";
+"TITLE_OTHERS_QUESTION" = "其他问题";
+"TITLE_VOICE_PLAY_MODEL_EARPHONE" = "听筒模式播放语音消息";
+"TITLE_PERSONAL_DETAIL" = "个人详情";
+"TITLE_CHANGE_PWD_SUCCESS" = "密码修改成功";
+"TITLE_OLD_PWD_ERROR" = "旧密码错误";
+"TITLE_NO_SETTING_NAME" = "<姓名未设置>";
+
+"STR_CHANGE_PASSWORD" = "修改密码";
+"STR_ENTER_OLD_PASSWORD" = "请输入旧密码";
+"STR_ENTER_NEW_PASSWORD" = "请输入新密码";
+"STR_ENTER_REPEAT_NEW_PASSWORD" = "请再次输入新密码";
+"STR_CHANGE_PASSWORD_MARK_TITLE" = "用于修改您的登录密码";
+"STR_ENTER_OLD_PASSWORD_NOTICE" = "旧密码格式不正确或者密码不能为空，是6-20位数字或字母";
+"STR_ENTER_NEW_PASSWORD_NOTICE" = "新密码格式不正确或者密码不能为空，是6-20位数字或字母";
+"STR_OLD_PASSWORD_ERROR" = "旧密码输入错误";
+"STR_ENTER_REPEAD_NOT_SAME" = "两次输入新密码不一致";
+"STR_SAVE" = "保存";
+"STR_MOVE_SCALE" = "缩放移动";
+"STR_MESSAGE_SEARCH_COUNT" = "%d条相关的聊天记录";
+
+"TITLE_PERSONAL_AVATAR" = "头像";
+"TITLE_LOGIN_ACCOUNT" = "登录账号";
+"TITLE_ADD_FRIEND_POWER" = "加我为好友需要验证信息";
+"TITLE_MOBILE_NUM" = "手机号码";
+"TITLE_EMAIL_ADDRESS" = "邮箱";
+"TITLE_NAME" = "姓名";
+"TITLE_SEX" = "性别";
+"TITLE_ADDRESS" = "地址";
+"TITLE_ABOUT" = "关于融科通";
+"TITLE_CAMERA" = "相机";
+"TITLE_ALBUM" = "相册";
+"TITLE_MAN" = "男";
+"TITLE_WOMAN" = "女";
+"TITLE_PROMPT" = "提示";
+"TITLE_UPLOAD_AVATAR_FAIL" = "上传失败";
+"TITLE_DOWNLOAD_AVATAR_FAIL" = "下载失败";
+"TITLE_COMMIT_SUCCESS" = "提交成功";
+"TITLE_CHAT_MESSAGE_RECORD" = "    聊天记录";
+"TITLE_CHAT_SESSION_RECORD" = "    会话记录";
+
+"PROMPT_NULL_ADDRESS" = "地址不能为空";
+"PROMPT_CHANGE_NONE" = "未修改";
+"PROMPT_CLEAN_ALL_MESSAGE_RECORD" = "将清空所有个人和群的聊天记录";
+"PROMPT_LOGOUT_MESSAGE" = "退出登录后不会删除任何历史数据，下次登录依然可以使用本账号";
+"PROMPT_INPUT_ADVICE" = "请输入你的意见或建议，我们会努力改正...";
+"PROMPT_PERSONAL_INFO_CHANGE_SUCCESS" = "个人信息修改成功";
+"PROMPT_CHANGE_AVATAR_SECCESS" = "修改头像成功";
+"PROMPT_INPUT_CORRECT_CONTENT" = "请输入正确的格式";
+"PROMPT_INPUT_CORRECT_CONTENT_TYPE" = "搜索条件不能为空，且由数字或字母组成，并以字母开头";
+"PROMPT_INPUT_ADDRESS" = "请输入你的地址...";
+"PROMPT_GET_NOTIFICATION_ENABLE" = "通知栏提醒";
+"PROMPT_GET_NOTICE_BY_SOUND" = "声音提醒";
+"PROMPT_GET_NOTICE_BY_VIBRATE" = "振动提醒";
+
+//*******************************************************************************
+// 融科通server error code
+"ERROR_RK_0" = "成功";
+"ERROR_RK_1004" = "用户名已存在";
+"ERROR_RK_1002" = "账号或密码错误";
+"ERROR_RK_1001" = "无效session";
+"ERROR_RK_1005" = "旧密码错误";
+"ERROR_RK_1025" = "下载头像失败";
+"ERROR_RK_1026" = "上传头像失败";
+"ERROR_RK_1030" = "分组名已存在";
+"ERROR_RK_9998" = "系统错误";
+"ERROR_RK_9999" = "参数错误(名称错误，或者参数缺失)";
+
+"STR_HAS_REGISTER_ACCOUNT" = "已注册过的账号";
+"PROMPT_REGISTER_TIMEOUT" = "注册超时，请重试。";
+"TITLE_REGISTER_ERROR" = "注册失败";
+
+//*******************************************************************************
+// 向即时通信聊天页面添加消息
+"RKCLOUD_AV_MSG_AUDIO_CALL" = "语音通话";
+"RKCLOUD_AV_MSG_VIDEO_CALL" = "视频通话";
+
+"RKCLOUD_AV_MSG_CALLER_CALL_CANCEL" = "已取消";
+"RKCLOUD_AV_MSG_CALLER_CALLEE_OFFLINE" = "对方不在线";
+"RKCLOUD_AV_MSG_CALLER_CALLEE_NO_ANSWER" = "无人应答";
+"RKCLOUD_AV_MSG_CALLER_CALLEE_CALLING" = "对方通话中";
+"RKCLOUD_AV_MSG_CALLER_CALLEE_REJECT" = "对方已拒接";
+"RKCLOUD_AV_MSG_CALLER_CALL_FAILED" = "呼叫失败";
+"RKCLOUD_AV_MSG_CALLEE_CALL_CANCEL" = "对方已取消";
+"RKCLOUD_AV_MSG_CALLEE_CALLEE_REJECT" = "已拒接";
+"RKCLOUD_AV_MSG_CALLEE_CALLEE_NO_ANSWER" = "无人应答";
+"RKCLOUD_AV_MSG_CALL_DURATION" = "通话时长 %@";
+"RKCLOUD_AV_MSG_CALL_MISSED" = "未接来电";
+"RKCLOUD_SINGLE_CHAT_MSG_CALL" = "我通过了您的好友请求，现在我们可以开始对话啦";
+
+//*******************************************************************************
+// 融科通 meeting
+"RKCLOUD_MEETING_MSG_AUDIO_CALL" = "多人语音";
+
+"TITLE_MANY_PEOPLE_VOICE_CHAT" = "多人语音";
+"TITLE_MEETING_ROOM" = "会议室";
+"TITLE_MUTE" = "静音";
+"TITLE_CANCEL_MUTE" = "取消静音";
+"TITLE_HANDS_FREE" = "免提";
+"TITLE_CANCEL_HANDS_FREE" = "取消免提";
+
+"STR_WAITING" = "请稍候...";
+
+"PROMPT_WAITING_MEMBERS_JOIN_IN" = "等待好友进入会议室";
+"PROMPT_MANY_PERSONAL_AUDIO_MEETING" = "点击进入多人语音会议室";
+"PROMPT_WAITING_FRIEND_JOIN_MEETING" = "等待其他用户进入...";
+"PROMPT_INVITE_JOIN_AUDIO_MEETING" = "邀请您进入多人语音会议室";
+"PROMPT_CREATE_MEETING_MYSELF" = "我发起了多人语音";
+"PROMPT_JOIN_MEETING_MYSELF" = "我加入多人语音";
+"PROMPT_QUIT_MEETING_MYSELF" = "我退出多人语音";
+"PROMPT_PLEASE_INPUT_REMARK_NAME" = "请输入备注名";
+
+//*******************************************************************************
+// 好友详情界面
+"TITLE_REMARK_NAME" = "备注名";
+"TITLE_NO_SETTING" = "<未设置>";
+
+//*******************************************************************************
+// 群信息设置
+
+"TITLE_GROUP_CHAT_LIST" = "群聊列表";
+"TITLE_GROUP_CHAT_MESSAGE" = "聊天信息";
+"TITLE_GROUP_NAME" = "群名称";
+"TITLE_CHAT_ON_TOP" = "置顶聊天";
+"TITLE_MESSAGE_REMIND" = "消息提醒";
+"TITLE_INVITE_JURISDICTION" = "邀请权限";
+"TITLE_SETTING_CHAT_BACKGROUND" = "设置聊天背景";
+"TITLE_CLEAN_MESSAGE_RECORD" = "清空消息记录";
+"TITLE_PLEASE_INPUT_NEW_NAME" = "请输入新名称";
+
+"PROMPT_SURE_TO_DISMISS_GROUP" = "您确认解散当前群吗？";
+"PROMPT_SURE_TO_QUIT_GROUP" = "您确认退出当前群吗？";
+
+
+//*******************************************************************************
+// 融科客服多语言
+// 提示用语
+"SERVICE_PROMPT_REPEATLOGIN_WARNING" = "您的帐号在其它地点登录，已被迫下线";
+"SERVICE_PROMPT_SAVE_SUCCESS" = "保存成功";
+"SERVICE_PROMPT_SAVE_FAILED" = "保存失败";
+"SERVICE_PROMPT_NAME_EMPTY" = "姓名不能为空";
+"SERVICE_PROMPT_PHONE_OR_EMAIL_EMPTY" = "电话和邮箱至少填写一个";
+"SERVICE_PROMPT_PHONE_FORMAT_ERROR" = "电话格式不正确";
+"SERVICE_PROMPT_EMAIL_FORMAT_ERROR" = "邮箱格式不正确";
+"SERVICE_PROMPT_NOTE_EMPTY" = "留言内容不能为空或全是空格";
+"SERVICE_PROMPT_NOTE_SUCCESS" = "留言成功";
+"SERVICE_PROMPT_NOTE_FAILED" = "留言失败";
+"SERVICE_PROMPT_SESSION_WAITING" = "当前正在排队，无法发送消息";
+"SERVICE_PROMPT_SESSION_END" = "会话已结束，无法发送消息";
+"SERVICE_PROMPT_SEND_MESSAGE_CONTENT_LIMIT" = "发送消息不能为空或全为空格";
+"SERVICE_PROMPT_EVALUATE" = "客服-%@，邀请您评价";
+"SERVICE_PROMPT_CANNOT_CONNECT_AGENT" = "无法连接客服\n去留言";
+"SERVICE_PROMPT_AGENT_BUSY" = "客服%@已离开，会话结束\n重新接入 去留言";
+"SERVICE_PROMPT_CONNECT_AGAIN_LEAVE_MSEEAGE" = "%@\n重新接入 去留言";
+"SERVICE_PROMPT_WAITING_INLINE_NO" = "排队中，你在队伍中第%d位\n去留言";
+"SERVICE_PROMPT_RECEIVE_MESSAGE" = "你收到了一条客服消息";
+"SERVICE_PROMPT_TRANSFOTRM_AGENT" = "已为您转接至客服 %@";
+"SERVICE_PROMPT_LOGOUT_EVALUATION" = "确定退出会话？您还未对本次服务评价";
+"SERVICE_PROMPT_LOGOUT_SYSTEM" = "您确定要退出吗？";
+
+//*******************************************************************************
+// 按钮文本或常用短语字符串
+"SERVICE_STR_FINISH" = "完成";
+"SERVICE_STR_CLOSE" = "关闭";
+"SERVICE_STR_OK" = "确定";
+"SERVICE_STR_CANCEL" = "取消";
+"SERVICE_STR_SEND" = "发送";
+"SERVICE_STR_COPY" = "拷贝";
+"SERVICE_STR_MONDAY" = "星期一";
+"SERVICE_STR_TUESDAY" = "星期二";
+"SERVICE_STR_WEDNESDAY" = "星期三";
+"SERVICE_STR_THURSDAY" = "星期四";
+"SERVICE_STR_FRIDAY" = "星期五";
+"SERVICE_STR_SATURDAY" = "星期六";
+"SERVICE_STR_SUNDAY" = "星期日";
+"SERVICE_STR_MORNING" = "上午";
+"SERVICE_STR_AFTERNOON" = "下午";
+"SERVICE_STR_YESTERDAY" = "昨天";
+"SERVICE_STR_YESTERDAY_OTHER" = "昨天 %@";
+"SERVICE_STR_TODAY" = "今天";
+"SERVICE_STR_YEAR" = "年";
+"SERVICE_STR_MONTH" = "月";
+"SERVICE_STR_DAY" = "日";
+"SERVICE_STR_SECONDS" = "秒钟";
+"SERVICE_STR_MINUTES" = "分钟";
+"SERVICE_STR_WAITING" = "请稍候...";
+"SERVICE_STR_MICROPHONE_CLOSED" = "麦克风已关闭";
+"SERVICE_STR_OPEN_MICROPHONE_GUIDE" = "请在[设置]>[隐私]>[麦克风]中开启融科通访问权限";
+"SERVICE_STR_OPEN_CAMERA_GUIDE" = "请在[设置]>[隐私]>[相机]中开启融科通访问权限";
+"SERVICE_STR_DRAFTS" = "待发";
+"SERVICE_STR_SENT" = "已发";
+"SERVICE_STR_RESENT_MANUALLY" = "重发";
+"SERVICE_STR_DOWNLOAD_FAILED" = "下载失败，点击重新下载";
+"SERVICE_STR_READ" = "已读";
+"SERVICE_STR_ARRIVED" = "送达";
+"SERVICE_STR_DOWNLOADING" = "下载中...";
+"SERVICE_STR_CLICK_PLAY" = "点击播放";
+"SERVICE_STR_PLAY_FAILURE" = "文件错误，播放失败";
+"SERVICE_STR_PLAYING" = "播放中，点击停止";
+"SERVICE_STR_HOLD_RECORDING" = "按住说话";
+"SERVICE_STR_HAND_FREE_RECORDING" = "松开结束";
+"SERVICE_STR_NO_AUDIO_INPUT" = "  没有音频输入设备";
+"SERVICE_STR_PRESS_TIME_SHORT" = "按键时间太短";
+"SERVICE_STR_DELETE" = "删除";
+"SERVICE_STR_IMAGE_DESCRIBE" = "图片";
+"SERVICE_STR_VOICE_DESCRIBE" = "语音";
+"SERVICE_STR_SAVE_PHOTO" = "保存";
+"SERVICE_STR_FORWARD" = "转发";
+"SERVICE_STR_USER_OFFLINE_MESSAGE" = "用户留言";
+"SERVICE_STR_CONNECT_SERVICE_WAITING" = "排队中";
+"SERVICE_STR_UP_SLIP" = "手指上滑，取消发送";
+"SERVICE_STR_LOOSEN_FINGER" = "松开手指，取消发送";
+"SERVICE_STR_USE" = "使用";
+"SERVICE_STR_EXIT" = "退出";
+"SERVICE_STR_EVALUATE" = "去评价";
+"SERVICE_STR_EVALUATE_SATISFIED" = "满意";
+"SERVICE_STR_EVALUATE_NO_SATISFIED" = "不满意";
+"SERVICE_STR_EVALUATE_NORMAL" = "一般";
+"SERVICE_STR_COMMENT_OUT_DATE" = "评论已过期";
+"SERVICE_STR_ALREADY_COMMENT" = "已评价";
+"SERVICE_STR_COMMENT" = "评价";
+"SERVICE_STR_LEAVE_MESSAGE" = "去留言";
+"SERVICE_STR_MESSAGE" = "留言";
+"SERVICE_STR_CONNECT_AGAIN" = "重新接入";
+"SERVICE_STR_TAKE_PHOTO" = "拍照";
+"SERVICE_STR_SYSTERM_ERROR" = "系统错误，请稍候再试";
+"SERVICE_STR_MANUAL_CONNECT_AGENT" = "手动输入连接客服界面";
+"SERVICE_STR_APP_DEMO" = "融智客服Demo";
+"SERVICE_STR_OKAY" = "好的";

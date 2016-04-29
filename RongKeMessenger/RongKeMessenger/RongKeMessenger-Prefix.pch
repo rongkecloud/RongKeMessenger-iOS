@@ -1,0 +1,23 @@
+//
+//  RongKeMessenger-Prefix.pch
+//  RongKeMessenger
+//
+//  Created by WangGray on 15/7/13.
+//  Copyright (c) 2015年 西安融科通信技术有限公司. All rights reserved.
+//
+
+#ifndef RongKeMessenger_RongKeMessenger_Prefix_pch
+#define RongKeMessenger_RongKeMessenger_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifndef DEBUG_LOG // 如果不需要输出日志
+#ifndef DEBUG_WRITE_LOG // 如果不需要写日志到文件中
+
+#define NSLog(...) // 则Release版本(Distribution)屏蔽NSLog日志输出
+
+#endif // DEBUG_WRITE_LOG
+#endif // DEBUG_LOG
+
+#endif

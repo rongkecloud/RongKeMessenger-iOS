@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RKMessageSearchViewController">
+            <connections>
+                <outlet property="messageSearchBar" destination="uXx-en-sbg" id="iIB-AP-bOQ"/>
+                <outlet property="messageSearchTableView" destination="q3a-3V-v2V" id="fnk-J3-AZT"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0jx-Vu-dJF">
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <subviews>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="uXx-en-sbg">
+                            <rect key="frame" x="0.0" y="0.0" width="254" height="44"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="zTD-R3-bzh"/>
+                            </constraints>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="-1" id="HYi-rN-IjY"/>
+                            </connections>
+                        </searchBar>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LTt-Nw-0B9">
+                            <rect key="frame" x="266" y="7" width="46" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="aBc-Ym-de7"/>
+                                <constraint firstAttribute="width" constant="46" id="udk-wl-JJ9"/>
+                            </constraints>
+                            <state key="normal" title="取消"/>
+                            <connections>
+                                <action selector="touchCancelButton:" destination="-1" eventType="touchUpInside" id="18g-GP-Lop"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.73725490199999999" green="0.73725490199999999" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="uXx-en-sbg" firstAttribute="top" secondItem="0jx-Vu-dJF" secondAttribute="top" id="3ga-r4-jwo"/>
+                        <constraint firstItem="LTt-Nw-0B9" firstAttribute="leading" secondItem="uXx-en-sbg" secondAttribute="trailing" constant="12" id="4yz-SI-jf3"/>
+                        <constraint firstAttribute="bottom" secondItem="uXx-en-sbg" secondAttribute="bottom" id="BcH-Wu-rED"/>
+                        <constraint firstItem="uXx-en-sbg" firstAttribute="leading" secondItem="0jx-Vu-dJF" secondAttribute="leading" id="T8K-SY-AER"/>
+                        <constraint firstItem="LTt-Nw-0B9" firstAttribute="top" secondItem="0jx-Vu-dJF" secondAttribute="top" constant="7" id="eaM-FZ-Dx2"/>
+                        <constraint firstAttribute="trailing" secondItem="LTt-Nw-0B9" secondAttribute="trailing" constant="8" id="qNW-6C-xke"/>
+                        <constraint firstAttribute="height" constant="44" id="xiy-M2-fXL"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="q3a-3V-v2V">
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="Qqn-8R-U4j"/>
+                        <outlet property="delegate" destination="-1" id="IZI-EP-mSY"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803915" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="0jx-Vu-dJF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KkF-rx-ue1"/>
+                <constraint firstAttribute="trailing" secondItem="0jx-Vu-dJF" secondAttribute="trailing" id="QWy-U5-v0p"/>
+                <constraint firstAttribute="trailing" secondItem="q3a-3V-v2V" secondAttribute="trailing" id="Y0Q-va-R3z"/>
+                <constraint firstAttribute="bottom" secondItem="q3a-3V-v2V" secondAttribute="bottom" id="feR-ir-rjz"/>
+                <constraint firstItem="0jx-Vu-dJF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="nuG-b1-I8S"/>
+                <constraint firstItem="q3a-3V-v2V" firstAttribute="top" secondItem="0jx-Vu-dJF" secondAttribute="bottom" id="vXJ-W0-ALu"/>
+                <constraint firstItem="q3a-3V-v2V" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="zhi-HM-rAy"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

@@ -1,0 +1,226 @@
+//
+//  RKCloudUISettingWithMsgViewController.h
+//  RongKeMessenger
+//
+//  Created by www.rongkecloud.com on 14/11/4.
+//  Copyright (c) 2014年 西安融科通信技术有限公司. All rights reserved.
+//
+
+#import "RKCloudSettingMsgNoticeViewController.h"
+#import "AppDelegate.h"
+#import "ToolsFunction.h"
+
+#define UISWITCH_ENABLE_TAG     701
+#define UISWITCH_NOTICE_TAG     702
+#define UISWITCH_VIBRATE_TAG    703
+
+@interface RKCloudSettingMsgNoticeViewController ()
+
+@property (strong, nonatomic) UISwitch *enableSwitch; // 通知栏提醒
+@property (strong, nonatomic) UISwitch *soundSwitch; // 声音提醒
+@property (strong, nonatomic) UISwitch *vibrateSwitch; // 振动提醒
+@property (assign, nonatomic) BOOL isEnable; // 是否通知栏提醒
+
+@end
+
+@implementation RKCloudSettingMsgNoticeViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"TITLE_SETTING_NEW_MESSAGE", "新消息设置");
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.tableView.backgroundColor = COLOR_VIEW_BACKGROUND;
+    self.isEnable = [RKCloudChatConfigManager getNotificationEnable];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+#pragma mark UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.isEnable == YES)
+    {
+        return 3;
+    } else {
+        return 1;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
+    }
+    
+    cell.userInteractionEnabled = YES;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    int floatX = UISCREEN_BOUNDS_SIZE.width - 76;
+    
+    switch (indexPath.row)
+    {
+        case 0:
+        {
+            // 设置是否在通知栏中显示新消息
+            cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTIFICATION_ENABLE", "通知栏提醒");
+            if ([ToolsFunction iSiOS7Earlier])
+            {
+                floatX -= 25;
+            }
+            
+            self.enableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+            self.enableSwitch.tag = UISWITCH_ENABLE_TAG;
+            [self.enableSwitch setOn:[RKCloudChatConfigManager getNotificationEnable]];
+            [self.enableSwitch addTarget:self action:@selector(setNotificationEnable:) forControlEvents:UIControlEventValueChanged];
+            
+            if (![cell viewWithTag:UISWITCH_ENABLE_TAG])
+            {
+                [cell addSubview:self.enableSwitch];
+            }
+        }
+            break;
+        case 1:
+        {
+            // 设置新消息是否声音提醒
+            cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_BY_SOUND", "声音提醒");
+            
+            if (self.isEnable == YES)
+            {
+                self.soundSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+                self.soundSwitch.tag = UISWITCH_NOTICE_TAG;
+                [self.soundSwitch setOn:[RKCloudChatConfigManager getNoticeBySound]];
+                [self.soundSwitch addTarget:self action:@selector(setNoticeBySound:) forControlEvents:UIControlEventValueChanged];
+                
+                if (![cell viewWithTag:UISWITCH_NOTICE_TAG])
+                {
+                    [cell addSubview:self.soundSwitch];
+                }
+            }
+        }
+            break;
+        case 2:
+        {
+            // 设置新消息是否振动提醒
+            cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_BY_VIBRATE", "振动提醒");
+            
+            if (self.isEnable == YES)
+            {
+                self.vibrateSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+                self.vibrateSwitch.tag = UISWITCH_VIBRATE_TAG;
+                [self.vibrateSwitch setOn:[RKCloudChatConfigManager getNoticedByVibrate]];
+                [self.vibrateSwitch addTarget:self action:@selector(setNoticedByVibrate:) forControlEvents:UIControlEventValueChanged];
+                
+                if (![cell viewWithTag:UISWITCH_VIBRATE_TAG])
+                {
+                    [cell addSubview:self.vibrateSwitch];
+                }
+            }
+        }
+            break;
+        default:
+            break;            
+    }
+    
+    
+    return cell;
+}
+
+
+#pragma mark -
+#pragma mark UITableViewDelegate
+
+// 设置cell的高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 44.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 10;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //选中后的反显颜色即刻消失
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *footerView = [[UIView alloc] init];
+    footerView.backgroundColor = [UIColor clearColor];
+    
+    return footerView;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] init];
+    headerView.backgroundColor = [UIColor clearColor];
+    
+    return headerView;
+    
+}
+#pragma mark - Custom Method
+
+// 设置是否在通知栏中显示新消息
+- (void)setNotificationEnable:(id)sender
+{
+    self.isEnable = !self.isEnable;
+    [RKCloudChatConfigManager setNotificationEnable:self.isEnable];
+    [RKCloudChatConfigManager setNoticeBySound:self.isEnable];
+    [RKCloudChatConfigManager setNoticedByVibrate:self.isEnable];
+    
+    [self.tableView reloadData];
+}
+
+// 设置新消息是否声音提醒
+- (void)setNoticeBySound:(id)sender
+{
+    UISwitch *mSender = (UISwitch *)sender;
+    [RKCloudChatConfigManager setNoticeBySound:mSender.isOn];
+}
+
+// 设置新消息是否振动提醒
+- (void)setNoticedByVibrate:(id)sender
+{
+    UISwitch *mSender = (UISwitch *)sender;
+    [RKCloudChatConfigManager setNoticedByVibrate:mSender.isOn];
+}
+
+
+@end
+

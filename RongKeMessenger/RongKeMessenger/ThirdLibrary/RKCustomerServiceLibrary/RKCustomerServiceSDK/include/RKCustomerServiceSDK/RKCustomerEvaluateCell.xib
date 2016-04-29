@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RKCustomerEvaluateCell" rowHeight="56" id="KGk-i7-Jjw" customClass="RKCustomerEvaluateCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rfv-fl-vZs">
+                        <rect key="frame" x="10" y="5" width="300" height="47"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="客服-小明邀请您评价" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="138" translatesAutoresizingMaskIntoConstraints="NO" id="DZg-eE-9FI">
+                                <rect key="frame" x="0.0" y="11" width="202" height="21"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="202" id="DEs-Ks-Wa9"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="POM-bK-aql"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZtZ-oh-69c">
+                                <rect key="frame" x="210" y="4" width="90" height="35"/>
+                                <color key="backgroundColor" red="0.36078431372549019" green="0.67450980392156867" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="S1X-JA-Qnc"/>
+                                    <constraint firstAttribute="height" constant="34.5" id="oXm-LA-ni3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="评价">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="touchCommitButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wfX-LA-RJz"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="DZg-eE-9FI" firstAttribute="leading" secondItem="Rfv-fl-vZs" secondAttribute="leading" id="3Lw-Ox-Q4X"/>
+                            <constraint firstAttribute="width" constant="300" id="Fju-zh-dZe"/>
+                            <constraint firstAttribute="height" constant="46.5" id="VZ8-B9-NHP"/>
+                            <constraint firstItem="ZtZ-oh-69c" firstAttribute="top" secondItem="Rfv-fl-vZs" secondAttribute="top" constant="4" id="avu-bZ-SYh"/>
+                            <constraint firstItem="DZg-eE-9FI" firstAttribute="centerY" secondItem="ZtZ-oh-69c" secondAttribute="centerY" id="byt-nX-1pd"/>
+                            <constraint firstItem="ZtZ-oh-69c" firstAttribute="leading" secondItem="DZg-eE-9FI" secondAttribute="trailing" constant="8" id="hFA-fB-9oh"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="Rfv-fl-vZs" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="WSp-D3-f0R"/>
+                    <constraint firstItem="Rfv-fl-vZs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="uLM-oD-onp"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="commitButton" destination="ZtZ-oh-69c" id="QB5-ak-RcI"/>
+                <outlet property="evaluateView" destination="Rfv-fl-vZs" id="86M-Ug-NZa"/>
+                <outlet property="evaluateViewConstraintWidth" destination="Fju-zh-dZe" id="bPV-ow-lEi"/>
+                <outlet property="promptConstraintWidth" destination="DEs-Ks-Wa9" id="2GD-j1-N1F"/>
+                <outlet property="promptLabel" destination="DZg-eE-9FI" id="Xeo-LW-Klw"/>
+            </connections>
+            <point key="canvasLocation" x="426" y="286"/>
+        </tableViewCell>
+    </objects>
+</document>

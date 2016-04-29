@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MemberDetailCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_icon_user_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="yxO-ou-9TW" customClass="CustomAvatarImageView">
+                        <rect key="frame" x="10" y="0.0" width="50" height="50"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="A3t-6H-fRO"/>
+                            <constraint firstAttribute="height" constant="50" id="Gw4-fO-SpS"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X8x-r8-S0p">
+                        <rect key="frame" x="10" y="0.0" width="20" height="20"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="5G1-iw-7w6"/>
+                            <constraint firstAttribute="width" constant="20" id="dyK-Ol-x1H"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaQ-CY-Gm7">
+                        <rect key="frame" x="0.0" y="50" width="70" height="20"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="V6m-pA-eU5"/>
+                            <constraint firstAttribute="height" constant="20" id="j3m-6L-VcT"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <animations/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="FaQ-CY-Gm7" secondAttribute="centerX" id="5FX-sb-wZO"/>
+                <constraint firstItem="FaQ-CY-Gm7" firstAttribute="top" secondItem="yxO-ou-9TW" secondAttribute="bottom" id="6vQ-Qy-ovK"/>
+                <constraint firstItem="yxO-ou-9TW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="FMe-Bw-PaT"/>
+                <constraint firstItem="yxO-ou-9TW" firstAttribute="leading" secondItem="X8x-r8-S0p" secondAttribute="leading" id="IvG-Vx-tL6"/>
+                <constraint firstAttribute="centerX" secondItem="yxO-ou-9TW" secondAttribute="centerX" id="hVp-0j-YJk"/>
+                <constraint firstItem="yxO-ou-9TW" firstAttribute="top" secondItem="X8x-r8-S0p" secondAttribute="top" id="kGf-yu-9sy"/>
+            </constraints>
+            <size key="customSize" width="77" height="72"/>
+            <connections>
+                <outlet property="avatarMuteImageView" destination="X8x-r8-S0p" id="YaM-k5-dMX"/>
+                <outlet property="memberAvatarImageView" destination="yxO-ou-9TW" id="I5f-ej-dHV"/>
+                <outlet property="memberNameLabel" destination="FaQ-CY-Gm7" id="FbT-AH-fNN"/>
+            </connections>
+            <point key="canvasLocation" x="168" y="262"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="default_icon_user_avatar" width="38" height="38"/>
+    </resources>
+</document>
