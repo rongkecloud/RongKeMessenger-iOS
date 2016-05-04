@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:RongKeMessenger/RongKeMessenger.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../RKCloudDemo-iOS/RKCloudDemo/RKCloudDemo.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../rongkecloud-instant-messaging-ios/RKCloudStream/RKCloudStream.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../rongkecloud-instant-messaging-ios/RKCloudChat/RKCloudChat.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:../../rongkecloud-instant-messaging-ios/RKCloudBase/RKCloudBase.xcodeproj">
+   </FileRef>
+</Workspace>

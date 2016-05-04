@@ -101,6 +101,8 @@
     
     // 清除主程序图标的BadgeNumber
     application.applicationIconBadgeNumber = 0;
+    // 清除通知中心上的所有留存记录
+    [application cancelAllLocalNotifications];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
