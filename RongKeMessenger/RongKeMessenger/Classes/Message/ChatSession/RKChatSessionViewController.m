@@ -2489,8 +2489,7 @@
     [self enablePopAction:YES];
     
     // 更新录音时间
-    // audioplayer 和 recorderplayer duration 相差 0.094
-    int recorderDuration = ([self.audioToolsKit.audioRecorder currentTime] - floor([self.audioToolsKit.audioRecorder currentTime]) > 0.906) ? ceil([self.audioToolsKit.audioRecorder currentTime]) : [self.audioToolsKit.audioRecorder currentTime];
+    int recorderDuration = [self.audioToolsKit.audioRecorder currentTime];
     
     // 发送前先停止录音
     [self.audioToolsKit stopRecordVoice];
