@@ -404,8 +404,12 @@
     NSInteger currentTime = 0;
     if (self.audioPlayer)
     {
-        NSInteger tatalTime = ceil(self.audioPlayer.duration);
+        //  audioplayer 和 recorderplayer duration 相差 0.094
+        double moreTime = (self.audioPlayer.duration - floor(self.audioPlayer.duration)) > 0.094 ? self.audioPlayer.duration : floor(self.audioPlayer.duration);
+        
+        NSInteger tatalTime = ceil(moreTime);
         NSInteger playingTime = ceil(self.audioPlayer.currentTime);
+        
         currentTime = tatalTime - playingTime;
     }
     return currentTime;
