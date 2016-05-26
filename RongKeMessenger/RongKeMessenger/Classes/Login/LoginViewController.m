@@ -25,7 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIBorderButton *registerButton; // 注册按钮
 
 @property (strong, nonatomic) IBOutlet UIView *inputLoginParentView; // 输入框view
-@property (weak, nonatomic) IBOutlet UIView *textAndPwdBackgroundView;
+@property (weak, nonatomic) IBOutlet UIView *textAndPwdBackgroundView; // 背景view
 
 @end
 
