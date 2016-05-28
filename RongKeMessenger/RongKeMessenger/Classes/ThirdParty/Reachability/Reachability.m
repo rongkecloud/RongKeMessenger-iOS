@@ -44,7 +44,8 @@
  Copyright (C) 2013 Apple Inc. All Rights Reserved.
  
  */
-
+#import <netinet/in.h>
+#import <netinet6/in6.h>
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <netdb.h>
@@ -143,10 +144,17 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 + (instancetype)reachabilityForInternetConnection;
 {
-	struct sockaddr_in zeroAddress;
-	bzero(&zeroAddress, sizeof(zeroAddress));
-	zeroAddress.sin_len = sizeof(zeroAddress);
-	zeroAddress.sin_family = AF_INET;
+#if (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 90000)
+    struct sockaddr_in6 zeroAddress;
+    bzero(&zeroAddress, sizeof(zeroAddress));
+    address.sin6_len = sizeof(zeroAddress);
+    address.sin6_family = AF_INET6;
+#else
+    struct sockaddr_in zeroAddress;
+    bzero(&zeroAddress, sizeof(zeroAddress));
+    zeroAddress.sin_len = sizeof(zeroAddress);
+    zeroAddress.sin_family = AF_INET;
+#endif
     
 	return [self reachabilityWithAddress:&zeroAddress];
 }
@@ -154,11 +162,18 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 + (instancetype)reachabilityForLocalWiFi;
 {
-	struct sockaddr_in localWifiAddress;
-	bzero(&localWifiAddress, sizeof(localWifiAddress));
-	localWifiAddress.sin_len = sizeof(localWifiAddress);
-	localWifiAddress.sin_family = AF_INET;
-
+#if (defined(__IPHONE_OS_VERSION_MIN_REQUIRED) && __IPHONE_OS_VERSION_MIN_REQUIRED >= 90000)
+    struct sockaddr_in6 localWifiAddress;
+    bzero(&localWifiAddress, sizeof(localWifiAddress));
+    address.sin6_len = sizeof(localWifiAddress);
+    address.sin6_family = AF_INET6;
+#else
+    struct sockaddr_in localWifiAddress;
+    bzero(&localWifiAddress, sizeof(localWifiAddress));
+    localWifiAddress.sin_len = sizeof(localWifiAddress);
+    localWifiAddress.sin_family = AF_INET;
+#endif
+    
 	// IN_LINKLOCALNETNUM is defined in <netinet/in.h> as 169.254.0.0.
 	localWifiAddress.sin_addr.s_addr = htonl(IN_LINKLOCALNETNUM);
 
