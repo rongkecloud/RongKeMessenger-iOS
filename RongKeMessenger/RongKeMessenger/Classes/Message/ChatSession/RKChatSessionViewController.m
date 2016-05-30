@@ -949,6 +949,12 @@
     [self.navigationController pushViewController:selectFriendsViewCtroller animated: NO];
 }
 
+// 根据messageObject撤回消息消息
+- (void)revokeMMSWithMessageObject:(RKCloudChatBaseMessage *)messageObject
+{
+    
+}
+
 // 增加新的消息记录到数组中
 - (void)addNewMessageToArray:(RKCloudChatBaseMessage *)currentObject
 {
@@ -3243,6 +3249,8 @@
             }
         }
     }
+    
+    [self.messageSessionContentTableView reloadData];
 }
 
 /**
