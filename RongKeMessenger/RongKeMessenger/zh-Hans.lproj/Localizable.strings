@@ -122,6 +122,7 @@
 "STR_SAVE_PHOTO" = "保存到相册";
 "STR_MULTI_CHAT" = "群会话";
 "STR_FORWARD" = "转发";
+"STR_REVOKE" = "撤回";
 "STR_USER_NAME" = "用户名";
 "STR_PASSWORD" = "密码";
 "STR_MY_FRIENDS" = "我的好友";

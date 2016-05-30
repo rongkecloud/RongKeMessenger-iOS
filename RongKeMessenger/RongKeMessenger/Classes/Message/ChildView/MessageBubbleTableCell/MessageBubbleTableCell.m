@@ -299,6 +299,19 @@
     return YES;
 }
 
+- (BOOL)enableRevokeMessage
+{
+    BOOL isEnableRevokeMms = NO;
+    
+    // 判断是否为自己发送的消息且时间超过两秒，显示撤回按钮
+    if ([self.messageObject.senderName isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount] && ([ToolsFunction getCurrentSystemDateSecond] - self.messageObject.createTime) < 2 * 60) {
+        
+        if (self.messageObject.messageStatus > MESSAGE_STATE_SEND_FAILED) {
+            isEnableRevokeMms = YES;
+        }
+    }
+    return isEnableRevokeMms;
+}
 
 #pragma mark -
 #pragma mark ButtonAction

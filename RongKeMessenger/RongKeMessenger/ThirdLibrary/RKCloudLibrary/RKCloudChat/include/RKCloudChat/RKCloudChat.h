@@ -159,6 +159,15 @@ typedef enum : NSInteger {
 #pragma mark -
 #pragma mark RKCloudChatSession
 
+/**
+ *  @brief 代理方法:SDK同步完所有群信息后的代理
+ *
+ *  @param chatSessionList 所有聊天会话session
+ *
+ *  @return
+ */
+- (void)didAllGroupInfoSynComplete:(NSArray *)chatSessionList;
+
 /*!
  * @brief 代理方法:更新整个会话列表数据
  *

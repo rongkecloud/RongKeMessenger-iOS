@@ -492,6 +492,29 @@
                                   type:NORMAL_PROMPT];
 }
 
+- (void)updateSessionListWithSessionArray:(NSArray *)sessionListArray
+{
+    [self.allSessionArray removeAllObjects];
+    
+    // 重新获取会话记录
+    if (sessionListArray && [sessionListArray count] > 0) {
+        [self.allSessionArray addObjectsFromArray:sessionListArray];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        // 刷新tableview
+        if (self.sessionListTableView)
+        {
+            [self.sessionListTableView reloadData];
+            
+            // Jacky.Chen 2016.02.26,更新leftBarButtonItem状态，解决进入会话收到新消息leftBarButtonItem不能用的问题
+            [self resetLeftBarButtonItemState];
+            
+        }
+    });
+}
+
 
 #pragma mark -
 #pragma mark UISearchBar Delegate
@@ -602,6 +625,14 @@
 #pragma mark -
 #pragma mark RKCloudChatDelegate - RKCloudChatSession
 
+// SDK更新完群信息后的刷新
+- (void)didAllGroupInfoSynComplete:(NSArray *)chatSessionList
+{
+    NSLog(@"CHAT-LIST-DELEGATE: didAllGroupInfoSynComplete: chatSessionList count = %lu", (unsigned long)[chatSessionList count]);
+    
+    [self updateSessionListWithSessionArray:chatSessionList];
+}
+
 /**
  * @brief 代理方法:更新整个会话列表数据
  *
@@ -613,25 +644,7 @@
 {
     NSLog(@"CHAT-LIST-DELEGATE: didUpdateChatSessionList: chatSessionList count = %lu", (unsigned long)[chatSessionList count]);
     
-    [self.allSessionArray removeAllObjects];
-    
-    // 重新获取会话记录
-    if (chatSessionList && [chatSessionList count] > 0) {
-        [self.allSessionArray addObjectsFromArray:chatSessionList];
-    }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        // 刷新tableview
-        if (self.sessionListTableView)
-        {
-            [self.sessionListTableView reloadData];
-            
-            // Jacky.Chen 2016.02.26,更新leftBarButtonItem状态，解决进入会话收到新消息leftBarButtonItem不能用的问题
-            [self resetLeftBarButtonItemState];
-
-        }
-    });
+    [self updateSessionListWithSessionArray:chatSessionList];
 }
 
 /**
