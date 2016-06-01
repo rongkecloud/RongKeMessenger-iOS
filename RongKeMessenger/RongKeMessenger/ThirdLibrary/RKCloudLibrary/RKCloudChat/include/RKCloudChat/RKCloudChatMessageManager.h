@@ -97,6 +97,17 @@
 #pragma mark RKCloudChat Group Apply/Quit/Invite/KickOut/ModifyInfo Function
 
 /**
+ *  @brief获取群信息(API请求)
+ *
+ *  @param groupId 群Id
+ *
+ *  @return 返回操作成功或者失败错误码
+ */
++ (void)syncGroupInfo:(NSString *)groupId
+             onSuccess:(void (^)(RKCloudChatBaseChat *chatObject))onSuccess
+              onFailed:(void (^)(int errorCode))onFailed;
+
+/**
  * @brief 创建群(API请求)
  *
  * @param arrayUserName 联系人的userName数组，不包含自己的userName
