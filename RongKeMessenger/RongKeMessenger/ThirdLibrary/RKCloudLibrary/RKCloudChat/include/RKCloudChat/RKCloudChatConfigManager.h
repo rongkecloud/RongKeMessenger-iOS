@@ -25,9 +25,25 @@
  *
  * @param isAllow  是否允许
  *
- * @return BOOL YES:设置成功 NO:设置失败
+ * @return nil
  */
-+ (BOOL)setNoticeBySound:(BOOL)isAllow;
++ (void)setNoticeBySound:(BOOL)isAllow;
+
+/**
+ * @brief 是否显示消息详情
+ *
+ * @return BOOL
+ */
++ (BOOL)getMsgRemindSum;
+
+/**
+ * @brief 是否显示消息详情
+ *
+ * @param isAllow  是否允许
+ *
+ * @return nil
+ */
++ (void)setMsgRemindSum:(BOOL)isSum;
 
 /**
  * @brief 获取新消息是否振动提醒
@@ -41,9 +57,9 @@
  *
  * @param isAllow  是否允许
  *
- * @return BOOL YES:设置成功 NO:设置失败
+ * @return
  */
-+ (BOOL)setNoticedByVibrate:(BOOL)isAllow;
++ (void)setNoticedByVibrate:(BOOL)isAllow;
 
 /**
  * @brief 获取是否在通知栏中显示新消息
@@ -57,9 +73,9 @@
  *
  * @param isAllow  是否允许
  *
- * @return BOOL YES:设置成功 NO:设置失败
+ * @return nil
  */
-+ (BOOL)setNotificationEnable:(BOOL)isAllow;
++ (void)setNotificationEnable:(BOOL)isAllow;
 
 /**
  * @brief 获取新消息声音提醒时播放的音乐本地路径
@@ -73,9 +89,9 @@
  *
  * @param musicUri 消息声音提醒时播放的音乐路径
  *
- * @return BOOL YES:设置成功 NO:设置失败
+ * @return nil
  */
-+ (BOOL)setNotifyRingUri:(NSString *)musicUri;
++ (void)setNotifyRingUri:(NSString *)musicUri;
 
 /**
  * @brief 获取播放语音消息时的模式
@@ -89,9 +105,9 @@
  *
  * @param earphone BOOL YES:听筒播放 NO:扬声器模式
  *
- * @return BOOL YES:设置成功 NO:设置失败
+ * @return nil
  */
-+ (BOOL)setVoicePlayModel:(BOOL)earphone;
++ (void)setVoicePlayModel:(BOOL)earphone;
 
 
 @end

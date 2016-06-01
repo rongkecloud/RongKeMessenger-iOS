@@ -36,6 +36,7 @@ extern NSString *kMessageMimeTypeAudio; // "AUDIO" (语音短信)
 extern NSString *kMessageMimeTypeFile; // "FILE" (文件)
 extern NSString *kMessageMimeTypeVideo; // "VIDEO" (视频片段)
 extern NSString *kMessageMimeTypeCustom; // "CUSTOM" (自定义消息)
+extern NSString *kMessageMimeTypeInterMsg; // "INTERMSG" (撤回消息消息)
 
 // 客户端本地使用
 extern NSString *kMessageMimeTypeLocal; // "LOCAL" (本地消息)

@@ -360,6 +360,8 @@
 "PROMPT_GET_NOTIFICATION_ENABLE" = "通知栏提醒";
 "PROMPT_GET_NOTICE_BY_SOUND" = "声音提醒";
 "PROMPT_GET_NOTICE_BY_VIBRATE" = "振动提醒";
+"PROMPT_GET_NOTICE_SHOW_DETAIL" = "通知显示消息详情";
+"PROMPT_GET_NOTICE_NEW_MESSAGE_SOUND" = "新消息提示音";
 
 //*******************************************************************************
 // 融科通server error code
