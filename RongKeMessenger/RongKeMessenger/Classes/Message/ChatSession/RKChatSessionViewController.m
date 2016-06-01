@@ -3269,6 +3269,8 @@
         return;
     }
     
+    // 撤回消息的处理
+    
     // 防止同一条消息重复显示
     BOOL bExist = NO;
     for (RKCloudChatBaseMessage *existMessageObject in self.visibleSortMessageRecordArray)

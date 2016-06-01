@@ -27,6 +27,7 @@ typedef NS_ENUM(NSUInteger, MessageStatus) {
     MESSAGE_STATE_RECEIVE_DOWNFAILED = 7, // 媒体文件下载失败
     MESSAGE_STATE_RECEIVE_DOWNED = 8, // 媒体文件下载成功
     MESSAGE_STATE_READED = 9, // 已读
+    MESSAGE_STATE_REVOKE = 10, // 对方已经撤回
 };
 
 // MMS消息类型枚举
@@ -38,7 +39,6 @@ typedef NS_ENUM(NSUInteger, MessageType) {
     MESSAGE_TYPE_LOCAL = 5, // 本地消息记录（音视频/会议 呼叫记录）
     MESSAGE_TYPE_CUSTOM = 6, // 自定义消息
     MESSAGE_TYPE_VIDEO = 7, // 视频消息
-    
     MESSAGE_TYPE_GROUP_JOIN = 8,  // 加入群消息
     MESSAGE_TYPE_GROUP_LEAVE = 9, // 离开群消息
     
@@ -54,6 +54,7 @@ typedef NS_ENUM(NSUInteger, MessageType) {
 @property (nonatomic, copy) NSString *mimeType; // MIME类型
 @property (nonatomic, copy) NSString *textContent; // 消息文本内容
 @property (nonatomic, copy) NSString *extension; // 消息的扩展内容
+@property (nonatomic, copy) NSString *msgSummary; // 消息摘要内容，空值则不显示消息摘要内容，非空值则为要显示的消息摘要内容
 
 @property (nonatomic) MessageDirection msgDirection; // 消息的发送接收方向
 @property (nonatomic) MessageStatus messageStatus; // 消息的状态
