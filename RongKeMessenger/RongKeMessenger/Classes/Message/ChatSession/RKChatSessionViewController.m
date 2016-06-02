@@ -954,7 +954,7 @@
 {
     [RKCloudChatMessageManager syncRevokeMessage:messageObject.messageID onSuccess:^(NSString *messageId)
     {
-        
+         NSLog(@"MESSAGE-SESSION:: revokeMMSWithMessageObject: Success");
     } onFailed:^(int errorCode) {
         
     }];
