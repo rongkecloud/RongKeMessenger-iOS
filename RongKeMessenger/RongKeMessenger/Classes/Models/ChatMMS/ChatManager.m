@@ -119,6 +119,21 @@
     return tipMessageString;
 }
 
+// 拼装撤销消息字符串
++ (NSString *)getRevokeStringWithMessageObject:(RKCloudChatBaseMessage *)messageObject
+{
+    NSString *tipMessageString = nil;
+    
+    if ([[AppDelegate appDelegate].userProfilesInfo.userAccount isEqualToString:messageObject.senderName]) {
+        tipMessageString = [NSString stringWithFormat:@"\"%@\"%@",NSLocalizedString(@"STR_ME", @"我"),NSLocalizedString(@"STR_REVOKE_MESSAGE", @"撤回了一条消息")];
+    }
+    else{
+        tipMessageString = [NSString stringWithFormat:@"\"%@\"%@",messageObject.senderName,NSLocalizedString(@"STR_REVOKE_MESSAGE", @"撤回了一条消息")];
+    }
+    
+    return tipMessageString;
+}
+
 // 根据消息内容获取cell高度
 + (float)heightForMessage:(RKCloudChatBaseMessage *)messageObject {
     
@@ -230,7 +245,15 @@
             cellHeight = sizeString.height + CELL_MESSAGE_TOP_DISTANCE + CELL_MESSAGE_BUTTOM_DISTANCE;
         }
             break;
+        case MESSAGE_TYPE_REVOKE:
+        {
+            // 获取所要显示的字需要占据的空间大小
+            NSString *tipMessageString = [ChatManager getRevokeStringWithMessageObject:messageObject];
+            CGSize sizeString = [ToolsFunction getSizeFromString:tipMessageString withFont:TIP_MESSAGE_TEXT_FONT constrainedToSize:CGSizeMake(270, 200)];
             
+            cellHeight = sizeString.height + CELL_MESSAGE_TOP_DISTANCE + CELL_MESSAGE_BUTTOM_DISTANCE;
+        }
+            break;
         case MESSAGE_TYPE_LOCAL: // 本地消息
         {
             if ([messageObject.mimeType isEqualToString:kMessageMimeTypeTip]) {

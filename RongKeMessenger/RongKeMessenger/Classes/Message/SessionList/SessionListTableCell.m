@@ -269,27 +269,36 @@
                 case SessionListShowTypeNomal:
                 case SessionListShowTypeSearchSessionName:
                 {
-                    // 如果是群聊会话则显示发送方的名字
-                    if (sessionObject.sessionType == SESSION_GROUP_TYPE)
-                    {
-                        NSString *nameSender = nil;
-                        if ([messageObject.senderName isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
-                        {
-                            nameSender = NSLocalizedString(@"STR_ME", "我");
-                        }
-                        else {
-                            nameSender = [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:messageObject.senderName];
-                        }
-                        
-                        [strDescription appendFormat:@"%@: ", nameSender];
-                    }
+                    NSString *messageInfo = nil;
                     
-                    NSString *messageInfo = [ChatManager getMessageDescription:messageObject];
-                    if (messageInfo) {
-                        // 获取消息在消息会话列表上最后一条的描述信息
-                        [strDescription appendString:messageInfo];
+                    if (messageObject.messageType == MESSAGE_TYPE_REVOKE)
+                    {
+                        messageInfo = [ChatManager getRevokeStringWithMessageObject:messageObject];
+                        self.descriptionLabel.text = messageInfo;
                     }
-                     self.descriptionLabel.text = strDescription;
+                    else
+                    {
+                        // 如果是群聊会话则显示发送方的名字
+                        if (sessionObject.sessionType == SESSION_GROUP_TYPE)
+                        {
+                            NSString *nameSender = nil;
+                            if ([messageObject.senderName isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+                            {
+                                nameSender = NSLocalizedString(@"STR_ME", "我");
+                            }
+                            else {
+                                nameSender = [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:messageObject.senderName];
+                            }
+                            
+                            [strDescription appendFormat:@"%@: ", nameSender];
+                        }
+                        messageInfo = [ChatManager getMessageDescription:messageObject];
+                        if (messageInfo) {
+                            // 获取消息在消息会话列表上最后一条的描述信息
+                            [strDescription appendString:messageInfo];
+                        }
+                        self.descriptionLabel.text = strDescription;
+                    }
                 }
                     break;
                 case SessionListShowTypeSearchListMain:
