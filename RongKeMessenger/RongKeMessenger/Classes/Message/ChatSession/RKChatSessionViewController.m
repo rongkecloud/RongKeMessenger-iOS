@@ -952,7 +952,12 @@
 // 根据messageObject撤回消息消息
 - (void)revokeMMSWithMessageObject:(RKCloudChatBaseMessage *)messageObject
 {
-    
+    [RKCloudChatMessageManager syncRevokeMessage:messageObject.messageID onSuccess:^(NSString *messageId)
+    {
+        
+    } onFailed:^(int errorCode) {
+        
+    }];
 }
 
 // 增加新的消息记录到数组中
@@ -1704,6 +1709,13 @@
         case MESSAGE_TYPE_VIDEO: // 视频
         {
             cellIndentifier = CELL_TABLE_MESSAGE_VIDEO;
+        }
+            break;
+        case MESSAGE_TYPE_REVOKE: // 撤回消息
+        {
+            cellIndentifier = CELL_MESSAGEGROUPINFO;
+            
+            tipMessageString = [ChatManager getRevokeStringWithMessageObject:messageObject];
         }
             break;
         default:

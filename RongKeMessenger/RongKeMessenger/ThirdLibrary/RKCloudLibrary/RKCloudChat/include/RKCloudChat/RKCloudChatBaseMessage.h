@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, MessageType) {
     MESSAGE_TYPE_VIDEO = 7, // 视频消息
     MESSAGE_TYPE_GROUP_JOIN = 8,  // 加入群消息
     MESSAGE_TYPE_GROUP_LEAVE = 9, // 离开群消息
-    
+    MESSAGE_TYPE_REVOKE = 10, // 撤回消息
     MESSAGE_TYPE_TIME = 255,   // 时间字符串(不存数据库)
 };
 

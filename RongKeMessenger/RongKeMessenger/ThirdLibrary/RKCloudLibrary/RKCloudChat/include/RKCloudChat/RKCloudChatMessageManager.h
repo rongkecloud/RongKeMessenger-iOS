@@ -54,6 +54,17 @@
 + (NSString *)forwardChatMsg:(NSString *)messageID toUserNameOrSessionID:(NSString *)dstSessionID;
 
 /**
+ *  @brief 撤回消息
+ *
+ *  @param messageId 撤回消息的Id
+ *
+ *  @return onSuccess onFailed
+ */
++ (void)syncRevokeMessage:(NSString *)messageId
+                onSuccess:(void (^)(NSString *messageId))onSuccess
+                 onFailed:(void (^)(int errorCode))onFailed;
+
+/**
  * @brief 向终端插入消息
  *
  * @param localMessage 消息LocalMessage对象数据
@@ -95,6 +106,17 @@
 
 #pragma mark -
 #pragma mark RKCloudChat Group Apply/Quit/Invite/KickOut/ModifyInfo Function
+
+/**
+ *  @brief获取群信息(API请求)
+ *
+ *  @param groupId 群Id
+ *
+ *  @return 返回操作成功或者失败错误码
+ */
++ (void)syncGroupInfo:(NSString *)groupId
+             onSuccess:(void (^)(RKCloudChatBaseChat *chatObject))onSuccess
+              onFailed:(void (^)(int errorCode))onFailed;
 
 /**
  * @brief 创建群(API请求)
