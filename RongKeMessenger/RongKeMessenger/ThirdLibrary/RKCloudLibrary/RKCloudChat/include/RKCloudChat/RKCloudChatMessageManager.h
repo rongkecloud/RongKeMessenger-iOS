@@ -54,6 +54,17 @@
 + (NSString *)forwardChatMsg:(NSString *)messageID toUserNameOrSessionID:(NSString *)dstSessionID;
 
 /**
+ *  @brief 撤回消息
+ *
+ *  @param messageId 撤回消息的Id
+ *
+ *  @return onSuccess onFailed
+ */
++ (void)syncRevokeMessage:(NSString *)messageId
+                onSuccess:(void (^)(NSString *messageId))onSuccess
+                 onFailed:(void (^)(int errorCode))onFailed;
+
+/**
  * @brief 向终端插入消息
  *
  * @param localMessage 消息LocalMessage对象数据

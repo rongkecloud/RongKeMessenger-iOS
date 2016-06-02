@@ -137,7 +137,7 @@ extern NSString *kRKCustomerServiceSDKVersion;  // 客户SDK的版本号: 1.0.1.
 + (BOOL)setNoticedByVibrate:(BOOL)isAllow;
 
 /**
- * @brief 设置声音提醒时的音乐 默认播放的文件为2.caf
+ * @brief 设置声音提醒时的音乐 默认播放的文件为rkcloud_chat_sound_custom.caf
  * @attention 调用startConnectCustomerService函数后调用
  *
  * @param musicUri 消息声音提醒时播放的音乐路径
