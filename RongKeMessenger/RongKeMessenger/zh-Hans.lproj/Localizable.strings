@@ -159,6 +159,7 @@
 "STR_ALUMB" = "相册";
 "STR_CONNECT_FAIL_RETRY" = "连接失败，请重试";
 "STR_DRAFT_DESCRIBE" = "草稿";
+"STR_HAVE_NO_READ_MESAGE" = "您有条未读消息";
 
 //*******************************************************************************
 // 标题文本字符串
@@ -363,6 +364,7 @@
 "PROMPT_GET_NOTICE_BY_VIBRATE" = "振动提醒";
 "PROMPT_GET_NOTICE_SHOW_DETAIL" = "通知显示消息详情";
 "PROMPT_GET_NOTICE_NEW_MESSAGE_SOUND" = "新消息提示音";
+"PROMPT_GET_NOTICE_ENABLE" = "已开启";
 
 //*******************************************************************************
 // 融科通server error code

@@ -125,7 +125,7 @@
     NSString *tipMessageString = nil;
     
     if ([[AppDelegate appDelegate].userProfilesInfo.userAccount isEqualToString:messageObject.senderName]) {
-        tipMessageString = [NSString stringWithFormat:@"\"%@\"%@",NSLocalizedString(@"STR_ME", @"我"),NSLocalizedString(@"STR_REVOKE_MESSAGE", @"撤回了一条消息")];
+        tipMessageString = [NSString stringWithFormat:@"%@%@",NSLocalizedString(@"STR_ME", @"我"),NSLocalizedString(@"STR_REVOKE_MESSAGE", @"撤回了一条消息")];
     }
     else{
         tipMessageString = [NSString stringWithFormat:@"\"%@\"%@",messageObject.senderName,NSLocalizedString(@"STR_REVOKE_MESSAGE", @"撤回了一条消息")];

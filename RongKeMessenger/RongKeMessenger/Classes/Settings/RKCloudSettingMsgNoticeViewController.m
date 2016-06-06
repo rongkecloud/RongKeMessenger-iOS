@@ -74,8 +74,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
@@ -92,20 +90,21 @@
         {
             // 设置是否在通知栏中显示新消息
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTIFICATION_ENABLE", "通知栏提醒");
-            if ([ToolsFunction iSiOS7Earlier])
-            {
-                floatX -= 25;
-            }
-            
-            self.enableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
-            self.enableSwitch.tag = UISWITCH_ENABLE_TAG;
-            [self.enableSwitch setOn:[RKCloudChatConfigManager getNotificationEnable]];
-            [self.enableSwitch addTarget:self action:@selector(setNotificationEnable:) forControlEvents:UIControlEventValueChanged];
-            
-            if (![cell viewWithTag:UISWITCH_ENABLE_TAG])
-            {
-                [cell addSubview:self.enableSwitch];
-            }
+            cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_ENABLE", @"已开启");
+//            if ([ToolsFunction iSiOS7Earlier])
+//            {
+//                floatX -= 25;
+//            }
+//            
+//            self.enableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+//            self.enableSwitch.tag = UISWITCH_ENABLE_TAG;
+//            [self.enableSwitch setOn:[RKCloudChatConfigManager getNotificationEnable]];
+//            [self.enableSwitch addTarget:self action:@selector(setNotificationEnable:) forControlEvents:UIControlEventValueChanged];
+//            
+//            if (![cell viewWithTag:UISWITCH_ENABLE_TAG])
+//            {
+//                [cell addSubview:self.enableSwitch];
+//            }
         }
             break;
         case 1:
@@ -241,6 +240,7 @@
     [RKCloudChatConfigManager setNotificationEnable:self.isEnable];
     [RKCloudChatConfigManager setNoticeBySound:self.isEnable];
     [RKCloudChatConfigManager setNoticedByVibrate:self.isEnable];
+    [RKCloudChatConfigManager setMsgRemindSum:self.isEnable];
     
     [self.tableView reloadData];
 }
