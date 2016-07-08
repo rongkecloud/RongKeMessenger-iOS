@@ -269,7 +269,8 @@
     }
     
     // 初始免提音按钮
-    if (self.handsFreeButtonView == nil) {
+    if (self.handsFreeButtonView == nil)
+    {
         // Jacky.Chen:2016.02.25，若第一次为语音通话则初始化免提按钮位置到静音按钮对称位置（默认，若为视频通话则在下边的条件里边更改X）
         self.handsFreeButtonView = [[CallOperationButtonAndTitleView alloc] initWithFrame:CGRectMake(UISCREEN_BOUNDS_SIZE.width - margin - OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT, CGRectGetMinY(self.muteButtonView.frame), OPRATION_BUTTON_WIDTH_AND_HEIGHT, OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT) withCallOperationButtonType:CallOperationButtonTypeHandsFree];
 
@@ -282,8 +283,8 @@
         [self.view addSubview:self.handsFreeButtonView];
     }
     
-    if (self.isVideoCall) {
-        
+    if (self.isVideoCall)
+    {
         // Jacky.Chen:2016.02.25：视频通话更改免提按钮位置
         CGRect handsFreeButtonFrame = self.handsFreeButtonView.frame;
         handsFreeButtonFrame.origin.x = CGRectGetMaxX(self.muteButtonView.frame) + margin;
@@ -295,13 +296,15 @@
         // 文字超出时需要挑这个ButtonView的坐标
         float buttonWith = OPRATION_BUTTON_WIDTH_AND_HEIGHT;
         float spacingWidthVlue = 0;
-        if (switchCameraSize.width > OPRATION_BUTTON_WIDTH_AND_HEIGHT) {
+        if (switchCameraSize.width > OPRATION_BUTTON_WIDTH_AND_HEIGHT)
+        {
             spacingWidthVlue = (switchCameraSize.width - OPRATION_BUTTON_WIDTH_AND_HEIGHT)/2;
             buttonWith = switchCameraSize.width;
         }
         
         // 初始化摄像头切换按钮
-        if (self.switchCameraButtonView == nil) {
+        if (self.switchCameraButtonView == nil)
+        {
             self.switchCameraButtonView = [[CallOperationButtonAndTitleView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.handsFreeButtonView.frame) + margin, CGRectGetMinY(self.handsFreeButtonView.frame), buttonWith, OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT) withCallOperationButtonType:CallOperationButtonTypeSwitchCamera];
             self.switchCameraButtonView.delegate = self;
             [self.view addSubview:self.switchCameraButtonView];
@@ -318,12 +321,14 @@
         // 文字超出时需要挑这个ButtonView的坐标
         float switchAudioButtonWith = OPRATION_BUTTON_WIDTH_AND_HEIGHT;
         float switchAudioButtonSpacingWidthVlue = 0;
-        if (switchAudioButtonSize.width > OPRATION_BUTTON_WIDTH_AND_HEIGHT) {
+        if (switchAudioButtonSize.width > OPRATION_BUTTON_WIDTH_AND_HEIGHT)
+        {
             switchAudioButtonSpacingWidthVlue = (switchAudioButtonSize.width - OPRATION_BUTTON_WIDTH_AND_HEIGHT)/2;
             switchAudioButtonWith = switchAudioButtonSize.width;
         }
         // 初始化语音切换按钮
-        if (self.switchAudioButtonView == nil) {
+        if (self.switchAudioButtonView == nil)
+        {
             self.switchAudioButtonView = [[CallOperationButtonAndTitleView alloc] initWithFrame:CGRectMake(marginD, CGRectGetMinY(self.hangupButtonView.frame), switchAudioButtonWith, OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT) withCallOperationButtonType:CallOperationButtonTypeAudioChat];
             self.switchAudioButtonView.delegate = self;
             [self.view addSubview:self.switchAudioButtonView];
@@ -367,9 +372,9 @@
     // 格式化通话时长显示格式
     long callDuration = [[NSDate date] timeIntervalSince1970] - self.callSecond;
     NSString *strFromatTime = [ToolsFunction stringFormatCallDuration:callDuration];
-
     // 更新通话时间
     self.callStateLabel.text = strFromatTime;
+    [self.view bringSubviewToFront: self.callStateLabel];
 }
 
 #pragma mark - CallOperationButtonAndTitleViewDelegate Method
@@ -467,7 +472,8 @@
 
 #pragma mark - Touch Button Action
 
-- (void)touchAnswerButton {
+- (void)touchAnswerButton
+{
     
     self.callSecond = [ToolsFunction getCurrentSystemDateSecond];
     
@@ -475,7 +481,8 @@
     
     CGRect hangupButtonViewFrame = CGRectZero;
     // 移除接听按钮
-    if (self.isVideoCall) {
+    if (self.isVideoCall)
+    {
         // 视频 移动挂断按钮到中间位置
         hangupButtonViewFrame = self.hangupButtonView.frame;//        self.answerButtonView.frame;
         hangupButtonViewFrame.origin.x = UISCREEN_BOUNDS_SIZE.width - (UISCREEN_BOUNDS_SIZE.width - 2 * OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT )/3 - OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT;
@@ -661,7 +668,8 @@
  */
 - (void)onStateCallBack:(RKCloudAVCallState)state withReason:(RKCloudAVErrorCode)stateReason
 {
-    switch (state) {
+    switch (state)
+    {
         case AV_CALL_STATE_ANSWER: // 通话已接通
         {
             self.callSecond = [ToolsFunction getCurrentSystemDateSecond];
@@ -673,7 +681,8 @@
             self.avAudioPlayer = nil;
             
             // 如果是视频通话则设置视频窗口
-            if (self.isVideoCall) {
+            if (self.isVideoCall)
+            {
                 // 为视频通话打开相关设备
                 [self openRelatedDeviceForVideoCall];
                 
@@ -695,16 +704,16 @@
                     CGRect hangupFrame = self.hangupButtonView.frame;
                     hangupFrame.origin.x =  UISCREEN_BOUNDS_SIZE.width - (UISCREEN_BOUNDS_SIZE.width - 2 * OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT )/3 - OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT;
                     self.hangupButtonView.frame = hangupFrame;
-                    // Jacky.Chen:2016.02.25
-                    // 通话时间标签位置调整
-                    CGRect timeLabelFrame = self.callStateLabel.frame;
-                    timeLabelFrame.origin.y = CGRectGetMinY(self.handsFreeButtonView.frame) - 40;
-                    self.callStateLabel.frame = timeLabelFrame;
-                    
                 } completion:^(BOOL finished) {
-                    if (finished) {
+                    if (finished)
+                    {
                         // 初始化静音、免提按钮
                         [self addOprationButtonOfCallSuccessConnect];
+                        
+                        // 通话时间标签位置调整
+                        CGRect timeLabelFrame = self.callStateLabel.frame;
+                        timeLabelFrame.origin.y = CGRectGetMinY(self.handsFreeButtonView.frame) - 40;
+                        self.callStateLabel.frame = timeLabelFrame;
                     }
                 }];
             }
@@ -742,7 +751,8 @@
             
             // 语音 移动挂断按钮到中间位置
             // Jacky.Chen:02.25:视频通话不调整 self.hangupButtonView.frame
-            if (!self.isVideoCall) {
+            if (self.isVideoCall == NO)
+            {
                 [UIView animateWithDuration:0 animations:^{
                     CGRect hangupFrame = self.hangupButtonView.frame;
                     hangupFrame.origin.x = hangupButtonViewLayOut.fMarginWidth + hangupButtonViewLayOut.fSpacingWidth + OPRATION_BUTTON_WIDTH_AND_HEIGHT;
@@ -806,6 +816,8 @@
     }
     
     NSLog(@"CALL: popCallViewController");
+    
+    [self stopDetectTalkingTime];
     
     isHangupPop = YES;
     // 取消本类所有的延迟操作
@@ -980,7 +992,7 @@
         AVAudioSessionPortDescription *outputsPortDescription = [arrayOutputs objectAtIndex:i];
         strOldOutputDeviceType = outputsPortDescription.portType;
         
-        RKCloudDebugLog(@"DEBUG: outputsPortDescription portName = %@ , portType = %@", outputsPortDescription.portName,outputsPortDescription.portType);
+        // RKCloudDebugLog(@"DEBUG: outputsPortDescription portName = %@ , portType = %@", outputsPortDescription.portName,outputsPortDescription.portType);
     }
     
     NSString *strNewOutputDeviceType = nil;

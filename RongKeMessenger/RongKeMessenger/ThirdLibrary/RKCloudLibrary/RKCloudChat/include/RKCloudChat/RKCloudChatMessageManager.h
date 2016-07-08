@@ -201,6 +201,37 @@
  */
 + (long)modifyGroupRemark:(NSString *)remarkName forGroupID:(NSString *)groupID;
 
+/**
+ * @brief 修改群聊的名称(API请求)
+ * @attention 修改群聊的名称，SDK不做权限的限制，任何人都可以修改，异步请求
+ *
+ * @param groupName     群聊的名称
+ * @param groupID       群组ID
+ * @param onSuccess     接口调用成功
+ * @param onFailed      接口调用失败，返回错误信息
+ *
+ * @return 返回操作成功或者失败错误码
+ */
++ (void)modifyGroupName:(NSString *)groupName
+             forGroupID:(NSString *)groupID
+              onSuccess:(void (^)())onSuccess
+               onFailed:(void (^)(int errorCode))onFailed;
+
+/**
+ * @brief 修改群聊的描述信息(API请求)
+ * @attention 修改群聊的描述信息，SDK不做权限的限制，任何人都可以修改，异步请求
+ *
+ * @param description    群聊的描述信息
+ * @param groupID       群组ID
+ * @param onSuccess     接口调用成功
+ * @param onFailed      接口调用失败，返回错误信息
+ *
+ * @return 返回操作成功或者失败错误码
+ */
++ (void)modifyGroupDescription:(NSString *)description
+               forGroupID:(NSString *)groupID
+                onSuccess:(void (^)())onSuccess
+                 onFailed:(void (^)(int errorCode))onFailed;
 
 #pragma mark -
 #pragma mark RKCloudChat My All Group Function
@@ -500,6 +531,16 @@
  * @return 成功或失败的错误码
  */
 + (long)updateMsgsReadedInChat:(NSString *)sessionID;
+
+
+/**
+ * @brief 更新消息信息
+ *
+ * @param messageObject  消息对象
+ *
+ * @return nil
+ */
++ (void)updateMsg:(RKCloudChatBaseMessage *)messageObject;
 
 
 #pragma mark - RKCloudChat Delete Session/Message Data Function

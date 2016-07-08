@@ -19,7 +19,6 @@
 @property (strong, nonatomic) UISwitch *enableSwitch; // 通知栏提醒
 @property (strong, nonatomic) UISwitch *soundSwitch; // 声音提醒
 @property (strong, nonatomic) UISwitch *vibrateSwitch; // 振动提醒
-@property (strong, nonatomic) UISwitch *showDetailSwitch; // 振动提醒
 @property (assign, nonatomic) BOOL isEnable; // 是否通知栏提醒
 
 @end
@@ -58,22 +57,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rowNum = 0;
     if (self.isEnable == YES)
     {
-        rowNum = 4;
-        if ([RKCloudChatConfigManager getNoticeBySound]) {
-            rowNum = 5;
-        }
-        
+        return 3;
     } else {
-        rowNum = 1;
+        return 1;
     }
-    return rowNum;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"cell"];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier: @"cell"];
@@ -90,43 +85,23 @@
         {
             // 设置是否在通知栏中显示新消息
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTIFICATION_ENABLE", "通知栏提醒");
-            cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_ENABLE", @"已开启");
-//            if ([ToolsFunction iSiOS7Earlier])
-//            {
-//                floatX -= 25;
-//            }
-//            
-//            self.enableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
-//            self.enableSwitch.tag = UISWITCH_ENABLE_TAG;
-//            [self.enableSwitch setOn:[RKCloudChatConfigManager getNotificationEnable]];
-//            [self.enableSwitch addTarget:self action:@selector(setNotificationEnable:) forControlEvents:UIControlEventValueChanged];
-//            
-//            if (![cell viewWithTag:UISWITCH_ENABLE_TAG])
-//            {
-//                [cell addSubview:self.enableSwitch];
-//            }
-        }
-            break;
-        case 1:
-        {
-            // 设置通知显示消息详情
-            cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_SHOW_DETAIL", "通知显示消息详情");
-            
-            if (self.isEnable == YES)
+            if ([ToolsFunction iSiOS7Earlier])
             {
-                self.showDetailSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
-                self.showDetailSwitch.tag = UISWITCH_NOTICE_TAG;
-                [self.showDetailSwitch setOn:[RKCloudChatConfigManager getMsgRemindSum]];
-                [self.showDetailSwitch addTarget:self action:@selector(setNotifyShowDetailSwitch:) forControlEvents:UIControlEventValueChanged];
-                
-                if (![cell viewWithTag:UISWITCH_NOTICE_TAG])
-                {
-                    [cell addSubview:self.showDetailSwitch];
-                }
+                floatX -= 25;
+            }
+            
+            self.enableSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+            self.enableSwitch.tag = UISWITCH_ENABLE_TAG;
+            [self.enableSwitch setOn:[RKCloudChatConfigManager getNotificationEnable]];
+            [self.enableSwitch addTarget:self action:@selector(setNotificationEnable:) forControlEvents:UIControlEventValueChanged];
+            
+            if (![cell viewWithTag:UISWITCH_ENABLE_TAG])
+            {
+                [cell addSubview:self.enableSwitch];
             }
         }
             break;
-        case 2:
+        case 1:
         {
             // 设置新消息是否声音提醒
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_BY_SOUND", "声音提醒");
@@ -145,7 +120,7 @@
             }
         }
             break;
-        case 3:
+        case 2:
         {
             // 设置新消息是否振动提醒
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_BY_VIBRATE", "振动提醒");
@@ -161,18 +136,6 @@
                 {
                     [cell addSubview:self.vibrateSwitch];
                 }
-            }
-        }
-            break;
-        case 4:
-        {
-            // 设置新消息是否振动提醒
-            cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_NEW_MESSAGE_SOUND", "新消息提示音");
-            
-            if (self.isEnable == YES)
-            {
-                
-                cell.detailTextLabel.text = [RKCloudChatConfigManager getNotifyRingUri].lastPathComponent;
             }
         }
             break;
@@ -240,7 +203,6 @@
     [RKCloudChatConfigManager setNotificationEnable:self.isEnable];
     [RKCloudChatConfigManager setNoticeBySound:self.isEnable];
     [RKCloudChatConfigManager setNoticedByVibrate:self.isEnable];
-    [RKCloudChatConfigManager setMsgRemindSum:self.isEnable];
     
     [self.tableView reloadData];
 }
@@ -250,8 +212,6 @@
 {
     UISwitch *mSender = (UISwitch *)sender;
     [RKCloudChatConfigManager setNoticeBySound:mSender.isOn];
-    
-    [self.tableView  reloadData];
 }
 
 // 设置新消息是否振动提醒
@@ -261,12 +221,6 @@
     [RKCloudChatConfigManager setNoticedByVibrate:mSender.isOn];
 }
 
-// 设置新消息是否显示提示详情
-- (void)setNotifyShowDetailSwitch:(id)sender
-{
-    UISwitch *mSender = (UISwitch *)sender;
-    [RKCloudChatConfigManager setMsgRemindSum:mSender.isOn];
-}
 
 @end
 

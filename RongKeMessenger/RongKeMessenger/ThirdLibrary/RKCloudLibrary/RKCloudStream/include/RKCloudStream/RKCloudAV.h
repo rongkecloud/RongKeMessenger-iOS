@@ -55,6 +55,17 @@ typedef enum : NSInteger {
     CAMERA_FRONT = 1, /**< 前置摄像头    */
 } RKAVCameraDevice;
 
+/*!
+ *  @enum
+ *  @brief 视频质量的ID枚举值定义
+ *
+ */
+typedef enum : NSInteger {
+    VIDEO_QUALITY_LOW = 0, /**< 质量低 适合蜂窝移动网络传输192*144  */
+    VIDEO_QUALITY_MEDIUM = 1, /**< 质量中 较清晰480P--640*480   */
+    VIDEO_QUALITY_HIGH = 2, /**< 质量高 高清720P--1280*720   */
+} RKAVVideoQuality;
+
 
 /*!
  *  @enum
@@ -219,6 +230,13 @@ typedef enum : NSInteger {
 
 
 #pragma mark - Video Call Control Interface
+
+/*!
+ *  @brief 设置视频的质量，在调用dial之前设置
+ *
+ *  @param videoQuality 整型，视频质量等级，参考RKAVVideoQuality枚举值，默认为VIDEO_QUALITY_MEDIUM-视频质量为中
+ */
++ (void)setVideoQuality:(RKAVVideoQuality)videoQuality;
 
 /*!
  *  @brief 设置音视频通话是横屏还是竖屏显示，并且请在调用setCamera()和initVideoInfo()方法之前调用

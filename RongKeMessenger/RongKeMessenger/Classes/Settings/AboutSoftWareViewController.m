@@ -27,7 +27,7 @@
     self.title = NSLocalizedString(@"TITLE_ABOUT", "关于融科通");
     [self.view setBackgroundColor:COLOR_VIEW_BACKGROUND];
     
-    self.labelVersion.text = [NSString stringWithFormat:@"%@(V%@)", APP_DISPLAY_NAME, APP_SHORT_VERSION];
+    self.labelVersion.text = [NSString stringWithFormat:@"%@(V%@)", APP_DISPLAY_NAME, APP_WHOLE_VERSION];
 }
 
 - (void)didReceiveMemoryWarning {

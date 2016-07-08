@@ -415,7 +415,7 @@
             //在当前的menu菜单项中加入copy项目
             NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:[menuController menuItems]];
             // 拷贝手势仅添加一次
-            if ([tempArray count] < 4) {
+            if ([tempArray count] < 3) {
                 UIMenuItem *copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"STR_COPY", nil) action:@selector(copyMessage:)];
                 [tempArray insertObject:copyMenuItem atIndex:0];
                 
@@ -439,12 +439,6 @@
 - (void)forwardMessage:(UIMenuController*)menuController
 {
     [self.vwcMessageSession forwardMMSWithMessageObject:self.messageObject];
-}
-
-// UIMenu撤回键响应函数
-- (void)revokeMessage:(UIMenuController*)menuController
-{
-    [self.vwcMessageSession revokeMMSWithMessageObject:self.messageObject];
 }
 
 // 复制动作处理
@@ -499,8 +493,7 @@
 - (BOOL)canPerformAction:(SEL)selector withSender:(id)sender {
     if (selector == @selector(deleteMessage:) 
         || selector == @selector(forwardMessage:) 
-        || selector == @selector(copyMessage:)
-        || selector == @selector(revokeMessage:)){
+        || selector == @selector(copyMessage:)) {
         return YES;
     }
     return NO;

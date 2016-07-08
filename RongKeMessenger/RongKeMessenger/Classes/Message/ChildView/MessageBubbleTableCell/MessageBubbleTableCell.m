@@ -239,7 +239,6 @@
             UIMenuItem *deleteMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"STR_DELETE", nil) action:@selector(deleteMessage:)];
             UIMenuItem *foewardMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"STR_FORWARD", nil) action:@selector(forwardMessage:)];
             
-            NSMutableArray *menuItemsArray = nil;
             // 本地消息 语音消息不支持转发 图片和文件未下载不支持转发
             if (self.messageObject.messageType == MESSAGE_TYPE_LOCAL ||
                 self.messageObject.messageType == MESSAGE_TYPE_VOICE ||
@@ -247,20 +246,11 @@
                 (self.messageObject.messageType == MESSAGE_TYPE_FILE && self.messageObject.messageStatus == MESSAGE_STATE_RECEIVE_RECEIVED))
             {
                 // 只具有删除
-                menuItemsArray = [NSMutableArray arrayWithObjects:deleteMenuItem, nil];
+                [menuController setMenuItems:[NSArray arrayWithObjects:deleteMenuItem,nil]];
             } else {
                 // 删除 和 转发
-                menuItemsArray = [NSMutableArray arrayWithObjects:deleteMenuItem,foewardMenuItem, nil];
+                [menuController setMenuItems:[NSArray arrayWithObjects:deleteMenuItem,foewardMenuItem,nil]];
             }
-            
-            // 添加撤回按钮
-            if ([self enableRevokeMessage])
-            {
-                UIMenuItem *revokeMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"STR_REVOKE", nil) action:@selector(revokeMessage:)];
-                [menuItemsArray addObject:revokeMenuItem];
-            }
-            
-            [menuController setMenuItems:menuItemsArray];
 
             //设置menu位置
             [menuController setTargetRect:CGRectMake(location.x, location.y, 0.0f, 0.0f) inView:[gestureRecognizer view]];
@@ -296,15 +286,10 @@
 	[self.vwcMessageSession forwardMMSWithMessageObject:self.messageObject];
 }
 
-// 撤回键响应函数
-- (void)revokeMessage:(UIMenuController*)menuController {
-    [self.vwcMessageSession revokeMMSWithMessageObject:self.messageObject];
-}
-
 // UIMenu代理
 - (BOOL)canPerformAction:(SEL)selector withSender:(id)sender {
 
-	if (selector == @selector(deleteMessage:)||selector == @selector(forwardMessage:)||selector == @selector(revokeMessage:)) {
+	if (selector == @selector(deleteMessage:)||selector == @selector(forwardMessage:)) {
 		return YES;
 	}
     return NO;

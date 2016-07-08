@@ -11,7 +11,7 @@
 
 @interface GroupChat : RKCloudChatBaseChat
 
-@property (nonatomic, copy) NSString *groupRemark; // 获取/设置群的备注信息
+@property (nonatomic, copy) NSString *groupDescription; // 群的描述信息
 @property (nonatomic, copy) NSString *groupCreater; // 获取群聊会话的创建者信息，为云视互动分配的账号
 @property (nonatomic) BOOL isEnableInvite; // 是否开放邀请人权限（0：代表禁止 1:代表允许）
 

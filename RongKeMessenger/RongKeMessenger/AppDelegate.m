@@ -22,6 +22,8 @@
 
 @interface AppDelegate ()
 
+// #define DEBUG_WRITE_LOG
+
 @property (nonatomic, strong) RKNavigationController *loginNavController; // Navigation for Login
 
 @end
@@ -36,7 +38,7 @@
     
 #ifdef DEBUG_WRITE_LOG
     // 重定向NSLog到文件中
-    NSString * logName = [LogManager redirectNSLogToFile];
+    [LogManager redirectNSLogToFile];
 #endif // DEBUG_WRITE_LOG
     
     NSLog(@"SYS: %@ Application Start, AppVersion: %@, RKCloudSDKVersion: %@", APP_DISPLAY_NAME, APP_WHOLE_VERSION, [RKCloudBase sdkVersion]);

@@ -5,9 +5,6 @@
       location = "group:RongKeMessenger/RongKeMessenger.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../RKCloudDemo-iOS/RKCloudDemo/RKCloudDemo.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:../../rongkecloud-instant-messaging-ios/RKCloudStream/RKCloudStream.xcodeproj">
    </FileRef>
    <FileRef

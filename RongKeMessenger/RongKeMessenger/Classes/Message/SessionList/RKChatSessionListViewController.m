@@ -471,34 +471,16 @@
 - (void)dealPromptViewForNewMessage:(RKCloudChatBaseMessage *)msgObj
                      withForSession:(RKCloudChatBaseChat *)chatObj
 {
-    if ([RKCloudChatConfigManager getNotificationEnable]) {
-        // 状态栏上显示提示消息
-        if (chatObj.isRemindStatus)
-        {
-            NSString *promptString = nil;
-            if ([RKCloudChatConfigManager getMsgRemindSum]) //  显示详情
-            {
-                if (msgObj.msgSummary.length > 0) // 显示用户设置的扩展信息
-                {
-                    promptString = msgObj.msgSummary;
-                }
-                else
-                {
-                    NSString *userName = [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:msgObj.senderName];
-                    NSString *describeMessage = [ChatManager getMessageDescription:msgObj];
-                    promptString = [NSString stringWithFormat:@"%@: %@", userName, describeMessage];
-                }
-            }
-            else
-            {
-                promptString = NSLocalizedString(@"STR_HAVE_NO_READ_MESAGE", @"您有条未读消息");
-            }
-            
-            
-            [self performSelectorOnMainThread:@selector(delayShowReceivedMessageText:)
-                                   withObject:promptString
-                                waitUntilDone:NO];
-        }
+    // 状态栏上显示提示消息
+    if (chatObj.isRemindStatus)
+    {
+        NSString *userName = [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:msgObj.senderName];
+        NSString *describeMessage = [ChatManager getMessageDescription:msgObj];
+        NSString *promptString = [NSString stringWithFormat:@"%@: %@", userName, describeMessage];
+        
+        [self performSelectorOnMainThread:@selector(delayShowReceivedMessageText:)
+                               withObject:promptString
+                            waitUntilDone:NO];
     }
 }
 

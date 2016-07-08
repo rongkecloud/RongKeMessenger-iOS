@@ -41,6 +41,7 @@
     
     // loginButton 设置
     [ToolsFunction setBorderColorAndBlueBackGroundColorFor:self.loginButton];
+//    [ToolsFunction setBorderColorAndBlueBackGroundColorFor:self.registerButton];
     self.loginButton.enabled = YES;
     
     // 如果存在帐号则赋值

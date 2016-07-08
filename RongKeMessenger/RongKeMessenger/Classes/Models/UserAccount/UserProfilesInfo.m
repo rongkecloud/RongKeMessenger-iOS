@@ -546,8 +546,8 @@
                 [appDelegate.rkChatSessionListViewController loadAllChatSessionList];
                 
                 // 设置消息提示声音
-                /*NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"rkcloud_chat_sound_custom" ofType:@"caf"];
-                [RKCloudChatConfigManager setNotifyRingUri:soundPath];*/
+                NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"2" ofType:@"caf"];
+                [RKCloudChatConfigManager setNotifyRingUri:soundPath];
                 
                 // 初始化RKCloudMeeting服务
                 [RKCloudMeeting init:appDelegate.meetingManager];
@@ -556,10 +556,10 @@
                 [RKCloudAV init:appDelegate.callManager];
                 
                 // 设置回铃声和来电铃声
-                /*NSString *ringinFilePath = [[NSBundle mainBundle] pathForResource:@"1" ofType:@"caf"];
+                NSString *ringinFilePath = [[NSBundle mainBundle] pathForResource:@"1" ofType:@"caf"];
                 [RKCloudAV setInCallRing:ringinFilePath];
                 //NSString *ringbackFilePath = [[NSBundle mainBundle] pathForResource:@"ringback" ofType:@"wav"];
-                [RKCloudAV setOutCallRing:ringinFilePath];*/
+                [RKCloudAV setOutCallRing:ringinFilePath];
                 
             }
              onFailed:^(int errorCode) {

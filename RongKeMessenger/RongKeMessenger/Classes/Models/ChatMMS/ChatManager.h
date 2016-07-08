@@ -31,9 +31,6 @@
 // 拼装会议的提示消息
 + (NSString *)getMeetingTipStringWithMessageObject:(RKCloudChatBaseMessage *)messageObject;
 
-// 拼装撤销消息字符串
-+ (NSString *)getRevokeStringWithMessageObject:(RKCloudChatBaseMessage *)messageObject;
-
 // 根据消息内容获取cell高度
 + (float)heightForMessage:(RKCloudChatBaseMessage *)messageObject;
 

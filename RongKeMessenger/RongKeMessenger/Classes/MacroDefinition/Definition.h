@@ -33,7 +33,7 @@
 #define RONG_KE_SERVICE_APPKEY @"6f2683bb7f9b98aa09283fd8b47f4086aec37b56"  // 多媒体客服融科通企业Key
 
 //*******************************************************************************
-//#define LAN_SERVER // 内网RD开发服务器
+ #define LAN_SERVER // 内网RD开发服务器
 //#define WAN_TEST_SERVER // 公网集成测试服务器
 
 //*******************************************************************************
@@ -51,10 +51,10 @@
 #ifdef WAN_TEST_SERVER
 
 // HTTP API Server地址
-#define DEFAULT_HTTP_API_SERVER_ADDRESS  @"123.59.147.165:8083"// 公网API入口地址
+#define DEFAULT_HTTP_API_SERVER_ADDRESS  @"101.200.143.20:8083"// 公网API入口地址
 // 云视互动地址
-#define DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS   @"123.59.147.165"// 公网云视互动Root服务器地址
-#define DEFAULT_RKCLOUD_ROOT_SERVER_PORT      8080
+#define DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS   @"101.200.143.20"// 公网云视互动Root服务器地址
+#define DEFAULT_RKCLOUD_ROOT_SERVER_PORT      8000
 
 #else // else WAN_TEST_SERVER
 
@@ -83,10 +83,10 @@
 #ifdef WAN_TEST_SERVER
 
 // HTTP API Server地址
-#define DEFAULT_HTTP_API_SERVER_ADDRESS  @"123.59.147.165:8083"// 公网API入口地址
+#define DEFAULT_HTTP_API_SERVER_ADDRESS  @"101.200.143.20:8083"// 公网API入口地址
 // 云视互动地址
-#define DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS   @"123.59.147.165" // 公网云视互动Root服务器地址
-#define DEFAULT_RKCLOUD_ROOT_SERVER_PORT      8080
+#define DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS   @"101.200.143.20" // 公网云视互动Root服务器地址
+#define DEFAULT_RKCLOUD_ROOT_SERVER_PORT      8000
 
 #else // else WAN_TEST_SERVER
 

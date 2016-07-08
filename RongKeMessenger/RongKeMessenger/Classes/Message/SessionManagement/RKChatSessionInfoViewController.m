@@ -976,9 +976,7 @@
                 }
                 
                 // 更新会话信息到数据库
-                long nResult = [RKCloudChatMessageManager modifyGroupRemark:stringTrim forGroupID:self.rkChatSessionViewController.currentSessionObject.sessionID];
-                if (nResult == RK_SUCCESS)
-                {
+                [RKCloudChatMessageManager modifyGroupName:stringTrim forGroupID:self.rkChatSessionViewController.currentSessionObject.sessionID onSuccess:^{
                     // 修改当前对话的群组名称
                     UITableViewCell *cell = [self.sessionInfoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
                     cell.detailTextLabel.text = stringTrim;
@@ -986,7 +984,9 @@
                     self.rkChatSessionViewController.currentSessionObject.sessionShowName = stringTrim;
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHAT_SESSION_CHANGE_GROUP_NAME object:nil];
-                }
+                } onFailed:^(int errorCode) {
+                    
+                }];
             }
         }
             break;
