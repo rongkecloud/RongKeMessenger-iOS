@@ -542,7 +542,7 @@
     return descriptionString;
 }
 
-// 获取本地消息的内容  
+// 获取本地消息的内容
 + (NSString *)getLocalMesssageTextContent:(RKCloudChatBaseMessage *)messageObject
 {
     NSString *strTextContent = messageObject.textContent;

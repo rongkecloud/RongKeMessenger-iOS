@@ -284,14 +284,11 @@
         RKCloudAVCallInfo *avCallInfo = [RKCloudAV getAVCallInfo];
         NSAssert(avCallInfo != nil, @"ERROR: avCallInfo == nil");
         
-        switch (stateReason)
-        {
+        switch (stateReason) {
             case AV_NO_REASON:
             {
                 // 格式化通话时长显示格式
                 long callDuration = [[NSDate date] timeIntervalSince1970] - avCallInfo.callAnswerTime;
-                NSLog(@"+++++++++%lf,%ld++++++++++", [[NSDate date] timeIntervalSince1970], avCallInfo.callAnswerTime);
-                
                 NSString *strFromatTime = [ToolsFunction stringFormatCallDuration:callDuration];
                 
                 // "通话时长 %d"

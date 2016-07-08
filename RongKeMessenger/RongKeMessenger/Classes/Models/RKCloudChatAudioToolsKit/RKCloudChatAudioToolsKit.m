@@ -599,7 +599,7 @@
         AVAudioSessionPortDescription *outputsPortDescription = [arrayOutputs objectAtIndex:i];
         strOldOutputDeviceType = outputsPortDescription.portType;
         
-        // NSLog(@"DEBUG: outputsPortDescription portName = %@ , portType = %@", outputsPortDescription.portName,outputsPortDescription.portType);
+        NSLog(@"DEBUG: outputsPortDescription portName = %@ , portType = %@", outputsPortDescription.portName,outputsPortDescription.portType);
     }
     
     NSString *strNewOutputDeviceType = nil;

@@ -2120,8 +2120,6 @@
     ImageMessage *imageMessage = [ImageMessage buildMsg:self.currentSessionObject.sessionID
                                           withImageData:selectImage];
     
-    imageMessage.extension = @"1sdflsadfjalsdfja";
-    
     // 发送图片
     [RKCloudChatMessageManager sendChatMsg:imageMessage];
     
