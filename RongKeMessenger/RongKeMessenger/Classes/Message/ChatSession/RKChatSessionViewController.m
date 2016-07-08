@@ -949,6 +949,17 @@
     [self.navigationController pushViewController:selectFriendsViewCtroller animated: NO];
 }
 
+// 根据messageObject撤回消息消息
+- (void)revokeMMSWithMessageObject:(RKCloudChatBaseMessage *)messageObject
+{
+    [RKCloudChatMessageManager syncRevokeMessage:messageObject.messageID onSuccess:^(NSString *messageId)
+    {
+         NSLog(@"MESSAGE-SESSION:: revokeMMSWithMessageObject: Success");
+    } onFailed:^(int errorCode) {
+        
+    }];
+}
+
 // 增加新的消息记录到数组中
 - (void)addNewMessageToArray:(RKCloudChatBaseMessage *)currentObject
 {
@@ -1698,6 +1709,13 @@
         case MESSAGE_TYPE_VIDEO: // 视频
         {
             cellIndentifier = CELL_TABLE_MESSAGE_VIDEO;
+        }
+            break;
+        case MESSAGE_TYPE_REVOKE: // 撤回消息
+        {
+            cellIndentifier = CELL_MESSAGEGROUPINFO;
+            
+            tipMessageString = [ChatManager getRevokeStringWithMessageObject:messageObject];
         }
             break;
         default:
@@ -3243,6 +3261,8 @@
             }
         }
     }
+    
+    [self.messageSessionContentTableView reloadData];
 }
 
 /**
@@ -3260,6 +3280,8 @@
     if (msgObj == nil || [msgObj.sessionID isEqualToString:self.currentSessionObject.sessionID] == NO) {
         return;
     }
+    
+    // 撤回消息的处理
     
     // 防止同一条消息重复显示
     BOOL bExist = NO;

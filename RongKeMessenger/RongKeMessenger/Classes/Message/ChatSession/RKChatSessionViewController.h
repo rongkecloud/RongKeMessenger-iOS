@@ -54,6 +54,8 @@
 - (void)deleteMMSWithMessageObject:(RKCloudChatBaseMessage *)messageObject;
 // 根据messageObject转发消息
 - (void)forwardMMSWithMessageObject:(RKCloudChatBaseMessage *)messageObject;
+// 根据messageObject撤回消息消息
+- (void)revokeMMSWithMessageObject:(RKCloudChatBaseMessage *)messageObject;
 // 保存图片并发送
 - (void)saveAndSendImage:(UIImage *)selectImage;
 
