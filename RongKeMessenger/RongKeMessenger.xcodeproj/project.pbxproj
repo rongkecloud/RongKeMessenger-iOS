@@ -21,6 +21,7 @@
 		16270DC21CB95A0C009DAC50 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16270DC11CB95A0C009DAC50 /* MediaPlayer.framework */; };
 		164757A51CC9FF070075998E /* RKSessionListSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FC85741CC5C21F00A8895A /* RKSessionListSearchViewController.xib */; };
 		165924491B66116100664833 /* SearchAddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 165924481B66116100664833 /* SearchAddContactViewController.m */; };
+		168110411D001596001CC581 /* rkcloud_chat_sound_custom.caf in Resources */ = {isa = PBXBuildFile; fileRef = 168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */; };
 		16A903121CAD129A001169A3 /* RKResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16A902FF1CAD129A001169A3 /* RKResources.xcassets */; };
 		16A903131CAD129A001169A3 /* message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 16A903011CAD129A001169A3 /* message.caf */; };
 		16A903141CAD129A001169A3 /* RKCustomerChatSessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A903051CAD129A001169A3 /* RKCustomerChatSessionViewController.xib */; };
@@ -279,7 +280,6 @@
 		284764AD1BEAED5B00BD92F0 /* Emoticon.plist in Resources */ = {isa = PBXBuildFile; fileRef = 288D81061B73604A00B2DE72 /* Emoticon.plist */; };
 		284764AF1BEAED5B00BD92F0 /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2857F9771B51295C008A2F3E /* QBImagePicker.storyboard */; };
 		284764B01BEAED5B00BD92F0 /* dtmf.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6CF1B86BEF0001AC58B /* dtmf.wav */; };
-		284764B11BEAED5B00BD92F0 /* 2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6CD1B86BEF0001AC58B /* 2.caf */; };
 		284764B21BEAED5B00BD92F0 /* CompleteOtherInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDE2C6701B7463A10005020A /* CompleteOtherInfoViewController.xib */; };
 		284764B31BEAED5B00BD92F0 /* mms_face_21.png in Resources */ = {isa = PBXBuildFile; fileRef = 288D811B1B73604A00B2DE72 /* mms_face_21.png */; };
 		284764B51BEAED5B00BD92F0 /* mms_face_22.png in Resources */ = {isa = PBXBuildFile; fileRef = 288D811C1B73604A00B2DE72 /* mms_face_22.png */; };
@@ -441,7 +441,6 @@
 		286484FD1C2BE66700D9D289 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 286484F31C2BE5AD00D9D289 /* libz.tbd */; };
 		286484FE1C2BE66E00D9D289 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 286484F51C2BE5C800D9D289 /* libsqlite3.tbd */; };
 		2878B6D31B86BEF0001AC58B /* 1.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6CC1B86BEF0001AC58B /* 1.caf */; };
-		2878B6D41B86BEF0001AC58B /* 2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6CD1B86BEF0001AC58B /* 2.caf */; };
 		2878B6D51B86BEF0001AC58B /* dialing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6CE1B86BEF0001AC58B /* dialing.wav */; };
 		2878B6D61B86BEF0001AC58B /* dtmf.wav in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6CF1B86BEF0001AC58B /* dtmf.wav */; };
 		2878B6D81B86BEF0001AC58B /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2878B6D11B86BEF0001AC58B /* music.mp3 */; };
@@ -501,12 +500,20 @@
 		28F6753A1B68E82B00DB4C19 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F675321B68E82B00DB4C19 /* unzip.c */; };
 		28F6753B1B68E82B00DB4C19 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F675341B68E82B00DB4C19 /* zip.c */; };
 		28F6753C1B68E82B00DB4C19 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28F675371B68E82B00DB4C19 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		2CCFBE1E1D0670E3003F56FE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCFBE1D1D0670E3003F56FE /* VideoToolbox.framework */; };
-		2CCFBE201D0670F4003F56FE /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCFBE1F1D0670F4003F56FE /* libicucore.tbd */; };
-		2CCFBE221D067100003F56FE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCFBE211D067100003F56FE /* GLKit.framework */; };
-		2CCFBE231D06713A003F56FE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCFBE211D067100003F56FE /* GLKit.framework */; };
-		2CCFBE241D06715C003F56FE /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCFBE1F1D0670F4003F56FE /* libicucore.tbd */; };
-		2CCFBE251D06716A003F56FE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CCFBE1D1D0670E3003F56FE /* VideoToolbox.framework */; };
+		2C9E04CC1D2FBBD8005AA7AB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */; };
+		2C9E04CE1D2FBC14005AA7AB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */; };
+		2C9E04D01D2FBC1F005AA7AB /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */; };
+		2C9E04D21D2FBC2C005AA7AB /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D11D2FBC2C005AA7AB /* libstdc++.tbd */; };
+		2C9E04D41D2FBC3A005AA7AB /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D31D2FBC3A005AA7AB /* libc.tbd */; };
+		2C9E04D61D2FBC57005AA7AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D51D2FBC57005AA7AB /* CoreGraphics.framework */; };
+		2C9E04D81D2FBC60005AA7AB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D71D2FBC60005AA7AB /* CoreMedia.framework */; };
+		2C9E04D91D2FBC89005AA7AB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */; };
+		2C9E04DA1D2FBC98005AA7AB /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */; };
+		2C9E04DB1D2FBCA0005AA7AB /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D11D2FBC2C005AA7AB /* libstdc++.tbd */; };
+		2C9E04DC1D2FBCAB005AA7AB /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D31D2FBC3A005AA7AB /* libc.tbd */; };
+		2C9E04DD1D2FBCBA005AA7AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D51D2FBC57005AA7AB /* CoreGraphics.framework */; };
+		2C9E04DE1D2FBCC2005AA7AB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D71D2FBC60005AA7AB /* CoreMedia.framework */; };
+		2C9E04DF1D2FBCCA005AA7AB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */; };
 		D53331261C7D54E9005817BB /* DownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = D53331241C7D54E9005817BB /* DownloadIndicator.m */; };
 		D53331271C7D54E9005817BB /* DownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = D53331241C7D54E9005817BB /* DownloadIndicator.m */; };
 		D533312C1C7DAF33005817BB /* NewFeatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = D533312B1C7DAF33005817BB /* NewFeatureView.m */; };
@@ -570,6 +577,7 @@
 		16270DC11CB95A0C009DAC50 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		165924471B66116100664833 /* SearchAddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAddContactViewController.h; sourceTree = "<group>"; };
 		165924481B66116100664833 /* SearchAddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAddContactViewController.m; sourceTree = "<group>"; };
+		168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rkcloud_chat_sound_custom.caf; sourceTree = "<group>"; };
 		16A902FF1CAD129A001169A3 /* RKResources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RKResources.xcassets; sourceTree = "<group>"; };
 		16A903011CAD129A001169A3 /* message.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = message.caf; sourceTree = "<group>"; };
 		16A903051CAD129A001169A3 /* RKCustomerChatSessionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerChatSessionViewController.xib; sourceTree = "<group>"; };
@@ -917,7 +925,6 @@
 		286484F31C2BE5AD00D9D289 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		286484F51C2BE5C800D9D289 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		2878B6CC1B86BEF0001AC58B /* 1.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 1.caf; sourceTree = "<group>"; };
-		2878B6CD1B86BEF0001AC58B /* 2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 2.caf; sourceTree = "<group>"; };
 		2878B6CE1B86BEF0001AC58B /* dialing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dialing.wav; sourceTree = "<group>"; };
 		2878B6CF1B86BEF0001AC58B /* dtmf.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dtmf.wav; sourceTree = "<group>"; };
 		2878B6D11B86BEF0001AC58B /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
@@ -1003,9 +1010,13 @@
 		28F675351B68E82B00DB4C19 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		28F675361B68E82B00DB4C19 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		28F675371B68E82B00DB4C19 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
-		2CCFBE1D1D0670E3003F56FE /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		2CCFBE1F1D0670F4003F56FE /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		2CCFBE211D067100003F56FE /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		2C9E04D11D2FBC2C005AA7AB /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		2C9E04D31D2FBC3A005AA7AB /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
+		2C9E04D51D2FBC57005AA7AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2C9E04D71D2FBC60005AA7AB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D53331241C7D54E9005817BB /* DownloadIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadIndicator.m; sourceTree = "<group>"; };
 		D53331251C7D54E9005817BB /* DownloadIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadIndicator.h; sourceTree = "<group>"; };
 		D533312A1C7DAF33005817BB /* NewFeatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureView.h; sourceTree = "<group>"; };
@@ -1056,9 +1067,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CCFBE221D067100003F56FE /* GLKit.framework in Frameworks */,
-				2CCFBE201D0670F4003F56FE /* libicucore.tbd in Frameworks */,
-				2CCFBE1E1D0670E3003F56FE /* VideoToolbox.framework in Frameworks */,
+				2C9E04D81D2FBC60005AA7AB /* CoreMedia.framework in Frameworks */,
+				2C9E04D61D2FBC57005AA7AB /* CoreGraphics.framework in Frameworks */,
+				2C9E04D41D2FBC3A005AA7AB /* libc.tbd in Frameworks */,
+				2C9E04D21D2FBC2C005AA7AB /* libstdc++.tbd in Frameworks */,
+				2C9E04D01D2FBC1F005AA7AB /* libicucore.tbd in Frameworks */,
+				2C9E04CE1D2FBC14005AA7AB /* GLKit.framework in Frameworks */,
+				2C9E04CC1D2FBBD8005AA7AB /* VideoToolbox.framework in Frameworks */,
 				16270DC21CB95A0C009DAC50 /* MediaPlayer.framework in Frameworks */,
 				286484F61C2BE5C800D9D289 /* libsqlite3.tbd in Frameworks */,
 				286484F41C2BE5AD00D9D289 /* libz.tbd in Frameworks */,
@@ -1085,9 +1100,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CCFBE251D06716A003F56FE /* VideoToolbox.framework in Frameworks */,
-				2CCFBE241D06715C003F56FE /* libicucore.tbd in Frameworks */,
-				2CCFBE231D06713A003F56FE /* GLKit.framework in Frameworks */,
+				2C9E04DF1D2FBCCA005AA7AB /* VideoToolbox.framework in Frameworks */,
+				2C9E04DE1D2FBCC2005AA7AB /* CoreMedia.framework in Frameworks */,
+				2C9E04DD1D2FBCBA005AA7AB /* CoreGraphics.framework in Frameworks */,
+				2C9E04DC1D2FBCAB005AA7AB /* libc.tbd in Frameworks */,
+				2C9E04DB1D2FBCA0005AA7AB /* libstdc++.tbd in Frameworks */,
+				2C9E04DA1D2FBC98005AA7AB /* libicucore.tbd in Frameworks */,
+				2C9E04D91D2FBC89005AA7AB /* GLKit.framework in Frameworks */,
 				286484FE1C2BE66E00D9D289 /* libsqlite3.tbd in Frameworks */,
 				286484FD1C2BE66700D9D289 /* libz.tbd in Frameworks */,
 				284393751C8E90D8000FC364 /* PushKit.framework in Frameworks */,
@@ -2272,8 +2291,8 @@
 		288D81371B73604A00B2DE72 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */,
 				2878B6CC1B86BEF0001AC58B /* 1.caf */,
-				2878B6CD1B86BEF0001AC58B /* 2.caf */,
 				2878B6DA1B86CEDE001AC58B /* hangup.caf */,
 				2878B6CE1B86BEF0001AC58B /* dialing.wav */,
 				2878B6CF1B86BEF0001AC58B /* dtmf.wav */,
@@ -2466,9 +2485,13 @@
 		28F1E72C1B535EB300DE5747 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2CCFBE211D067100003F56FE /* GLKit.framework */,
-				2CCFBE1F1D0670F4003F56FE /* libicucore.tbd */,
-				2CCFBE1D1D0670E3003F56FE /* VideoToolbox.framework */,
+				2C9E04D71D2FBC60005AA7AB /* CoreMedia.framework */,
+				2C9E04D51D2FBC57005AA7AB /* CoreGraphics.framework */,
+				2C9E04D31D2FBC3A005AA7AB /* libc.tbd */,
+				2C9E04D11D2FBC2C005AA7AB /* libstdc++.tbd */,
+				2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */,
+				2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */,
+				2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */,
 				16270DC11CB95A0C009DAC50 /* MediaPlayer.framework */,
 				286484F51C2BE5C800D9D289 /* libsqlite3.tbd */,
 				286484F31C2BE5AD00D9D289 /* libz.tbd */,
@@ -2706,7 +2729,6 @@
 				288D813B1B73604A00B2DE72 /* Emoticon.plist in Resources */,
 				2857F9D41B51295C008A2F3E /* QBImagePicker.storyboard in Resources */,
 				2878B6D61B86BEF0001AC58B /* dtmf.wav in Resources */,
-				2878B6D41B86BEF0001AC58B /* 2.caf in Resources */,
 				FDE2C6721B7463A10005020A /* CompleteOtherInfoViewController.xib in Resources */,
 				284764ED1BEAEFD100BD92F0 /* RongKeMessengerLan-Info.plist in Resources */,
 				288D81501B73604A00B2DE72 /* mms_face_21.png in Resources */,
@@ -2746,6 +2768,7 @@
 				FDE4F6121B6A00370035DA82 /* RKCloudSettingViewController.xib in Resources */,
 				FDE4F61C1B6A17750035DA82 /* RKCloudSettingMsgViewController.xib in Resources */,
 				16A903141CAD129A001169A3 /* RKCustomerChatSessionViewController.xib in Resources */,
+				168110411D001596001CC581 /* rkcloud_chat_sound_custom.caf in Resources */,
 				288D81421B73604A00B2DE72 /* mms_face_07.png in Resources */,
 				2857F9041B5127AC008A2F3E /* RKChatSessionInfoViewController.xib in Resources */,
 				FDE9EB581B7B28A70036DCDF /* MemberDetailCollectionViewCell.xib in Resources */,
@@ -2796,7 +2819,6 @@
 				284764AF1BEAED5B00BD92F0 /* QBImagePicker.storyboard in Resources */,
 				284764B01BEAED5B00BD92F0 /* dtmf.wav in Resources */,
 				161EC8661CBF92B600A8682A /* RKMessageSearchViewController.xib in Resources */,
-				284764B11BEAED5B00BD92F0 /* 2.caf in Resources */,
 				284764B21BEAED5B00BD92F0 /* CompleteOtherInfoViewController.xib in Resources */,
 				284764B31BEAED5B00BD92F0 /* mms_face_21.png in Resources */,
 				284764B51BEAED5B00BD92F0 /* mms_face_22.png in Resources */,
@@ -3545,6 +3567,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG_LOG,
 					DEBUG_WRITE_LOG,
+					LAN_SERVER,
 				);
 				INFOPLIST_FILE = "RongKeMessenger/RongKeMessengerLan-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -3559,7 +3582,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rongkecloud.messenger.lan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cad2dba7-01ee-411a-a894-548f7bda2fed";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = "Ad Hoc";

@@ -22,8 +22,6 @@
 
 @interface AppDelegate ()
 
-// #define DEBUG_WRITE_LOG
-
 @property (nonatomic, strong) RKNavigationController *loginNavController; // Navigation for Login
 
 @end
@@ -38,7 +36,7 @@
     
 #ifdef DEBUG_WRITE_LOG
     // 重定向NSLog到文件中
-    [LogManager redirectNSLogToFile];
+    NSString * logName = [LogManager redirectNSLogToFile];
 #endif // DEBUG_WRITE_LOG
     
     NSLog(@"SYS: %@ Application Start, AppVersion: %@, RKCloudSDKVersion: %@", APP_DISPLAY_NAME, APP_WHOLE_VERSION, [RKCloudBase sdkVersion]);
@@ -214,23 +212,32 @@
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
 #endif // DEBUG_LOG || DEBUG_WRITE_LOG
     
-#ifndef LAN_SERVER // 使用公网服务器
+#ifndef LAN_SERVER// 使用公网服务器
     // 发布版本证书名称
     NSString *strAPNsCerName = @"pro_RongKeMessenger";
 #ifdef DEBUG
+    
+#ifndef WAN_TEST_SERVER // 使用公网服务器
     // 开发版本证书名称
     strAPNsCerName = @"dev_RongKeMessenger";
-#endif
+#else
+    // 开发版本证书名称
+    strAPNsCerName = @"dev_RongKeMessengerLan";
+
+#endif  // WAN_TEST_SERVER
+    
+#endif  // DEBUG
     
 #else // 使用内网服务器
+    
     // 发布版本证书名称（voip_services为使用Apple的VoIP Push服务做测试使用）
     NSString *strAPNsCerName = @"pro_RongKeMessengerLan";//@"voip_services";
 #ifdef DEBUG
     // 开发版本证书名称
     strAPNsCerName = @"dev_RongKeMessengerLan";
 #endif
-    
-#endif
+
+#endif  // LAN_SERVER
     
     // 注册云视互动SDK
     [RKCloudBase registerSDKWithAppKey:RKCLOUD_SDK_APPKEY withDelegate:self withAPNsCertificates:strAPNsCerName];
