@@ -33,18 +33,18 @@
 #define RONG_KE_SERVICE_APPKEY @"6f2683bb7f9b98aa09283fd8b47f4086aec37b56"  // 多媒体客服融科通企业Key
 
 //*******************************************************************************
- #define LAN_SERVER // 内网RD开发服务器
-//#define WAN_TEST_SERVER // 公网集成测试服务器
+// #define LAN_SERVER // 内网RD开发服务器
+#define WAN_TEST_SERVER // 公网集成测试服务器
 
 //*******************************************************************************
 #ifdef DEBUG // 是Debug版本（开发版本）
 
 #ifdef LAN_SERVER // Debug版本增加是否内网测试宏LAN_SERVER，无定义=非内网测试，定义=内网服务器测试
 // HTTP API Server地址
-#define DEFAULT_HTTP_API_SERVER_ADDRESS  @"192.168.1.163:8083"// 内网API入口地址
+#define DEFAULT_HTTP_API_SERVER_ADDRESS  @"192.168.1.166:8083"// 内网API入口地址
 // 云视互动地址
-#define DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS   @"192.168.1.162"// 内网云视互动Root服务器地址
-#define DEFAULT_RKCLOUD_ROOT_SERVER_PORT      8080
+#define DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS   @"192.168.1.166"// 内网云视互动Root服务器地址
+#define DEFAULT_RKCLOUD_ROOT_SERVER_PORT      8000
 
 #else // else LAN_SERVER
 
