@@ -345,7 +345,7 @@
     // 发送消息在右侧
     if (self.isRightBubble)
 	{
-        /*
+        
         NSString *stateString = nil;
         
         // 群聊不显示状态
@@ -383,7 +383,7 @@
             float stateStringOriginY = CGRectGetMaxY(self.bubbleRect) - CELL_DISTANCE_BETWEEN_SEND_AND_BOTTOM_OF_BUBBLE - stateSize.height;
             [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withFont:[UIFont systemFontOfSize:14]];
         }
-         */
+        
         
         [[UIColor grayColor] set];
         
@@ -397,7 +397,8 @@
 #endif
 		}
     }
-	else {
+	else
+    {
         // 接收到的消息在左侧
         UIImage *unReadImage = nil;
         
@@ -437,7 +438,8 @@
     // 绘制时间
     [[UIColor blackColor] set];
     
-    if (self.mmsObject.messageType == MESSAGE_TYPE_VIDEO) {
+    if (self.mmsObject.messageType == MESSAGE_TYPE_VIDEO)
+    {
         VideoMessage *videoMessage = (VideoMessage *)self.mmsObject;
         // 绘制时长
         NSString *videoDuration = [NSString stringWithFormat:@"%.2f",(float)((float)videoMessage.mediaDuration/100.00)];

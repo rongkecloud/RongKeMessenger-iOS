@@ -264,8 +264,6 @@
 
 - (void)initCellContent:(RKCloudChatBaseMessage *)messageObject isEditing:(BOOL)isEditing
 {
-#if 1
-    
     // 针对ios7使用UITextView的属性化来显示文本消息
     if ([ToolsFunction iSiOS7Earlier] == NO)
     {
@@ -289,43 +287,6 @@
         self.textMessageContentView.textContent = messageObject.textContent;
     }
     
-#else
-    /*
-    // 文本消息的内容
-    NSMutableString *stringMsgText = messageObject.textContent;
-	// 从资源plist中加载表情符号字典
-	NSDictionary *emoticonDict = [ToolsFunction loadPropertyList:EMOTICON_PLIST_NAME];
-	NSString * stringKey = nil;
-	NSString * stringReplacement = nil;
-	NSRange range = NSMakeRange(0, [stringMsgText length]);
-	NSArray *arrayKeys = [emoticonDict allKeys];
-	
-	// 发送时将文本中的表情描述转换为表情转义字符串
-	for (int i = 0; i < [arrayKeys count]; i++) {
-		range = NSMakeRange(0, [stringMsgText length]);
-		// 表情转移字符
-		stringKey = [arrayKeys objectAtIndex:i];
-		// 表情符号对应的图标名称
-		stringReplacement = [NSString stringWithFormat:@"<img src='%@.png' width=18 height=18>",
-							 [emoticonDict objectForKey:stringKey]];
-		// 将文本字符串中的表情转义字符替换为图标标签
-		if (stringKey && stringReplacement) {
-			[stringMsgText replaceOccurrencesOfString:stringKey
-										   withString:stringReplacement
-											  options:NSCaseInsensitiveSearch
-												range:range];
-		}
-	}
-	
-	//NSLog(@"stringMsgText 2 = %@", stringMsgText);
-	// 使用WebView加载和显示文本和图标
-	[self.textWebView loadHTMLString:stringMsgText baseURL:[[NSBundle mainBundle] resourceURL]];
-    
-    textMessageString = stringMsgText;
-	[stringMsgText release];
-     */
-#endif
-    
 	// 父类初始化
 	[super initCellContent:messageObject isEditing:isEditing];
 
@@ -340,7 +301,7 @@
 		case MESSAGE_STATE_RECEIVE_RECEIVED: // 已接收
 		{
             // 当接收到的时候更新消息状态为“已读”状态
-            [RKCloudChatMessageManager updateMsgStatusHasReaded:messageObject.messageID];
+            [RKCloudChatMessageManager sendReadedReceipt: messageObject];
 		}
 			break;
 			

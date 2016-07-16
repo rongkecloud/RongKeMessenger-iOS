@@ -762,33 +762,6 @@
 }
 
 /**
- * @brief 代理方法: 收到单条消息之后的回调
- *
- * @param msgObj   RKCloudChatBaseMessage对象 收到的消息
- * @param chatObj  RKCloudChatBaseChat对象 消息所属的会话信息
- *
- * @return
- */
-- (void)didReceivedMsg:(RKCloudChatBaseMessage *)msgObj withForSession:(RKCloudChatBaseChat *)chatObj
-{
-    NSLog(@"CHAT-LIST-DELEGATE: didReceivedMsg: messageID = %@, sessionID = %@", msgObj.messageID, chatObj.sessionID);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (self.messageSessionViewController &&
-            [self.messageSessionViewController.currentSessionObject.sessionID isEqualToString:chatObj.sessionID])
-        {
-            [self.messageSessionViewController didReceivedMsg:msgObj withForSession:chatObj];
-        }
-        else if (msgObj.msgDirection == MESSAGE_RECEIVE &&
-                 msgObj.messageStatus == MESSAGE_STATE_RECEIVE_RECEIVED) {
-            // 处理是否显示新消息提醒
-            [self dealPromptViewForNewMessage:msgObj withForSession:chatObj];
-        }
-    });
-}
-
-/**
  * @brief 代理方法: 收到多条消息之后的回调
  * @attention 收到的消息按照不同的会话进行划分，并且每个会话中的消息按照产生的时间升序排列
  * @param dictChatToMessages 字典类型，key为RKCloudChatBaseChat对象，值为RKCloudChatBaseMessage对象数组
@@ -819,6 +792,9 @@
             
             // 处理是否显示新消息提醒
             [self dealPromptViewForNewMessage:messageObject withForSession:baseChatObject];
+            
+            // 发送已接收的回执
+            [RKCloudChatMessageManager sendArrivedReceipt: messageObject];
         }
         
         if ([arrayBatchMessageOjbect count] > 0)
