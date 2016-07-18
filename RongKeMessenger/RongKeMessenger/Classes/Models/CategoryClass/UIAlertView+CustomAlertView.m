@@ -230,7 +230,8 @@
 {
     // 先从主窗口上获取alertView的指针
     UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
-    if (window) {
+    if (window)
+    {
         UIView *alertView = [window viewWithTag:ALERT_PROMPT_WAITING_TAG];
         if (alertView)
         {
@@ -240,7 +241,6 @@
         }
     }
 }
-
 
 #pragma mark - Show Auto Hide Prompt View
 

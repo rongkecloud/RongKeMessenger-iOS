@@ -43,6 +43,7 @@
 #define CELL_RESETID_TAG                    1109    // 更多页面中登出按钮的tag
 #define GROUP_MESSAGE_SEPARATEDLINE_L_TAG	1110	// 分割线左
 #define GROUP_MESSAGE_SEPARATEDLINE_R_TAG	1111	// 分割线右
+#define ALERT_MODIFY_GROUP_DESCRIPTION      1112	// 修改群组描述
 
 // 显示窗口使用(2001~3000)
 #define MASK_VIEWS_TAG						2001	// 会话消息遮罩层TAG (隐藏键盘使用-此功能可考虑使用手势替代)

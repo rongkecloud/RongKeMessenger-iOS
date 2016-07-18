@@ -246,10 +246,12 @@
         {
             numberOfRows = 3;
             // 如果是群聊，当前登录者非群主，允许公开邀请权限不让显示
-            if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE && [((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]]) {
-                numberOfRows = 4;
+            if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE && [((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
+            {
+                numberOfRows = 6;
             }
-            else if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_SINGLE_TYPE){
+            else if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_SINGLE_TYPE)
+            {
                 numberOfRows = 2;
             }
         }
@@ -276,7 +278,8 @@
     // Jacky.Chen:02.24 ADD
     NSString *identifier = nil;
     // 如果是群聊且为退群cell则不进行重用
-    if ((indexPath.section == 4) && (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE)) {
+    if ((indexPath.section == 4) && (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE))
+    {
         identifier = @"groupExitCell";
     }
     else
@@ -285,7 +288,8 @@
         
     }
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: identifier];
-    if (cell == nil) {
+    if (cell == nil)
+    {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier: identifier];
     }
     
@@ -294,7 +298,8 @@
     [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
     
     UIView *subView = [cell viewWithTag:100];
-    if (subView) {
+    if (subView)
+    {
         [subView removeFromSuperview];
     }
     
@@ -310,7 +315,8 @@
     {
         case 0:
         {
-            if (self.sessionContactListView == nil) {
+            if (self.sessionContactListView == nil)
+            {
                 // 会话成员增加删除view
                 self.sessionContactListView = [[SessionContactAvatarListView alloc] initWithFrame:CGRectMake(8, 10, UISCREEN_BOUNDS_SIZE.width-16, sessionContactListViewHeight)];
                 self.sessionContactListView.parent = self;
@@ -343,20 +349,35 @@
             if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE)
             {
                 // Jacky.Chen:2012.02.26.设置尾部有开关按钮的cell不可选中
-                if (indexPath.row != 0) {
+                if (indexPath.row > 2)
+                {
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 switch (indexPath.row)
                 {
-                    case 0:
+                    case 0:  // 群名称
                     {
                         cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_NAME", "群名称");
                         cell.detailTextLabel.text = self.rkChatSessionViewController.currentSessionObject.sessionShowName;
                         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                     }
                         break;
+                    case 1:  // 群描述
+                    {
+                        cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_DESCRIPTION", "群描述");
+                        cell.detailTextLabel.text = ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupDescription;
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    }
+                        break;
+                    case 2:  // 群转让
+                    {
+                        cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_TRANSFER", "群转让");
+                        cell.detailTextLabel.text = @"";
+                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                    }
+                        break;
                         
-                    case 1:
+                    case 3:
                     {
                         // 是否置顶聊天
                         cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
@@ -375,7 +396,7 @@
                         
                     }
                         break;
-                    case 2:
+                    case 4:
                     {
                         // 是否消息提醒
                         cell.textLabel.text = NSLocalizedString(@"TITLE_MESSAGE_REMIND", "消息提醒");
@@ -391,10 +412,11 @@
                         }
                     }
                         break;
-                    case 3:
+                    case 5:
                     {
                         // 判断当前群聊建立者是否是登录者
-                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]]) {
+                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
+                        {
                             
                             cell.textLabel.text = NSLocalizedString(@"TITLE_INVITE_JURISDICTION", "邀请权限");
                             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -419,7 +441,8 @@
                 // Jacky.Chen:2012.02.26.设置尾部有开关按钮的cell不可选中
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-                switch (indexPath.row) {
+                switch (indexPath.row)
+                {
                     case 0:
                     {
                         // 是否置顶聊天
@@ -579,15 +602,29 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];   //选中后的反显颜色即刻消失
     
-    switch (indexPath.section) {
+    switch (indexPath.section)
+    {
         case 0:
             break;
             
         case 1:
         {
-            if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE && indexPath.row == 0)
+            if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE && indexPath.row <= 2)
             {
-                [self updateChatSessionName];
+                switch (indexPath.row)
+                {
+                    case 0:  // 群名称
+                        [self updateChatSessionName];
+                        break;
+                    case 1:  // 群描述
+                        [self modifyGroupDescription];
+                        break;
+                    case 2:  // 群转让
+                        // [self updateChatSessionName];
+                        break;
+                    default:
+                        break;
+                }
             }
         }
             break;
@@ -828,7 +865,12 @@
     self.rkChatSessionViewController.currentSessionObject.isRemindStatus = mSender.isOn;
     
     // 设置消息提醒状态
-    [RKCloudChatMessageManager setRemindStatusInChat:self.rkChatSessionViewController.currentSessionObject.sessionID withRemindStatu:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
+    [RKCloudChatMessageManager maskGroupMsgRemind:self.rkChatSessionViewController.currentSessionObject.sessionID isMask:!(mSender.isOn) onSuccess:^{
+
+    } onFailed:^(int errorCode) {
+        
+    }];
+    // [RKCloudChatMessageManager setRemindStatusInChat:self.rkChatSessionViewController.currentSessionObject.sessionID withRemindStatu:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
 }
 
 // 设置是否置顶聊天
@@ -840,6 +882,10 @@
     [RKCloudChatMessageManager setChatIsTop:mSender.isOn
                                forSessionID:self.rkChatSessionViewController.currentSessionObject.sessionID];
 }
+
+
+#pragma mark -
+#pragma mark 修改群信息相关函数
 
 // 修改会话对象名称
 - (void)updateChatSessionName
@@ -872,6 +918,40 @@
     [setChatTitleAlert show];
 
 }
+
+
+// 修改会话对象名称
+- (void)modifyGroupDescription
+{
+    // 输入新的群组名称
+    UIAlertView *setChatTitleAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"TITLE_PLEASE_INPUT_GROUP_DESCRIPTION", "请输入群描述")
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"STR_CANCEL", "取消")
+                                                      otherButtonTitles:NSLocalizedString(@"STR_OK", "确定"), nil];
+    
+    
+    setChatTitleAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    setChatTitleAlert.tag = ALERT_MODIFY_GROUP_DESCRIPTION;
+    
+    UITextField * titleField = [setChatTitleAlert textFieldAtIndex:0];
+    //设置字体大小
+    [titleField setFont:[UIFont systemFontOfSize:16]];
+    //设置右边消除键出现模式
+    [titleField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    //设置文字垂直居中
+    titleField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    //设置键盘背景色透明
+    titleField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    titleField.keyboardType = UIKeyboardTypeDefault;
+    titleField.text = ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupDescription;
+    titleField.placeholder = NSLocalizedString(@"TITLE_PLEASE_INPUT_GROUP_DESCRIPTION", "请输入群描述");
+    [titleField becomeFirstResponder];
+    
+    [setChatTitleAlert show];
+    
+}
+
 
 #pragma mark -
 #pragma mark UIAlertViewDelegate methods
@@ -953,44 +1033,6 @@
         }
             break;
             
-        case ALERT_MODIFY_GROUP_NAME:
-        {
-            // 确认修改
-            if (buttonIndex == 1) {
-                // 隐藏键盘
-                id titleField = [alertView textFieldAtIndex:0];
-                NSString *inputContent = nil;
-                // 获取输入的名称
-                if (titleField && [titleField isKindOfClass:[UITextField class]])
-                {
-                    [titleField resignFirstResponder];
-                    inputContent = ((UITextField *)titleField).text;
-                }
-                
-                NSString *stringTrim = [inputContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                
-                // 判断是否为空
-                if (stringTrim == nil || [stringTrim length] <= 0){
-                    [UIAlertView showAutoHidePromptView:@"群名称不能为空" background:nil showTime:1.5];
-                    return;
-                }
-                
-                // 更新会话信息到数据库
-                long nResult = [RKCloudChatMessageManager modifyGroupRemark:stringTrim forGroupID:self.rkChatSessionViewController.currentSessionObject.sessionID];
-                if (nResult == RK_SUCCESS)
-                {
-                    // 修改当前对话的群组名称
-                    UITableViewCell *cell = [self.sessionInfoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-                    cell.detailTextLabel.text = stringTrim;
-                    
-                    self.rkChatSessionViewController.currentSessionObject.sessionShowName = stringTrim;
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHAT_SESSION_CHANGE_GROUP_NAME object:nil];
-                }
-            }
-        }
-            break;
-            
         case ALERT_CREATE_NEW_GROUP_TAG:
         {
             // 确定按钮则创建聊天会话
@@ -1023,13 +1065,6 @@
                                                 
                                                 // 视图返回到根视图
                                                 [self.navigationController popToRootViewControllerAnimated:NO];
-                                                
-                                                /*
-                                                AppDelegate *appDelegate = [AppDelegate appDelegate];
-                                                // 新建一个聊天会话,如果会话存在，打开聊天页面
-                                                GroupChat *groupChat = [[GroupChat alloc] initGroupChat:groupID];
-                                                [appDelegate.rkChatSessionListViewController createNewChatView:groupChat];
-                                                 */
                                             }
                                              onFailed:^(int errorCode, NSArray *arrayFailUserName) {
                                                  [UIAlertView hideWaitingMaskView];
@@ -1082,7 +1117,84 @@
             
         }
             break;
-
+        case ALERT_MODIFY_GROUP_DESCRIPTION:  // 修改群描述
+        {
+            if (buttonIndex == 0) {
+                return;
+            }
+            
+            // 隐藏键盘
+            id titleField = [alertView textFieldAtIndex:0];
+            NSString *inputContent = nil;
+            // 获取输入的名称
+            if (titleField && [titleField isKindOfClass:[UITextField class]])
+            {
+                [titleField resignFirstResponder];
+                inputContent = ((UITextField *)titleField).text;
+            }
+            
+            NSString *stringTrim = [inputContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            
+            // 判断是否为空
+            if (stringTrim == nil || [stringTrim length] <= 0){
+                [UIAlertView showAutoHidePromptView:@"群描述不能为空" background:nil showTime:1.5];
+                return;
+            }
+            
+            [RKCloudChatMessageManager modifyGroupDescription:stringTrim
+                                                   forGroupID: self.rkChatSessionViewController.currentSessionObject.sessionID
+                                                    onSuccess:^{
+                                                        
+                                                        GroupChat *groupChat = (GroupChat *)self.rkChatSessionViewController.currentSessionObject;
+                                                        
+                                                        groupChat.groupDescription = stringTrim;
+                                                        
+                                                        [self.sessionInfoTableView reloadData];
+                                                        
+                                                    } onFailed:^(int errorCode) {
+                                                        
+                                                    }];
+            
+        }
+            break;
+        case ALERT_MODIFY_GROUP_NAME:
+        {
+            // 确认修改
+            if (buttonIndex == 1)
+            {
+                // 隐藏键盘
+                id titleField = [alertView textFieldAtIndex:0];
+                NSString *inputContent = nil;
+                // 获取输入的名称
+                if (titleField && [titleField isKindOfClass:[UITextField class]])
+                {
+                    [titleField resignFirstResponder];
+                    inputContent = ((UITextField *)titleField).text;
+                }
+                
+                NSString *stringTrim = [inputContent stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                
+                // 判断是否为空
+                if (stringTrim == nil || [stringTrim length] <= 0){
+                    [UIAlertView showAutoHidePromptView:@"群名称不能为空" background:nil showTime:1.5];
+                    return;
+                }
+                
+                // 更新会话信息到数据库
+                long nResult = [RKCloudChatMessageManager modifyGroupRemark:stringTrim forGroupID:self.rkChatSessionViewController.currentSessionObject.sessionID];
+                if (nResult == RK_SUCCESS)
+                {
+                    // 修改当前对话的群组名称
+                    UITableViewCell *cell = [self.sessionInfoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+                    cell.detailTextLabel.text = stringTrim;
+                    
+                    self.rkChatSessionViewController.currentSessionObject.sessionShowName = stringTrim;
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHAT_SESSION_CHANGE_GROUP_NAME object:nil];
+                }
+            }
+        }
+            break;
         default:
             break;
     }
@@ -1093,14 +1205,15 @@
 #pragma mark RKCloudChatDelegate - RKCloudChatGroup
 // 云视互动即时通信对于群的回调接口
 
-/**
+/*!
  * @brief 代理方法: 单个群信息有变化
  *
  * @param groupId NSString 群ID
+ * @param changedType 修改群信息的类型，具体看ChangedType定义
  *
  * @return
  */
-- (void)didGroupInfoChanged:(NSString *)groupId
+- (void)didGroupInfoChanged:(NSString *)groupId changedType:(ChangedType)changedType
 {
     // 初始化会话信息
     [self initCurrentSessionInfo];
@@ -1111,6 +1224,7 @@
         [self.sessionInfoTableView reloadData];
     }
 }
+
 
 /**
  * @brief 代理方法: 移除群

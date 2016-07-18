@@ -831,14 +831,15 @@
 #pragma mark RKCloudChatDelegate - RKCloudChatGroup
 // 云视互动即时通信对于群的回调接口
 
-/**
+/*!
  * @brief 代理方法: 单个群信息有变化
  *
  * @param groupId NSString 群ID
+ * @param changedType 修改群信息的类型，具体看ChangedType定义
  *
  * @return
  */
-- (void)didGroupInfoChanged:(NSString *)groupId
+- (void)didGroupInfoChanged:(NSString *)groupId changedType:(ChangedType)changedType
 {
     NSLog(@"CHAT-LIST-DELEGATE: didGroupInfoChanged: groupId = %@", groupId);
     

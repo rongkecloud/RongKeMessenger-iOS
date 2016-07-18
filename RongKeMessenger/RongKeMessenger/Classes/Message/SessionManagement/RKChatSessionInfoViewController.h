@@ -26,7 +26,7 @@
 
 #pragma mark RKCloudChatDelegate - RKCloudChatGroup
 
-- (void)didGroupInfoChanged:(NSString *)groupId;
+- (void)didGroupInfoChanged:(NSString *)groupId changedType:(ChangedType)changedType;
 - (void)didGroupRemoved:(NSString *)groupId withRemoveType:(LeaveType)removeType;
 - (void)didGroupUsersChanged:(NSString *)groupId;
 
