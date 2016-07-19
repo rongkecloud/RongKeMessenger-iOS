@@ -500,6 +500,10 @@
 		28F6753A1B68E82B00DB4C19 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F675321B68E82B00DB4C19 /* unzip.c */; };
 		28F6753B1B68E82B00DB4C19 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F675341B68E82B00DB4C19 /* zip.c */; };
 		28F6753C1B68E82B00DB4C19 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28F675371B68E82B00DB4C19 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2C80C1441D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */; };
+		2C80C1451D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */; };
+		2C80C1461D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */; };
+		2C80C1471D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */; };
 		2C9E04CC1D2FBBD8005AA7AB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */; };
 		2C9E04CE1D2FBC14005AA7AB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */; };
 		2C9E04D01D2FBC1F005AA7AB /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */; };
@@ -1010,6 +1014,9 @@
 		28F675351B68E82B00DB4C19 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		28F675361B68E82B00DB4C19 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		28F675371B68E82B00DB4C19 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
+		2C80C1411D3CEE81009D2871 /* SelectGroupMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectGroupMemberViewController.h; sourceTree = "<group>"; };
+		2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectGroupMemberViewController.m; sourceTree = "<group>"; };
+		2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectGroupMemberViewController.xib; sourceTree = "<group>"; };
 		2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -1846,6 +1853,9 @@
 				2857F8801B5127AC008A2F3E /* RKChatSessionInfoViewController.xib */,
 				2857F8811B5127AC008A2F3E /* SetBackgroundImageTableViewController.h */,
 				2857F8821B5127AC008A2F3E /* SetBackgroundImageTableViewController.m */,
+				2C80C1411D3CEE81009D2871 /* SelectGroupMemberViewController.h */,
+				2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */,
+				2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */,
 			);
 			path = SessionManagement;
 			sourceTree = "<group>";
@@ -2703,6 +2713,7 @@
 				16A9031E1CAD129A001169A3 /* RKCustomerPromptCell.xib in Resources */,
 				288D81401B73604A00B2DE72 /* mms_face_05.png in Resources */,
 				288D814D1B73604A00B2DE72 /* mms_face_18.png in Resources */,
+				2C80C1461D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */,
 				161EC8651CBF92B600A8682A /* RKMessageSearchViewController.xib in Resources */,
 				288D81521B73604A00B2DE72 /* mms_face_23.png in Resources */,
 				288D814A1B73604A00B2DE72 /* mms_face_15.png in Resources */,
@@ -2846,6 +2857,7 @@
 				284764D71BEAED5B00BD92F0 /* mms_face_24.png in Resources */,
 				284764D81BEAED5B00BD92F0 /* RKChatSessionListViewController.xib in Resources */,
 				284764DA1BEAED5B00BD92F0 /* RKCloudSettingViewController.xib in Resources */,
+				2C80C1471D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */,
 				284764DB1BEAED5B00BD92F0 /* RKCloudSettingMsgViewController.xib in Resources */,
 				284764DC1BEAED5B00BD92F0 /* mms_face_07.png in Resources */,
 				284764DD1BEAED5B00BD92F0 /* RKChatSessionInfoViewController.xib in Resources */,
@@ -3001,6 +3013,7 @@
 				2809C9FF1B4E4FDD0072BE39 /* main.m in Sources */,
 				2857F9B81B51295C008A2F3E /* ASIDataCompressor.m in Sources */,
 				2857F9DF1B51295C008A2F3E /* split.c in Sources */,
+				2C80C1441D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */,
 				2857F9D31B51295C008A2F3E /* QBCheckmarkView.m in Sources */,
 				2857F9111B5127AC008A2F3E /* RegularCheckTools.m in Sources */,
 				FDE9EB551B7B28A70036DCDF /* MeetingRoomViewController.m in Sources */,
@@ -3194,6 +3207,7 @@
 				284764571BEAED5B00BD92F0 /* AppDelegate.m in Sources */,
 				284764581BEAED5B00BD92F0 /* UserProfilesInfo.m in Sources */,
 				284764591BEAED5B00BD92F0 /* ContactHorizontalList.m in Sources */,
+				2C80C1451D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */,
 				2847645A1BEAED5B00BD92F0 /* NSNumber-SQLitePersistence.m in Sources */,
 				2847645B1BEAED5B00BD92F0 /* SQLiteInstanceManager.m in Sources */,
 				2847645C1BEAED5B00BD92F0 /* NSObject-ClassName.m in Sources */,
