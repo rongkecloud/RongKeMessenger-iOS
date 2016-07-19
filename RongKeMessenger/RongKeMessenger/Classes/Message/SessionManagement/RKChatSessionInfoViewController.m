@@ -20,6 +20,8 @@
 #import "FriendDetailViewController.h"
 #import "DatabaseManager+FriendInfoTable.h"
 #import "FriendInfoTable.h"
+#import "SelectGroupMemberViewController.h"
+#import "FriendTable.h"
 
 #define SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG                601
 #define SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG     602
@@ -27,7 +29,7 @@
 #define SESSIONINFO_SWITCH_SINGLECHAT_MESSAGE_PROMPT_TAG    604
 #define SESSIONINFO_SWITCH_INVITE_PROMPT_TAG    605
 
-@interface RKChatSessionInfoViewController () <UITableViewDelegate, UITableViewDataSource,  UIAlertViewDelegate, RKCloudChatDelegate,ChatSelectFriendsViewControllerDelegate>
+@interface RKChatSessionInfoViewController () <UITableViewDelegate, UITableViewDataSource,  UIAlertViewDelegate, RKCloudChatDelegate,ChatSelectFriendsViewControllerDelegate, SelectGroupMemberDelegate>
 {
     CGFloat sessionContactListViewHeight;
 }
@@ -620,7 +622,7 @@
                         [self modifyGroupDescription];
                         break;
                     case 2:  // 群转让
-                        // [self updateChatSessionName];
+                        [self transferGroupOwner];
                         break;
                     default:
                         break;
@@ -952,6 +954,17 @@
     
 }
 
+// 转让群主
+- (void)transferGroupOwner
+{
+    SelectGroupMemberViewController *viewController = [[SelectGroupMemberViewController alloc] initWithNibName:@"SelectGroupMemberViewController" bundle:nil];
+    AppDelegate *appDelegate = [AppDelegate appDelegate];
+    [ToolsFunction moveUpTransition:YES forLayer: appDelegate.window.layer];
+    viewController.groupId = self.rkChatSessionViewController.currentSessionObject.sessionID;
+    viewController.delegate = self;
+    
+    [self.navigationController pushViewController:viewController animated: NO];
+}
 
 #pragma mark -
 #pragma mark UIAlertViewDelegate methods
@@ -1180,10 +1193,8 @@
                     return;
                 }
                 
-                // 更新会话信息到数据库
-                long nResult = [RKCloudChatMessageManager modifyGroupRemark:stringTrim forGroupID:self.rkChatSessionViewController.currentSessionObject.sessionID];
-                if (nResult == RK_SUCCESS)
-                {
+                // 修改群聊的名字
+                [RKCloudChatMessageManager modifyGroupName:stringTrim forGroupID:self.rkChatSessionViewController.currentSessionObject.sessionID onSuccess:^{
                     // 修改当前对话的群组名称
                     UITableViewCell *cell = [self.sessionInfoTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
                     cell.detailTextLabel.text = stringTrim;
@@ -1191,7 +1202,10 @@
                     self.rkChatSessionViewController.currentSessionObject.sessionShowName = stringTrim;
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_CHAT_SESSION_CHANGE_GROUP_NAME object:nil];
-                }
+                } onFailed:^(int errorCode) {
+                    
+                }];
+                
             }
         }
             break;
@@ -1318,6 +1332,37 @@
             [self.sessionInfoTableView reloadData];
         }
     });
+}
+
+#pragma mark -
+#pragma mark SelectGroupMemberDelegate methods
+
+- (void)selectedGroupMember:(NSMutableArray *)selectedMemberArray
+{
+    if (selectedMemberArray == nil || [selectedMemberArray count] == 0) {
+        return;
+    }
+    FriendTable *friendTable = [selectedMemberArray firstObject];
+    
+    [UIAlertView showWaitingMaskView: NSLocalizedString(@"PROMPT_FIXING", nil)];
+    
+    [RKCloudChatMessageManager transferGroup:self.rkChatSessionViewController.currentSessionObject.sessionID toAccount:friendTable.friendAccount onSuccess:^{
+        [UIAlertView hideWaitingMaskView];
+    } onFailed:^(int errorCode) {
+        [UIAlertView hideWaitingMaskView];
+        NSString *errorMessage = @"系统错误";
+        switch (errorCode)
+        {
+            case CHAT_GROUP_UNMASTER:
+                errorMessage = @"非群主，不能转让群";
+                break;
+                
+            default:
+                break;
+        }
+        
+        [UIAlertView showAutoHidePromptView: errorMessage];
+    }];
 }
 
 @end

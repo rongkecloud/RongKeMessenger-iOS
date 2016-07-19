@@ -849,7 +849,7 @@
             return;
         }
         
-        [self.messageSessionViewController didGroupInfoChanged:groupId];
+        [self.messageSessionViewController didGroupInfoChanged:groupId changedType:changedType];
     });
 }
 
