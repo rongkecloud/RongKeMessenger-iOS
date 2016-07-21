@@ -14,15 +14,17 @@
 #import "DatabaseManager+FriendTable.h"
 #import "UserProfilesInfo.h"
 #import "RKCloudUIContactTableCell.h"
+#import "GroupChat.h"
 
 @interface SelectGroupMemberViewController ()
 
 @property (nonatomic, strong) IBOutlet UITableView *selectFriendsTableView;
 @property (nonatomic, strong) NSMutableArray *allFriendTableArray;  // 所有好友的FriendTable数组
 @property (nonatomic, strong) NSMutableArray *allIndexArray;
-@property (nonatomic, strong) NSMutableArray *allContactSectionArray;
 @property (nonatomic, strong) NSMutableArray *sectionArray;
 @property (nonatomic, strong) NSMutableArray *allSectionTitlesArray;
+
+@property (nonatomic) BOOL isAtAllGroupMember;
 
 @end
 
@@ -51,6 +53,12 @@
         {
             [self.allFriendTableArray addObject:friendTable];
         }
+    }
+    
+    GroupChat *groupChat = (GroupChat *)[RKCloudChatMessageManager queryChat: self.groupId];
+    if (groupChat.groupCreater && [groupChat.groupCreater isEqualToString: appDelegate.userProfilesInfo.userAccount])
+    {
+        self.isAtGroupMember = YES;
     }
     
     // 初始化好友数据
@@ -181,8 +189,7 @@
         }
     }
     
-    self.allContactSectionArray = sections;
-    self.sectionArray = self.allContactSectionArray;
+    self.sectionArray = sections;
 }
 
 #pragma mark -
@@ -203,17 +210,11 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger sectiongNum = [self.sectionArray count];
-    
     return sectiongNum;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // 显示搜索的结果
-    //    if (isSearchContact)
-    //    {
-    //        return [self.searchContactArray count];
-    //    }
     
     if (section >= [self.sectionArray count])
     {
@@ -221,9 +222,7 @@
         return 0;
     }
     
-    // section-1 说明：
-    //table第一个section添加了分组项 其他分组数据从sectionArray和allSectionTitlesArray中取
-    return [[self.sectionArray objectAtIndex: (section)] count];
+    return [[self.sectionArray objectAtIndex: section] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

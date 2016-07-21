@@ -12,6 +12,8 @@
 
 - (void)selectedGroupMember:(NSArray *)selectedMemberArray;
 
+- (void)atAllGroupMember;
+
 @end
 
 @interface SelectGroupMemberViewController : UIViewController
@@ -19,5 +21,7 @@
 @property (nonatomic, assign) id<SelectGroupMemberDelegate> delegate;
 
 @property (nonatomic, strong) NSString *groupId;
+
+@property (nonatomic) BOOL isAtGroupMember;
 
 @end

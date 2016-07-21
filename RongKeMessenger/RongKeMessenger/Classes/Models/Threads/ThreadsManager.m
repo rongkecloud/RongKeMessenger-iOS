@@ -421,7 +421,8 @@
             
             [rkRequest.params setValue:self.appDelegate.userProfilesInfo.userAccount forKey:@"account"];
             [rkRequest.params setValue:userPassword forKey:@"pwd"];
-            
+            [rkRequest.params setValue:@"ios" forKey:@"os"];
+
             rkRequest.apiUrl = [NSString stringWithFormat:HTTP_API_LOGIN, self.appDelegate.userProfilesInfo.mobileAPIServer];
         
             // rkcloud base result

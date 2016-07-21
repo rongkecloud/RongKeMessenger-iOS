@@ -772,36 +772,39 @@
 {
     NSLog(@"CHAT-LIST-DELEGATE: didReceivedMsgs: arrayChatMessages count = %lu", (unsigned long)[arrayChatMessages count]);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (arrayChatMessages == nil || [arrayChatMessages count] == 0) {
-            return;
-        }
-        
-        NSMutableArray *arrayBatchMessageOjbect = [NSMutableArray array];
-        
-        for (RKCloudChatBaseMessage *messageObject in arrayChatMessages)
+    if (arrayChatMessages == nil || [arrayChatMessages count] == 0) {
+        return;
+    }
+    
+    NSMutableArray *arrayBatchMessageObject = [NSMutableArray array];
+    
+    for (RKCloudChatBaseMessage *messageObject in arrayChatMessages)
+    {
+        // 获取单个会话的基本信息，不包含会话的最后一条消息对象
+        RKCloudChatBaseChat *baseChatObject = [RKCloudChatMessageManager queryChat:messageObject.sessionID];
+
+        if (self.messageSessionViewController && [messageObject.sessionID isEqualToString:self.messageSessionViewController.currentSessionObject.sessionID])
         {
-            if (self.messageSessionViewController && [messageObject.sessionID isEqualToString:self.messageSessionViewController.currentSessionObject.sessionID])
-            {
-                [arrayBatchMessageOjbect addObject:messageObject];
-            }
-            
-            // 获取单个会话的基本信息，不包含会话的最后一条消息对象
-            RKCloudChatBaseChat *baseChatObject = [RKCloudChatMessageManager queryChat:messageObject.sessionID];
-            
+            [arrayBatchMessageObject addObject:messageObject];
+        }
+        else
+        {
             // 处理是否显示新消息提醒
             [self dealPromptViewForNewMessage:messageObject withForSession:baseChatObject];
-            
+        }
+        
+        // 只有单聊才发送消息回执
+        if (baseChatObject.sessionType == SESSION_SINGLE_TYPE)
+        {
             // 发送已接收的回执
             [RKCloudChatMessageManager sendArrivedReceipt: messageObject];
         }
-        
-        if ([arrayBatchMessageOjbect count] > 0)
-        {
-            [self.messageSessionViewController didReceivedMessageArray:arrayBatchMessageOjbect];
-        }
-    });
+    }
+    
+    if ([arrayBatchMessageObject count] > 0)
+    {
+        [self.messageSessionViewController didReceivedMessageArray:arrayBatchMessageObject];
+    }
 }
 
 /**

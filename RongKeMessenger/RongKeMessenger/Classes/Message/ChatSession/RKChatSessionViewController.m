@@ -33,6 +33,8 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "VideoMessage.h"
 #import "MessageVideoCell.h"
+#import "SelectGroupMemberViewController.h"
+#import "HPTextViewInternal.h"
 
 // 键盘的高度
 #define TOOLVIEW_HEIGHT 190
@@ -66,7 +68,7 @@
 // 群消息信息（邀请/时间等）表格单元标识符
 #define CELL_MESSAGEGROUPINFO @"MessageMCTableCell"
 
-@interface RKChatSessionViewController () <RKMessageContainerToolsViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface RKChatSessionViewController () <RKMessageContainerToolsViewDelegate,UITableViewDataSource,UITableViewDelegate, SelectGroupMemberDelegate>
 {
 	NSInteger currentTextViewLocation;  // 文本输入当前光标位置
 	
@@ -107,6 +109,12 @@
 @property (nonatomic, assign) BOOL isRefreshing; // Jacky.Chen ,03.18 ,Add增加属性防止多次重复刷新阻塞主线程
 
 @property (nonatomic, assign) CGPoint lastTouchPoint; // Jacky.Chen.03.10.记录录音时手指最后的触摸点
+
+// 增加@功能
+@property (nonatomic, strong) NSMutableArray *atUserArray;  // @指定的用户
+@property (nonatomic) BOOL isAtAll;      // 是否@all
+@property (nonatomic) BOOL isExecuteAt;  // 是否执行@功能
+@property (nonatomic) BOOL isPushAtView; // 是否弹出@选择页面
 
 @end
 
@@ -169,19 +177,14 @@
                                              selector:@selector(clearMessagesNotification:)
                                                  name:NOTIFICATION_CLEAR_MESSAGES_OF_SESSION
                                                object:nil];
-    
-    [RKCloudChatMessageManager queryMessageKeyword:@"jd" onSuccess:^(NSArray<NSDictionary *> *messageObjectArray) {
-        
-    } onFailed:^(int errorCode) {
-        
-    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     NSLog(@"DEBUG: RKChatSessionViewController - viewWillAppear begin");
-        
+    self.isPushAtView = NO;
+    
     // 给meetingManager的会话对象赋值 用于本地进出多人语音添加提示语
     [AppDelegate appDelegate].meetingManager.currentSessionObject = self.currentSessionObject;
     
@@ -293,7 +296,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+
     // 更新输入框的位置
     chatTextViewRect = self.messageContainerToolsView.frame;
     
@@ -508,6 +512,9 @@
     loadMessageCount         = 0;
     self.isRefreshing        = NO;
     self.lastTouchPoint      = CGPointZero;
+    self.isExecuteAt = YES;
+    self.isAtAll = NO;
+    self.atUserArray = [NSMutableArray array];
 }
 
 // 初始化bar上的button
@@ -626,6 +633,12 @@
                                              selector:@selector(willChangeStatusBarFrameNotification:)
                                                  name:UIApplicationWillChangeStatusBarFrameNotification
                                                object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(textViewTextDidChangeNotification:)
+                                                 name:UITextViewTextDidChangeNotification
+                                               object: nil];
 }
 
 
@@ -1317,6 +1330,73 @@
     [self.audioToolsKit startPalyVoice:voiceCell.audioMessage];
 }
 
+- (void)pushSelectedGroupMemberView
+{
+    SelectGroupMemberViewController *viewController = [[SelectGroupMemberViewController alloc] initWithNibName:@"SelectGroupMemberViewController" bundle:nil];
+    viewController.groupId = self.currentSessionObject.sessionID;
+    viewController.delegate = self;
+    
+    AppDelegate *appDelegate = [AppDelegate appDelegate];
+    [ToolsFunction moveUpTransition:YES forLayer: appDelegate.window.layer];
+    [self.navigationController pushViewController:viewController animated: NO];
+}
+
+- (void)textViewTextDidChangeNotification:(NSNotification *)notification
+{
+    if (self.isExecuteAt == NO || self.isPushAtView)
+    {
+        return;
+    }
+    
+    if (self.isPushAtView == NO) {
+        self.isPushAtView = YES;
+    }
+    
+    HPTextViewInternal *textView = (HPTextViewInternal *)[notification object];
+    
+    if (textView.text && [textView.text length] > 0)
+    {
+        NSString *inputString = textView.text;
+        if ([inputString hasSuffix: @"@"])
+        {
+            [self pushSelectedGroupMemberView];
+        }
+    }
+}
+
+#pragma mark -
+#pragma mark SelectGroupMemberDelegate methods
+
+- (void)selectedGroupMember:(NSArray *)selectedMemberArray
+{
+    if (selectedMemberArray == nil || [selectedMemberArray count] == 0)
+    {
+        return;
+    }
+    
+    FriendTable *friendTable = [selectedMemberArray firstObject];
+    
+    if (friendTable.friendAccount == nil)
+    {
+        return;
+    }
+    
+    // 添加@的人
+    [self.atUserArray addObject: friendTable.friendAccount];
+    
+    // 将表情符号插入到相应的textView输入框的光标处
+    NSMutableString *stringText = [NSMutableString stringWithString:self.messageContainerToolsView.inputContainerToolsView.growingTextView.text];
+    [stringText insertString:NSLocalizedString(friendTable.friendAccount, nil) atIndex:currentTextViewLocation];
+    
+    // 显示到textView输入框中
+    self.messageContainerToolsView.inputContainerToolsView.growingTextView.text = stringText;
+    
+    // 移动当前光标位置
+    currentTextViewLocation += [NSLocalizedString(friendTable.friendAccount, nil) length];
+    
+    // 设置光标到输入表情的后面
+    self.messageContainerToolsView.inputContainerToolsView.growingTextView.selectedRange = NSMakeRange(currentTextViewLocation, 0);
+}
 
 #pragma mark - Show New Message Prompt View
 
@@ -1844,6 +1924,14 @@
 
 - (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)atext
 {
+    if ([atext isEqualToString: @""])
+    {
+        self.isExecuteAt = NO;
+    }
+    else
+    {
+        self.isExecuteAt = YES;
+    }
     return YES;
 }
 
