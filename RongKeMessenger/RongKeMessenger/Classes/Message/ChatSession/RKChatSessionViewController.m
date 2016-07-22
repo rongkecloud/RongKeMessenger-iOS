@@ -634,11 +634,15 @@
                                                  name:UIApplicationWillChangeStatusBarFrameNotification
                                                object:nil];
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(textViewTextDidChangeNotification:)
-                                                 name:UITextViewTextDidChangeNotification
-                                               object: nil];
+    // 提醒功能只对群聊启用
+    if (self.currentSessionObject.sessionType == SESSION_GROUP_TYPE)
+    {
+        // 注册UITextView的text改变的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textViewTextDidChangeNotification:)
+                                                     name:UITextViewTextDidChangeNotification
+                                                   object: nil];
+    }
 }
 
 
@@ -1364,6 +1368,28 @@
     }
 }
 
+// 检测发送的文本中是否存在at的成员
+- (void)derectAtGroupMember:(NSString *)sendText
+{
+    if (self.isAtAll || [self.atUserArray count] == 0)
+    {
+        return;
+    }
+    
+    NSString *atAccount = nil;
+    NSRange range;
+    for (int i = 0; i < [self.atUserArray count]; i++)
+    {
+        atAccount = [self.atUserArray objectAtIndex: i];
+        range = [sendText rangeOfString: atAccount];
+        if (range.length <= 0)
+        {
+            [self.atUserArray removeObject: atAccount];
+        }
+    }
+}
+
+
 #pragma mark -
 #pragma mark SelectGroupMemberDelegate methods
 
@@ -1380,6 +1406,7 @@
     {
         return;
     }
+    self.isAtAll = NO;
     
     // 添加@的人
     [self.atUserArray addObject: friendTable.friendAccount];
@@ -1396,6 +1423,13 @@
     
     // 设置光标到输入表情的后面
     self.messageContainerToolsView.inputContainerToolsView.growingTextView.selectedRange = NSMakeRange(currentTextViewLocation, 0);
+}
+
+- (void)atAllGroupMember
+{
+    self.isAtAll = YES;
+    
+    [self.atUserArray removeAllObjects];
 }
 
 #pragma mark - Show New Message Prompt View
@@ -2022,8 +2056,8 @@
 }
 
 // 发送文字消息
-- (void)sendTextMessage {
-    
+- (void)sendTextMessage
+{
     AppDelegate *appDelegate = [AppDelegate appDelegate];
     
     // Jacky.Chen:2016.03.01: 删除过滤掉@“\U0000fffc\U0000fffc”系统语音设别自动生成的文本输入Unicode字符
@@ -2045,12 +2079,14 @@
     NSArray *arrayKeys = [appDelegate.chatManager.emoticonMultilingualStringToESCDict allKeys];
     
     // 发送时将文本中的表情描述转换为表情转义字符串
-    for (int i = 0; i < [arrayKeys count]; i++) {
+    for (int i = 0; i < [arrayKeys count]; i++)
+    {
         NSRange range = NSMakeRange(0, [stringSendText length]);
         
         stringKey = [arrayKeys objectAtIndex:i];
         stringReplacement = [[AppDelegate appDelegate].chatManager.emoticonMultilingualStringToESCDict objectForKey:stringKey];
-        if (stringKey && stringReplacement) {
+        if (stringKey && stringReplacement)
+        {
             // 替换表情描述字符串为表情转义字符串
             [stringSendText replaceOccurrencesOfString:stringKey
                                             withString:stringReplacement
@@ -2059,8 +2095,21 @@
         }
     }
     
+    // 检测是否有@群用户
+    [self derectAtGroupMember: stringSendText];
+    
     TextMessage *textMessage = [TextMessage buildMsg:self.currentSessionObject.sessionID
                                       withMsgContent:stringSendText];
+    // @功能
+    if (self.isAtAll)
+    {
+        textMessage.atUser = @"all";
+    }
+    else if ([self.atUserArray count] > 0)
+    {
+        textMessage.atUser = [self.atUserArray JSONRepresentation];
+    }
+    
     // 发送文字消息
     [RKCloudChatMessageManager sendChatMsg:textMessage];
     

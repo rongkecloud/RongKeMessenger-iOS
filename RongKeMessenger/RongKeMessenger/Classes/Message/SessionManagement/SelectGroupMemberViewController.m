@@ -210,19 +210,32 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger sectiongNum = [self.sectionArray count];
+    if (self.isAtGroupMember) {
+        sectiongNum++;
+    }
+    
     return sectiongNum;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (section == 0 && self.isAtGroupMember) {
+        // 显示@所有成员
+        return 1;
+    }
     
-    if (section >= [self.sectionArray count])
+    int indexSection = (int)section;
+    if (self.isAtGroupMember)
+    {
+        indexSection = indexSection - 1;
+    }
+    if (indexSection >= [self.sectionArray count])
     {
         // 语言不一样，索引就不一样和为了设置联系人的个数
         return 0;
     }
     
-    return [[self.sectionArray objectAtIndex: section] count];
+    return [[self.sectionArray objectAtIndex: indexSection] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -242,7 +255,19 @@
         return;
     }
     
-    NSArray *friendArray = [self.sectionArray objectAtIndex:indexPath.section];
+    // @所有成员
+    if (self.isAtGroupMember && indexPath.section == 0) {
+        [friendInfoTableViewCell setLabelText: @"所有成员"];
+        return;
+    }
+    
+    int indexSection = (int)indexPath.section;
+    if (self.isAtGroupMember)
+    {
+        indexSection = indexSection - 1;
+    }
+    
+    NSArray *friendArray = [self.sectionArray objectAtIndex:indexSection];
     if ([friendArray count] == 0) {
         return;
     }
@@ -291,7 +316,25 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    NSArray *friendArray = [self.sectionArray objectAtIndex:indexPath.section];
+    // @所有成员
+    if (self.isAtGroupMember && indexPath.section == 0)
+    {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(atAllGroupMember)])
+        {
+            [self.delegate atAllGroupMember];
+        }
+        
+        [self touchCancelButton: nil];
+        return;
+    }
+    
+    int indexSection = (int)indexPath.section;
+    if (self.isAtGroupMember)
+    {
+        indexSection = indexSection - 1;
+    }
+    
+    NSArray *friendArray = [self.sectionArray objectAtIndex: indexSection];
     if (friendArray.count == 0) {
         return;
     }
@@ -337,10 +380,16 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if (self.isAtGroupMember && section == 0) {
+        return nil;
+    }
     // 减去搜索栏的位置的索引
     NSInteger index = section;
+    if (self.isAtGroupMember) {
+        index = index - 1;
+    }
     
-    if (section < 1 || index >= [self.allSectionTitlesArray count])
+    if (index >= [self.allSectionTitlesArray count])
     {
         // 1、添加搜索title
         // 2、设备分组title

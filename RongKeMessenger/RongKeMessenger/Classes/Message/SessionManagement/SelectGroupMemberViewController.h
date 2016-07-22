@@ -12,6 +12,7 @@
 
 - (void)selectedGroupMember:(NSArray *)selectedMemberArray;
 
+@optional
 - (void)atAllGroupMember;
 
 @end

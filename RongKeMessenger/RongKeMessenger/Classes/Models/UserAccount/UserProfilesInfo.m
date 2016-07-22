@@ -37,6 +37,12 @@
     /************* userAccount是当前登录的帐号，直接保存到系统的standardUserDefaults **********/
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+#ifdef LAN_SERVER
+    self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
+#else
+#ifdef WAN_TEST_SERVER
+    self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
+#else
     // Mobile API Server
     if ([defaults objectForKey:USER_DEFAULTS_KEY_MOBILE_API_SERVER]) {
         self.mobileAPIServer = [defaults objectForKey:USER_DEFAULTS_KEY_MOBILE_API_SERVER];
@@ -47,6 +53,9 @@
         // save changes to disk
         [defaults synchronize];
     }
+#endif
+#endif
+    
     NSLog(@"USE-PROFILES: mobileAPIServer = %@", self.mobileAPIServer);
     
     // User Account
@@ -184,10 +193,19 @@
         }
         NSLog(@"USE-PROFILES: userAddress = %@", self.userAddress);
         
+#ifdef LAN_SERVER
+        self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
+#else
+#ifdef WAN_TEST_SERVER
+        self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
+#else
         // Mobile API Server
         if (accountTable.mobileAPIServer) {
             self.mobileAPIServer = accountTable.mobileAPIServer;
         }
+#endif
+#endif
+        
         NSLog(@"USE-PROFILES: mobileAPIServer = %@", self.mobileAPIServer);
     }
     /************************** User Account Info Table *********************************/
