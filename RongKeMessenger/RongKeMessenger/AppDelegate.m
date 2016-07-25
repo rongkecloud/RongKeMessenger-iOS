@@ -472,9 +472,8 @@ static void uncaughtExceptionHandler(NSException * exception)
  */
 - (void)didReceivedCustomUserMsg:(NSArray *)arrayCustomMessages
 {
-    for (NSString *customMessage in arrayCustomMessages) {
-        NSDictionary *customMessageDic = [customMessage JSONValue];
-        
+    for (NSDictionary *customMessageDic in arrayCustomMessages)
+    {
         NSLog(@"RKCLOUD-CHAT: didReceivedCustomUserMsg: dictCustomMessage = %@", customMessageDic);
         
         NSArray *requestStrArray = [((NSString *)[customMessageDic objectForKey:@"content"]) componentsSeparatedByString:@","];

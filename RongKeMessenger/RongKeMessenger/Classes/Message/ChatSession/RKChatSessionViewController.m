@@ -1351,11 +1351,7 @@
     {
         return;
     }
-    
-    if (self.isPushAtView == NO) {
-        self.isPushAtView = YES;
-    }
-    
+
     HPTextViewInternal *textView = (HPTextViewInternal *)[notification object];
     
     if (textView.text && [textView.text length] > 0)
@@ -1363,6 +1359,10 @@
         NSString *inputString = textView.text;
         if ([inputString hasSuffix: @"@"])
         {
+            if (self.isPushAtView == NO) {
+                self.isPushAtView = YES;
+            }
+            
             [self pushSelectedGroupMemberView];
         }
     }
@@ -1408,21 +1408,10 @@
     }
     self.isAtAll = NO;
     
+    [self insertStringToTextView: friendTable.friendAccount];
+    
     // 添加@的人
     [self.atUserArray addObject: friendTable.friendAccount];
-    
-    // 将表情符号插入到相应的textView输入框的光标处
-    NSMutableString *stringText = [NSMutableString stringWithString:self.messageContainerToolsView.inputContainerToolsView.growingTextView.text];
-    [stringText insertString:NSLocalizedString(friendTable.friendAccount, nil) atIndex:currentTextViewLocation];
-    
-    // 显示到textView输入框中
-    self.messageContainerToolsView.inputContainerToolsView.growingTextView.text = stringText;
-    
-    // 移动当前光标位置
-    currentTextViewLocation += [NSLocalizedString(friendTable.friendAccount, nil) length];
-    
-    // 设置光标到输入表情的后面
-    self.messageContainerToolsView.inputContainerToolsView.growingTextView.selectedRange = NSMakeRange(currentTextViewLocation, 0);
 }
 
 - (void)atAllGroupMember
@@ -1430,6 +1419,24 @@
     self.isAtAll = YES;
     
     [self.atUserArray removeAllObjects];
+    
+    [self insertStringToTextView: @"所有成员"];
+}
+
+- (void)insertStringToTextView:(NSString *)textString
+{
+    // 将表情符号插入到相应的textView输入框的光标处
+    NSMutableString *stringText = [NSMutableString stringWithString:self.messageContainerToolsView.inputContainerToolsView.growingTextView.text];
+    [stringText insertString:textString atIndex:currentTextViewLocation];
+    
+    // 显示到textView输入框中
+    self.messageContainerToolsView.inputContainerToolsView.growingTextView.text = stringText;
+    
+    // 移动当前光标位置
+    currentTextViewLocation += [textString length];
+    
+    // 设置光标到输入表情的后面
+    self.messageContainerToolsView.inputContainerToolsView.growingTextView.selectedRange = NSMakeRange(currentTextViewLocation, 0);
 }
 
 #pragma mark - Show New Message Prompt View
