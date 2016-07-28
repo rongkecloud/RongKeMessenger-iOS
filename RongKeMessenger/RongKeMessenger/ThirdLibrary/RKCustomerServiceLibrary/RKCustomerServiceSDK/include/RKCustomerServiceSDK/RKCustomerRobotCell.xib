@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="120" id="KGk-i7-Jjw" customClass="RKCustomerRobotCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="51"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="50.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="service_icon_agent_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="tvv-Bd-zhf" customClass="RKCustomerCustomAvatarImageView">
+                        <rect key="frame" x="10" y="10" width="36" height="36"/>
+                        <color key="backgroundColor" red="0.51764705879999995" green="0.81568627449999997" blue="0.086274509799999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="36" id="gz3-ci-5wO"/>
+                            <constraint firstAttribute="width" constant="36" id="oLc-bi-oNH"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="18"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bubble_robot_bg_left" translatesAutoresizingMaskIntoConstraints="NO" id="trX-Up-r5b">
+                        <rect key="frame" x="50" y="10" width="163" height="31"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </imageView>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="我不知道啊我不知" translatesAutoresizingMaskIntoConstraints="NO" id="cHs-kJ-zGx">
+                        <rect key="frame" x="62" y="11" width="146" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="0XS-Fi-3Le"/>
+                            <constraint firstAttribute="width" constant="146" id="qHU-Iw-Zno"/>
+                        </constraints>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <connections>
+                            <outlet property="delegate" destination="-1" id="C6c-9e-tKs"/>
+                        </connections>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="cHs-kJ-zGx" firstAttribute="leading" secondItem="tvv-Bd-zhf" secondAttribute="trailing" constant="16" id="70T-GT-vXP"/>
+                    <constraint firstItem="cHs-kJ-zGx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="JIS-8r-Clj"/>
+                    <constraint firstItem="cHs-kJ-zGx" firstAttribute="bottom" secondItem="trX-Up-r5b" secondAttribute="bottom" id="Win-gi-hKP"/>
+                    <constraint firstItem="cHs-kJ-zGx" firstAttribute="top" secondItem="trX-Up-r5b" secondAttribute="top" constant="1" id="aIJ-eu-C7z"/>
+                    <constraint firstItem="cHs-kJ-zGx" firstAttribute="leading" secondItem="trX-Up-r5b" secondAttribute="leading" constant="12" id="b7R-4C-x5y"/>
+                    <constraint firstItem="tvv-Bd-zhf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="fG5-dV-sFh"/>
+                    <constraint firstItem="tvv-Bd-zhf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="grL-Do-Beq"/>
+                    <constraint firstItem="cHs-kJ-zGx" firstAttribute="trailing" secondItem="trX-Up-r5b" secondAttribute="trailing" constant="-5" id="lRf-4Y-5gg"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="trX-Up-r5b" secondAttribute="bottom" constant="1" id="q4f-bV-X9t"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="cHs-kJ-zGx" secondAttribute="bottom" constant="5" id="xx3-ow-SIC"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="q4f-bV-X9t"/>
+                        <exclude reference="xx3-ow-SIC"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="avatarImageView" destination="tvv-Bd-zhf" id="UuI-De-ZMt"/>
+                <outlet property="messageContentTextView" destination="cHs-kJ-zGx" id="2ZQ-iB-nu3"/>
+                <outlet property="textViewConstraintHeight" destination="0XS-Fi-3Le" id="cjG-AI-3Jt"/>
+                <outlet property="textViewContraintWidth" destination="qHU-Iw-Zno" id="rse-lE-SOT"/>
+            </connections>
+            <point key="canvasLocation" x="185" y="557"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bubble_robot_bg_left" width="40" height="32"/>
+        <image name="service_icon_agent_avatar" width="84" height="84"/>
+    </resources>
+</document>
