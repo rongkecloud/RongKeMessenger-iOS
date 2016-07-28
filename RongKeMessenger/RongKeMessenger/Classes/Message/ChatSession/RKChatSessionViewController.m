@@ -177,6 +177,9 @@
                                              selector:@selector(clearMessagesNotification:)
                                                  name:NOTIFICATION_CLEAR_MESSAGES_OF_SESSION
                                                object:nil];
+    
+    // 告知其它平台清空新消息提示
+    [RKCloudChatMessageManager clearOtherPlatformNewMMSCounts: self.currentSessionObject.sessionID];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -3401,6 +3404,16 @@
                 // 刷新显示大图界面
                 [self updateImagePreviewViewController:messageObject];
                 
+                if ((messageObject.messageType == MESSAGE_TYPE_FILE
+                     || messageObject.messageType == MESSAGE_TYPE_VOICE
+                     || messageObject.messageType == MESSAGE_TYPE_IMAGE
+                     || messageObject.messageType == MESSAGE_TYPE_VIDEO)
+                    && messageObject.messageStatus == MESSAGE_STATE_RECEIVE_DOWNED)
+                {
+                    // 发送已读通知
+                    [RKCloudChatMessageManager sendReadedReceipt: messageObject];
+                }
+                
                 break;
             }
         }
@@ -3468,6 +3481,9 @@
 - (void)didReceivedMessageArray:(NSArray *)arrayBatchChatMessages
 {
     NSLog(@"CHAT-SESSION-DELEGATE: didReceivedMessageArray: arrayBatchChatMessages count = %lu", (unsigned long)[arrayBatchChatMessages count]);
+    
+    // 告知其它平台清空新消息提示
+    [RKCloudChatMessageManager clearOtherPlatformNewMMSCounts: self.currentSessionObject.sessionID];
     
     // 循环遍历出批量消息的数组元素
     for (RKCloudChatBaseMessage *chatMessage in arrayBatchChatMessages)

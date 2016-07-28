@@ -246,7 +246,7 @@
             
         case 1:
         {
-            numberOfRows = 3;
+            numberOfRows = 4;
             // 如果是群聊，当前登录者非群主，允许公开邀请权限不让显示
             if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE && [((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
             {
@@ -373,28 +373,68 @@
                         break;
                     case 2:  // 群转让
                     {
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_TRANSFER", "群转让");
-                        cell.detailTextLabel.text = @"";
-                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
+                        {
+                            cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_TRANSFER", "群转让");
+                            cell.detailTextLabel.text = @"";
+                            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        }
+                        else
+                        {
+                            // 是否置顶聊天
+                            cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            
+                            UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
+                            switch_top.tag = SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG;
+                            [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
+                            [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
+                            
+                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
+                            if (!subView) {
+                                [cell addSubview:switch_top];
+                            }
+                        }
+                        
                     }
                         break;
                         
                     case 3:
                     {
-                        // 是否置顶聊天
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                        
-                        
-                        UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                        switch_top.tag = SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG;
-                        [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
-                        [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
-                        
-                        UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
-                        if (!subView) {
-                            [cell addSubview:switch_top];
+                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
+                        {
+                            // 是否置顶聊天
+                            cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            
+                            UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
+                            switch_top.tag = SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG;
+                            [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
+                            [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
+                            
+                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
+                            if (!subView) {
+                                [cell addSubview:switch_top];
+                            }
                         }
+                        else
+                        {
+                            // 是否消息提醒
+                            cell.textLabel.text = NSLocalizedString(@"TITLE_MESSAGE_REMIND", "消息提醒");
+                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            UISwitch *switchRemind = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
+                            switchRemind.tag = SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG;
+                            [switchRemind setOn:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
+                            [switchRemind addTarget:self action:@selector(setRemind:) forControlEvents:UIControlEventValueChanged];
+                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG];
+                            if (!subView) {
+                                [cell addSubview:switchRemind];
+                            }
+                        }
+                        
                         
                     }
                         break;

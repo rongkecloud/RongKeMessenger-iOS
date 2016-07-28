@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "SelectFriendsViewController.h"
 #import "RKMessageSearchViewController.h"
+#import "RKCloudBase.h"
 
 @interface RKChatSessionListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -794,7 +795,7 @@
         }
         
         // 只有单聊才发送消息回执
-        if (baseChatObject.sessionType == SESSION_SINGLE_TYPE)
+        if ([messageObject.senderName isEqualToString: [RKCloudBase getUserName]] == NO && baseChatObject.sessionType == SESSION_SINGLE_TYPE)
         {
             // 发送已接收的回执
             [RKCloudChatMessageManager sendArrivedReceipt: messageObject];
@@ -805,6 +806,7 @@
     {
         [self.messageSessionViewController didReceivedMessageArray:arrayBatchMessageObject];
     }
+    
 }
 
 /**

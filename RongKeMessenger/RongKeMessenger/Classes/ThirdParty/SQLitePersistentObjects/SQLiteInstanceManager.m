@@ -121,17 +121,18 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 		}
 		else
 		{
-			// Default to UTF-8 encoding
-			[self executeUpdateSQL:@"PRAGMA encoding = \"UTF-8\""];
-			
-			// Turn on full auto-vacuuming to keep the size of the database down
-			// This setting can be changed per database using the setAutoVacuum instance method
-			[self executeUpdateSQL:@"PRAGMA auto_vacuum=1"];
-            
-            // Set cache size to zero. This will prevent performance slowdowns as the
-            // database gets larger
-            [self executeUpdateSQL:@"PRAGMA CACHE_SIZE=0"];
-			
+            [self performUsingDBOperationQueue:^{
+                // Default to UTF-8 encoding
+                [self executeUpdateSQL:@"PRAGMA encoding = \"UTF-8\""];
+                
+                // Turn on full auto-vacuuming to keep the size of the database down
+                // This setting can be changed per database using the setAutoVacuum instance method
+                [self executeUpdateSQL:@"PRAGMA auto_vacuum=1"];
+                
+                // Set cache size to zero. This will prevent performance slowdowns as the
+                // database gets larger
+                [self executeUpdateSQL:@"PRAGMA CACHE_SIZE=0"];
+            }];
 		}
 	}
 	return database;
@@ -192,13 +193,13 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 }
 - (void)executeUpdateSQL:(NSString *) updateSQL
 {
-	char *errorMsg;
-	if (sqlite3_exec([self database],[updateSQL UTF8String] , NULL, NULL, &errorMsg) != SQLITE_OK) {
-		NSString *errorMessage = [NSString stringWithFormat:@"Failed to execute SQL '%@' with message '%s'.", updateSQL, errorMsg];
-#pragma unused(errorMessage)		
-		// NSAssert(0, errorMessage);
-		sqlite3_free(errorMsg);
-	}
+    char *errorMsg;
+    if (sqlite3_exec([self database],[updateSQL UTF8String] , NULL, NULL, &errorMsg) != SQLITE_OK) {
+        NSString *errorMessage = [NSString stringWithFormat:@"Failed to execute SQL '%@' with message '%s'.", updateSQL, errorMsg];
+#pragma unused(errorMessage)
+        // NSAssert(0, errorMessage);
+        sqlite3_free(errorMsg);
+    }
 }
 
 - (void)dealloc
