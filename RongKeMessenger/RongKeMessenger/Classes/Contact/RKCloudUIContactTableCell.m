@@ -44,19 +44,26 @@
     switch (self.cellFromType) {
         case Cell_From_Type_Select_Contact:
         {
-            if (checkImageView.hidden) {
-                //checkImageView.frame = CGRectMake(UISCREEN_BOUNDS_SIZE.width - 25 - 30, 14, 25, 25);
-                checkAvatarImageView.frame = CGRectMake(15, 8.5f, 38, 38);
-                checkLabel.frame = CGRectMake(62, 12.5, UISCREEN_BOUNDS_SIZE.width - 70, 30);
+            // check图标是否隐藏
+            if (checkImageView.hidden)
+            {
+                checkImageView.frame = CGRectMake(0, 15, 9, 25);
             }
             else
             {
                 checkImageView.frame = CGRectMake(14, 15, 25, 25);
-                checkAvatarImageView.frame = CGRectMake(53, 8.5f, 38, 38);
-                checkLabel.frame = CGRectMake(100, 12.5, UISCREEN_BOUNDS_SIZE.width - 140, 30);
-                newFriendNoticeImageView.frame = CGRectMake(130, 21, 8, 8);
-                
             }
+            
+            // 头像是否隐藏
+            if (checkAvatarImageView.hidden)
+            {
+                checkAvatarImageView.frame = CGRectMake(checkImageView.frame.origin.x+checkImageView.frame.size.width+6, 8.5f, 0, 0);
+            }
+            else
+            {
+                checkAvatarImageView.frame = CGRectMake(checkImageView.frame.origin.x+checkImageView.frame.size.width+6, 8.5f, 38, 38);
+            }
+            checkLabel.frame = CGRectMake(checkAvatarImageView.frame.origin.x + checkAvatarImageView.frame.size.width + 10, 12.5, UISCREEN_BOUNDS_SIZE.width - (checkAvatarImageView.frame.origin.x + checkAvatarImageView.frame.size.width + 18), 30);
         }
             break;
         case Cell_From_Type_Other:
@@ -109,7 +116,10 @@
         checkLabel.text = labelString;
     }
 }
-
+- (void)setAvatarHide:(BOOL)isHide
+{
+    checkAvatarImageView.hidden = isHide;
+}
 // 设置通讯录头像
 - (void)setCellImage:(UIImage *)cellImage{
     if (cellImage)

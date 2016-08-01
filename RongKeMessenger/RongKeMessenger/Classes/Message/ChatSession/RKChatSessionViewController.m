@@ -1352,6 +1352,7 @@
     SelectGroupMemberViewController *viewController = [[SelectGroupMemberViewController alloc] initWithNibName:@"SelectGroupMemberViewController" bundle:nil];
     viewController.groupId = self.currentSessionObject.sessionID;
     viewController.delegate = self;
+    viewController.isAtGroupMember = YES;
     
     AppDelegate *appDelegate = [AppDelegate appDelegate];
     [ToolsFunction moveUpTransition:YES forLayer: appDelegate.window.layer];

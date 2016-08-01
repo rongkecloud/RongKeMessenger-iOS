@@ -21,6 +21,7 @@
 - (void)setChecked:(BOOL)checked;                        // 设置通讯录选中状态
 - (void)setCheckedImageHide:(BOOL)isHide;                // 设置通讯录cell是否有选中图片
 - (void)setCheckedImageDisable:(BOOL)isDisable;          // 设置通讯录cell选中图片是否可用
+- (void)setAvatarHide:(BOOL)isHide;                      // 设置头像是否隐藏
 - (void)setCellImage:(UIImage *)cellImage;               // 设置通讯录头像
 - (void)setLabelText:(NSString *)labelString;            // 设置通讯录名称
 - (void)setNewFriendNoticeImageViewHidden:(BOOL)isShow;  // 设置新好友提示的红色图标

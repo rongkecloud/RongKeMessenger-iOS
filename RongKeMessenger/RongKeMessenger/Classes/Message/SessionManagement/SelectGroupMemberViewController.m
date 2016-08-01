@@ -58,7 +58,7 @@
     GroupChat *groupChat = (GroupChat *)[RKCloudChatMessageManager queryChat: self.groupId];
     if (groupChat.groupCreater && [groupChat.groupCreater isEqualToString: appDelegate.userProfilesInfo.userAccount])
     {
-        self.isAtGroupMember = YES;
+        self.isAtAllGroupMember = YES;
     }
     
     // 初始化好友数据
@@ -210,7 +210,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     NSInteger sectiongNum = [self.sectionArray count];
-    if (self.isAtGroupMember) {
+    if (self.isAtAllGroupMember && self.isAtGroupMember) {
         sectiongNum++;
     }
     
@@ -219,13 +219,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0 && self.isAtGroupMember) {
+    if (section == 0 && self.isAtGroupMember && self.isAtAllGroupMember) {
         // 显示@所有成员
         return 1;
     }
     
     int indexSection = (int)section;
-    if (self.isAtGroupMember)
+    if (self.isAtAllGroupMember)
     {
         indexSection = indexSection - 1;
     }
@@ -256,13 +256,15 @@
     }
     
     // @所有成员
-    if (self.isAtGroupMember && indexPath.section == 0) {
+    if (self.isAtAllGroupMember && self.isAtGroupMember && indexPath.section == 0) {
+        [friendInfoTableViewCell setAvatarHide: YES];
         [friendInfoTableViewCell setLabelText: @"所有成员"];
         return;
     }
-    
+    [friendInfoTableViewCell setAvatarHide: NO];
+
     int indexSection = (int)indexPath.section;
-    if (self.isAtGroupMember)
+    if (self.isAtAllGroupMember)
     {
         indexSection = indexSection - 1;
     }
@@ -317,7 +319,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     // @所有成员
-    if (self.isAtGroupMember && indexPath.section == 0)
+    if (self.isAtAllGroupMember && self.isAtGroupMember && indexPath.section == 0)
     {
         if (self.delegate && [self.delegate respondsToSelector:@selector(atAllGroupMember)])
         {
@@ -329,7 +331,7 @@
     }
     
     int indexSection = (int)indexPath.section;
-    if (self.isAtGroupMember)
+    if (self.isAtAllGroupMember)
     {
         indexSection = indexSection - 1;
     }
@@ -380,12 +382,12 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (self.isAtGroupMember && section == 0) {
+    if (self.isAtAllGroupMember && self.isAtGroupMember && section == 0) {
         return nil;
     }
     // 减去搜索栏的位置的索引
     NSInteger index = section;
-    if (self.isAtGroupMember) {
+    if (self.isAtAllGroupMember) {
         index = index - 1;
     }
     
