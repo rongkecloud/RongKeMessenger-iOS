@@ -136,15 +136,23 @@
         if (isCreate == YES) // 创建者
         {
             contactAvatarCounts = [self.currentAllGroupContactArray count] + 2;
+            
+            if ([self.currentAllGroupContactArray count] == 1)
+            {
+                // 当前只有一个人的话，只有邀请加入群，没有删除群
+                contactAvatarCounts = [self.currentAllGroupContactArray count] + 1;
+            }
         }
-        else {
+        else
+        {
             // 非创建者
             if (((GroupChat *)self.rkChatSessionViewController.currentSessionObject).isEnableInvite == YES) // 有 邀请权限
             {
                 contactAvatarCounts = [self.currentAllGroupContactArray count] + 1;
                 
             }
-            else {
+            else
+            {
                 // 无 邀请权限
                 contactAvatarCounts = [self.currentAllGroupContactArray count];
             }   
@@ -358,8 +366,8 @@
             
             // 添加联系人到页面
             [self.sessionContactListView addContactAvatarByContactArray:self.currentAllGroupContactArray
-                                                                  isCreate:isCreate
-                                                              isOpenInvite:isOpenInvite];
+                                                               isCreate:isCreate
+                                                           isOpenInvite:isOpenInvite];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             [cell addSubview:self.sessionContactListView];
@@ -635,28 +643,6 @@
 // custom view for footer. will be adjusted to default or specified footer height
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    // 最后一个section才有此按钮
-//    if(section == 3 &&
-//       self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE)
-//    {
-//        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UISCREEN_BOUNDS_SIZE.width, 60)];
-//        UIButton *redExitButton = [[UIButton alloc] initWithFrame:CGRectMake(20, 15, UISCREEN_BOUNDS_SIZE.width - 20*2, 44)];
-//        [redExitButton setBackgroundColor:[UIColor redColor]];
-//        redExitButton.layer.cornerRadius = DEFAULT_IMAGE_CORNER_RADIUS;
-//        
-//        // 判断群聊和是否为群建立者
-//        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]]) {
-//            [redExitButton setTitle:@"解散群" forState:UIControlStateNormal];
-//        }
-//        else {
-//            [redExitButton setTitle:@"退出群" forState:UIControlStateNormal];
-//        }
-//        [redExitButton addTarget:self action:@selector(touchExitButton) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        [footerView addSubview:redExitButton];
-//        return footerView;
-//    }
-    
     return nil;
 }
 
