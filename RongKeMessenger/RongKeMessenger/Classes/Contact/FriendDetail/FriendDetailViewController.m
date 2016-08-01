@@ -137,10 +137,12 @@
     {
         // 获取对应的FriendsNotifyTable、得到当前的状态
         FriendsNotifyTable *friendsNotifyTable = [self.appDelegate.databaseManager getFriendsNotifyTableByFriendAccout:self.userAccount];
-        if (friendsNotifyTable) {
+        if (friendsNotifyTable)
+        {
             // 若是已经申请状态则不需要显示添加好友按钮
-            if ([friendsNotifyTable.status integerValue] == AddFriendCurrentStateWaitingValidation) {
-                return;
+            if ([friendsNotifyTable.status integerValue] == AddFriendCurrentStateWaitingValidation)
+            {
+                // return;
             }
         }
         
