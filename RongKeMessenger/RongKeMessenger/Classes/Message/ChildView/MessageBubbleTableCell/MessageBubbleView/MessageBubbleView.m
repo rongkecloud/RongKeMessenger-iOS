@@ -381,9 +381,11 @@
             CGSize stateSize = [ToolsFunction getSizeFromString:stateString withFont:[UIFont systemFontOfSize:14]];
             float stateStringOriginX = self.bubbleRect.origin.x - CELL_DISTANCE_BETWEEN_SEND_AND_LEFT_OF_BUBBLE - stateSize.width;
             float stateStringOriginY = CGRectGetMaxY(self.bubbleRect) - CELL_DISTANCE_BETWEEN_SEND_AND_BOTTOM_OF_BUBBLE - stateSize.height;
-            [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withFont:[UIFont systemFontOfSize:14]];
+            if (self.mmsObject.messageType != MESSAGE_TYPE_LOCAL)
+            {
+                [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withFont:[UIFont systemFontOfSize:14]];
+            }
         }
-        
         
         [[UIColor grayColor] set];
         
@@ -403,8 +405,10 @@
         UIImage *unReadImage = nil;
         
         // 绘制未读标记
-        if (mmsType != MESSAGE_TYPE_TEXT &&
-            (mmsStatus == MESSAGE_STATE_RECEIVE_RECEIVED || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED))
+        if (mmsType != MESSAGE_TYPE_TEXT
+            && self.mmsObject.messageType != MESSAGE_TYPE_LOCAL
+            &&(mmsStatus == MESSAGE_STATE_RECEIVE_RECEIVED
+             || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED))
 		{
             unReadImage = [UIImage imageNamed:@"unread_warning_icon"];
             float unReadImageOriginX = CGRectGetMaxX(self.bubbleRect) + CELL_DISTANCE_BETWEEN_READ_FLAG_AND_RIGHT_OF_RECEIVE_BUBBLE;

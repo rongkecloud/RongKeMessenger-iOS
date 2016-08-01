@@ -275,6 +275,36 @@
     return numberOfRows;
 }
 
+// 重置cell的控件
+- (void)resetCellControl:(UITableViewCell *)cell
+{
+    // 当为群聊时
+    // 设置字体
+    [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
+    
+    cell.textLabel.text = nil;
+    UIView *subView = [cell viewWithTag:100];
+    if (subView)
+    {
+        [subView removeFromSuperview];
+    }
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    UIView *switchView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
+    if (switchView) {
+        [switchView removeFromSuperview];
+    }
+    switchView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG];
+    if (switchView) {
+        [switchView removeFromSuperview];
+    }
+    switchView = [cell viewWithTag:SESSIONINFO_SWITCH_INVITE_PROMPT_TAG];
+    if (switchView) {
+        [switchView removeFromSuperview];
+    }
+    cell.userInteractionEnabled = YES;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Jacky.Chen:02.24 ADD
@@ -295,24 +325,14 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier: identifier];
     }
     
-    // 当为群聊时
-    // 设置字体
-    [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
-    
-    UIView *subView = [cell viewWithTag:100];
-    if (subView)
-    {
-        [subView removeFromSuperview];
-    }
-    
-    cell.userInteractionEnabled = YES;
+    // 重置cell的控件
+    [self resetCellControl: cell];
     
     int floatXSwitch = UISCREEN_BOUNDS_SIZE.width - 76;
     if ([ToolsFunction iSiOS7Earlier])
     {
         floatXSwitch -= 25;
     }
-    
     switch (indexPath.section)
     {
         case 0:
@@ -1388,6 +1408,12 @@
     
     [RKCloudChatMessageManager transferGroup:self.rkChatSessionViewController.currentSessionObject.sessionID toAccount:friendTable.friendAccount onSuccess:^{
         [UIAlertView hideWaitingMaskView];
+        
+        ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater = friendTable.friendAccount;
+        if (self.sessionInfoTableView) {
+            [self.sessionInfoTableView reloadData];
+        }
+        
     } onFailed:^(int errorCode) {
         [UIAlertView hideWaitingMaskView];
         NSString *errorMessage = @"系统错误";

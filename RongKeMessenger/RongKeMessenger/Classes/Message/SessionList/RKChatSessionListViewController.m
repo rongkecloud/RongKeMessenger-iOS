@@ -141,7 +141,8 @@
     }
     
     RKCloudChatBaseChat *chatObject = [self.allSessionArray objectAtIndex:indexPath.row];
-    if (chatObject) {
+    if (chatObject)
+    {
         // 配置会话列表Cell的相关会话的信息
         [cell configSessionListByChatSessionObject:chatObject  withListType:SessionListShowTypeNomal withMarkColorStr:nil];
     }
@@ -795,7 +796,13 @@
         }
         
         // 只有单聊才发送消息回执
-        if ([messageObject.senderName isEqualToString: [RKCloudBase getUserName]] == NO && baseChatObject.sessionType == SESSION_SINGLE_TYPE)
+        if ([messageObject.senderName isEqualToString: [RKCloudBase getUserName]] == NO
+            && baseChatObject.sessionType == SESSION_SINGLE_TYPE
+            && (messageObject.messageType == MESSAGE_TYPE_TEXT
+                || messageObject.messageType == MESSAGE_TYPE_IMAGE
+                || messageObject.messageType == MESSAGE_TYPE_VOICE
+                || messageObject.messageType == MESSAGE_TYPE_FILE
+                || messageObject.messageType == MESSAGE_TYPE_VIDEO))
         {
             // 发送已接收的回执
             [RKCloudChatMessageManager sendArrivedReceipt: messageObject];
@@ -848,14 +855,11 @@
 {
     NSLog(@"CHAT-LIST-DELEGATE: didGroupInfoChanged: groupId = %@", groupId);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (self.messageSessionViewController == nil || [self.messageSessionViewController.currentSessionObject.sessionID isEqualToString:groupId] == NO) {
-            return;
-        }
-        
-        [self.messageSessionViewController didGroupInfoChanged:groupId changedType:changedType];
-    });
+    if (self.messageSessionViewController == nil || [self.messageSessionViewController.currentSessionObject.sessionID isEqualToString:groupId] == NO) {
+        return;
+    }
+    
+    [self.messageSessionViewController didGroupInfoChanged:groupId changedType:changedType];
 }
 
 /**

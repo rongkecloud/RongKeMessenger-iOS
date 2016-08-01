@@ -749,14 +749,18 @@
         case SessionListShowTypeSearchListMain:
         case SessionListShowTypeSearchListCategory: {
             {
-                if (isFirstLoad) {
+                if (isFirstLoad)
+                {
                     // 查询搜索消息前后的MessageObjec对象
-                    [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID withCurrentMessageId:self.currentSessionObject.lastMessageObject.messageID messageCounts:20 onSuccess:^(NSArray<RKCloudChatBaseMessage *> *resultArray) {
-                        if (resultArray && resultArray.count > 0)
-                        {
-                            [self.visibleSortMessageRecordArray addObjectsFromArray:resultArray];
-                        }
-                    } onFailed:^(int errorCode) {
+                    [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                             withCurrentMessageId:self.currentSessionObject.lastMessageObject.messageID
+                                                    messageCounts:20
+                                                        onSuccess:^(NSArray<RKCloudChatBaseMessage *> *resultArray) {
+                                                            if (resultArray && resultArray.count > 0)
+                                                            {
+                                                                [self.visibleSortMessageRecordArray addObjectsFromArray:resultArray];
+                                                            }
+                                                        } onFailed:^(int errorCode) {
                         
                     }];
                 }
@@ -795,7 +799,10 @@
     }
     
     // 获取排序后消息数据库对象数组（RKCloudChatBaseMessage）
-    NSArray *arraySortMessageRecord = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID withCreateDate:headmostMessageTimestamp withStorageIndex:headmostMessageIndex messageCount:LOAD_MESSAGE_COUNT];
+    NSArray *arraySortMessageRecord = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                                                     withCreateDate:headmostMessageTimestamp
+                                                                   withStorageIndex:headmostMessageIndex
+                                                                       messageCount:LOAD_MESSAGE_COUNT];
     
     return arraySortMessageRecord;
 }
@@ -865,7 +872,10 @@
     // 获取所有的未读消息，用于页面一屏显示的数据不足全部未读条数，右上角提醒按钮使用
     if (isFirstLoad == YES && self.unReadMessageArray == nil)
     {
-        self.unReadMessageArray = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID withCreateDate:headmostMessageTimestamp withStorageIndex:0 messageCount:self.currentSessionObject.unReadMsgCnt];
+        self.unReadMessageArray = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                                                 withCreateDate:headmostMessageTimestamp
+                                                               withStorageIndex:0
+                                                                   messageCount:self.currentSessionObject.unReadMsgCnt];
     }
     
     NSLog(@"MMS: ***** loadMessageSessionRecord end *****");
