@@ -35,6 +35,7 @@
 #import "MessageVideoCell.h"
 #import "SelectGroupMemberViewController.h"
 #import "HPTextViewInternal.h"
+#import "MJRefresh.h"
 
 // 键盘的高度
 #define TOOLVIEW_HEIGHT 190
@@ -79,6 +80,7 @@
     CGRect systemKeyboardRect;   // 系统键盘的矩形位置
     NSInteger  loadMessageCount;       // 记录当前载入的消息个数（不包括分组的时间消息及其他未存入数据库的消息）
                                  /*Jacky.Chen:2016.02.16:添加成员变量记录从数据库中加载显示的消息个数,作为下拉加载更多的判断条件，解决当前项目中历史消息显示不全的问题*/
+    BOOL isFirstLoadMMS;
 }
 
 @property (nonatomic, strong) UITableView *messageSessionContentTableView;        // 此表用于显示消息记录的具体内容
@@ -149,7 +151,7 @@
     [self setupRecordingView];
     
     // 按组载入消息记录
-    [self loadMessageRecord:YES];
+    // [self loadMessageRecord:YES];
     
     // 初始化底部的工具栏View
     [self createMessageToolsContainerView];
@@ -166,6 +168,9 @@
     // 初始化UI和控件窗口
     [self initUIControlView];
     
+    // 初始化聊天会话上滑和下拉控件和加载数据的block
+    [self initChatSessionRefreshingControl];
+
     // 注册更新昵称和头像的通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateUserProfileNotification:)
@@ -429,7 +434,7 @@
     self.messageSessionContentTableView.dataSource = self;
     self.messageSessionContentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.messageSessionContentTableView.backgroundColor = COLOR_CHAT_VIEW_BACKGROUND;
-
+    
 }
 
 // Jacky.Chen:2016.02.24 add
@@ -518,6 +523,7 @@
     self.isExecuteAt = YES;
     self.isAtAll = NO;
     self.atUserArray = [NSMutableArray array];
+    isFirstLoadMMS = YES;
 }
 
 // 初始化bar上的button
@@ -648,6 +654,80 @@
     }
 }
 
+// 初始化聊天会话上滑和下拉控件和加载数据的block
+- (void)initChatSessionRefreshingControl
+{
+    
+    // 为了dealloc方法能够响应，必须使用weakSelf指针
+    __weak RKChatSessionViewController *weakSelf = self;
+    
+    // 增加下拉刷新
+    weakSelf.messageSessionContentTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        NSString *messageId = nil;
+        if (self.visibleSortMessageRecordArray && [self.visibleSortMessageRecordArray count] > 0)
+        {
+            for (RKCloudChatBaseMessage *existMessageObject in self.visibleSortMessageRecordArray)
+            {
+                // 判断消息记录是否存在
+                if ([existMessageObject isKindOfClass:[RKCloudChatBaseMessage class]])
+                {
+                    messageId = existMessageObject.messageID;
+                    break;
+                }
+            }
+        }
+        
+        [RKCloudChatMessageManager queryChatMsgs:weakSelf.currentSessionObject.sessionID
+                                        chatType:(weakSelf.currentSessionObject.sessionType+1)
+                                           msgId:messageId
+                                       msgCounts:LOAD_MESSAGE_COUNT
+                                        callBack:^(NSArray<RKCloudChatBaseMessage *> *messageObjectArray) {
+                                            int row = (int)weakSelf.visibleSortMessageRecordArray.count;
+                                            if (messageObjectArray && [messageObjectArray count] > 0) {
+                                                // 加载排序后的消息内容
+                                                [weakSelf loadSortMessageRecord:messageObjectArray withLoadDirection:LoadMessageOld];
+                                            }
+                                            row = (int)self.visibleSortMessageRecordArray.count - row;
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.messageSessionContentTableView.header endRefreshing];
+                                                
+                                                // 重新加载表格数据
+                                                [self reloadTableView];
+                                                // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
+                                                [self voiceCellPlaying];
+                                                
+                                                if (isFirstLoadMMS == NO)
+                                                {
+                                                    [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                                }
+                                                else
+                                                {
+                                                    [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.visibleSortMessageRecordArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                                                }
+                                                
+                                                isFirstLoadMMS = NO;
+
+                                            });
+                                            
+                                            // 获取所有的未读消息，用于页面一屏显示的数据不足全部未读条数，右上角提醒按钮使用
+                                            /*if (isFirstLoadMMS == YES && self.unReadMessageArray == nil)
+                                            {
+                                                self.unReadMessageArray = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                                                                                         withCreateDate:headmostMessageTimestamp
+                                                                                                       withStorageIndex:0
+                                                                                                           messageCount:self.currentSessionObject.unReadMsgCnt];
+                                            }*/
+                                            
+                                            
+                                        }];
+        
+    }];
+    
+    // 加载历史记录
+    [self.messageSessionContentTableView.header beginRefreshing];
+}
+
 
 #pragma mark -
 #pragma mark Message Record Load/Update Function
@@ -702,7 +782,8 @@
         
         // 如果当前消息和之前最后一条消息时间间隔大于TIME_BLANK 或者 当前消息和上一条消息有一个是邀请消息但另一个不是邀请消息时，建立新分组
         NSString *dateString = [self createTimeGroupWithMessageCreateTime:[NSDate dateWithTimeIntervalSince1970:messageObject.createTime] andLastMessageDate:self.lastDivideGroupDate];
-        if (dateString) {
+        if (dateString)
+        {
             [mutableArray addObject:dateString];
         }
         
@@ -711,24 +792,29 @@
     }
     
     // 如果有数据，添加到visibleSortMessageRecordArray中
-    if (mutableArray) {
+    if (mutableArray)
+    {
         NSLog(@"MMS: loadSortMessageRecord: mutableArray count = %lu", (unsigned long)[mutableArray count]);
         
-        switch (loadDirection) {
-            case LoadMessageOld: {
+        switch (loadDirection)
+        {
+            case LoadMessageOld:
+            {
                 {
                     [mutableArray addObjectsFromArray:self.visibleSortMessageRecordArray];
                     self.visibleSortMessageRecordArray = mutableArray;
                 }
                 break;
             }
-            case LoadMessageNew: {
+            case LoadMessageNew:
+            {
                 {
                     [self.visibleSortMessageRecordArray addObjectsFromArray:mutableArray];
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 break;
             }
         }
@@ -737,17 +823,21 @@
     }
 }
 
+// 进入消息窗口页面时，调用的加载消息
 - (void)loadMessageRecord:(BOOL)isFirstLoad
 {
-    switch (self.sessionShowType) {
-        case SessionListShowTypeNomal: {
+    switch (self.sessionShowType)
+    {
+        case SessionListShowTypeNomal:
+        {
             {
                 [self loadMessageSessionRecord:isFirstLoad withLoadDirection:LoadMessageOld];
             }
             break;
         }
         case SessionListShowTypeSearchListMain:
-        case SessionListShowTypeSearchListCategory: {
+        case SessionListShowTypeSearchListCategory:
+        {
             {
                 if (isFirstLoad)
                 {
@@ -850,7 +940,8 @@
     long headmostMessageTimestamp = [ToolsFunction getCurrentSystemDateSecond];
     
     // 从数据库中获取相关的数据
-    switch (loadDirection) {
+    switch (loadDirection)
+    {
         case LoadMessageOld:
         {
             arraySortMessageRecord = [self loadOldMessage:headmostMessageTimestamp];
@@ -864,7 +955,8 @@
             break;
     }
     
-    if ([arraySortMessageRecord count] > 0) {
+    if ([arraySortMessageRecord count] > 0)
+    {
         // 加载排序后的消息内容
         [self loadSortMessageRecord:arraySortMessageRecord withLoadDirection:loadDirection];
     }
@@ -898,7 +990,8 @@
     // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
     [self voiceCellPlaying];
     
-    if (loadDirection == LoadMessageOld) {
+    if (loadDirection == LoadMessageOld)
+    {
         // (Jacky.Chen:2016.02.16:优化原有滚动方法）滚动至加载前表格位置(无动画)
         [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
@@ -3035,7 +3128,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // 判断是否滑动到最顶端
+    /*// 判断是否滑动到最顶端
     if(self.messageSessionContentTableView.contentOffset.y < 0 )
     {
         [self loadMessageFromeDBWithDirection:LoadMessageOld];
@@ -3052,7 +3145,8 @@
     // 判断如果用户没有点击消息提醒按钮而是滑动到底部，隐藏消息提醒按钮
     if (distanceFromButtom < height+30) {
         CGRect rx = [ UIScreen mainScreen ].bounds;
-        if (self.nMessagePromptButton.frame.origin.x < rx.size.width) {
+        if (self.nMessagePromptButton.frame.origin.x < rx.size.width)
+        {
             [self hideNewMessagePromptView:nil];
             // 清除提醒新消息个数
             self.addNewMessageCount = 0;
@@ -3061,6 +3155,7 @@
     
     // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
     [self voiceCellPlaying];
+    */
 }
 
 #pragma mark -
