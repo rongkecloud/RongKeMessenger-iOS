@@ -422,7 +422,7 @@
         [[UIColor grayColor] set];
         
         // 格式化时间字符串
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        /*NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
         [timeFormatter setDateFormat:@"HH:mm"];
         NSString *sendTimeString = [[NSString alloc] initWithFormat:@"%@", [timeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.mmsObject.sendTime]]];
         
@@ -432,7 +432,7 @@
         float stringSendDateOriginY = CGRectGetMaxY(self.bubbleRect) - dateSize.height - CELL_DISTANCE_BETWEEN_TIME_AND_BOTTOM_OF_RECEIVE_BUBBLE;
         
         [sendTimeString drawAtPoint:CGPointMake(stringSendDateOriginX, stringSendDateOriginY) withFont:[UIFont systemFontOfSize:12]];
-        
+        */
 #ifdef RECEIVE_DATE_DRAW
 		// 接收时间绘制
 		[receiveTimeString drawAtPoint:CGPointMake(CGRectGetMaxX(self.bubbleRect), self.bubbleRect.origin.y) withFont:[UIFont systemFontOfSize:10]];
