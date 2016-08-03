@@ -697,13 +697,17 @@
                                                 // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
                                                 [self voiceCellPlaying];
                                                 
-                                                if (isFirstLoadMMS == NO)
+                                                
+                                                if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 0)
                                                 {
-                                                    [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-                                                }
-                                                else
-                                                {
-                                                    [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.visibleSortMessageRecordArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                                                    if (isFirstLoadMMS == NO)
+                                                    {
+                                                        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                                    }
+                                                    else
+                                                    {
+                                                        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.visibleSortMessageRecordArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                                                    }
                                                 }
                                                 
                                                 isFirstLoadMMS = NO;
