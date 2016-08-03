@@ -293,9 +293,12 @@
             }
         }
     }
-    else {
+    else
+    {
         // 构建登录页面
         [self createLoginNavigation];
+        // 显示引导页
+        [ToolsFunction showNewFeatureView];
     }
 }
 
