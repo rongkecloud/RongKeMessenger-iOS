@@ -318,12 +318,34 @@
 {
     BOOL isEnableRevokeMms = NO;
     
-    // 判断是否为自己发送的消息且时间超过两秒，显示撤回按钮
-    if ([self.messageObject.senderName isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount] && ([ToolsFunction getCurrentSystemDateSecond] - self.messageObject.createTime) < 2 * 60) {
-        
-        if (self.messageObject.messageStatus > MESSAGE_STATE_SEND_FAILED) {
-            isEnableRevokeMms = YES;
+    /*
+     // MMS消息类型枚举
+     typedef NS_ENUM(NSUInteger, MessageType) {
+     MESSAGE_TYPE_TEXT = 1,	// 文本消息
+     MESSAGE_TYPE_IMAGE = 2, // 图片消息
+     MESSAGE_TYPE_VOICE = 3, // 语音消息
+     MESSAGE_TYPE_FILE = 4,  // 附件消息
+     MESSAGE_TYPE_LOCAL = 5, // 本地消息记录（音视频/会议 呼叫记录）
+     MESSAGE_TYPE_CUSTOM = 6, // 自定义消息
+     MESSAGE_TYPE_VIDEO = 7, // 视频消息
+     MESSAGE_TYPE_GROUP_JOIN = 8,  // 加入群消息
+     MESSAGE_TYPE_GROUP_LEAVE = 9, // 离开群消息
+     MESSAGE_TYPE_REVOKE = 10, // 撤回消息
+     MESSAGE_TYPE_TIME = 255,   // 时间字符串(不存数据库)
+     };
+     */
+    
+    // 只有当消息类型是 1、2、3、4、7 时，可以撤回
+    if (self.messageObject.messageType <= 4 || self.messageObject.messageType == 7)
+    {
+        // 判断是否为自己发送的消息且时间超过两秒，显示撤回按钮
+        if ([self.messageObject.senderName isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount] && ([ToolsFunction getCurrentSystemDateSecond] - self.messageObject.createTime) < 2 * 60) {
+            
+            if (self.messageObject.messageStatus > MESSAGE_STATE_SEND_FAILED) {
+                isEnableRevokeMms = YES;
+            }
         }
+
     }
     return isEnableRevokeMms;
 }
