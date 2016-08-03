@@ -692,20 +692,27 @@
         BOOL isExist = NO;
         RKCloudChatBaseChat *sessionObject = nil;
         
-        for (int i = 0; i < [self.allSessionArray count]; i++) {
+        for (int i = 0; i < [self.allSessionArray count]; i++)
+        {
             sessionObject = (RKCloudChatBaseChat *)[self.allSessionArray objectAtIndex:i];
-            if ([chatSession.sessionID isEqualToString:sessionObject.sessionID]) {
+            if ([chatSession.sessionID isEqualToString:sessionObject.sessionID])
+            {
                 isExist = YES;
                 break;
             }
         }
         
         // 重新获取会话记录
-        if (isExist) {
-            [self.allSessionArray removeObject:sessionObject];
-            [self.allSessionArray insertObject:chatSession atIndex:0];
+        if (isExist)
+        {
+            if ([sessionObject.lastMessageObject.sessionID isEqualToString: chatSession.lastMessageObject.sessionID] == NO)
+            {
+                [self.allSessionArray removeObject:sessionObject];
+                [self.allSessionArray insertObject:chatSession atIndex:0];
+            }
         }
-        else {
+        else
+        {
             [self.allSessionArray insertObject:chatSession atIndex:0];
         }
         
