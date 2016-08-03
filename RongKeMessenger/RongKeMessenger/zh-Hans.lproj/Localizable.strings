@@ -473,6 +473,11 @@
 "SERVICE_PROMPT_TRANSFOTRM_AGENT" = "已为您转接至客服 %@";
 "SERVICE_PROMPT_LOGOUT_EVALUATION" = "确定退出会话？您还未对本次服务评价";
 "SERVICE_PROMPT_LOGOUT_SYSTEM" = "您确定要退出吗？";
+"SERVICE_PROMPT_TRANSFORM_AGENT_SUCESS" = "转接至人工客服";
+"SERVICE_PROMPT_ROBOT_QUESTION_LIST" = "您问的是否是以下问题？点击或回复序号即可得到对应问题的答案：";
+"SERVICE_PROMPT_NEWWORK_ERROR" = "与服务器连接中断，您可能无法正常使用系统";
+"SERVICE_PROMPT_BLANKET" = "会话已经结束\n重新接入 去留言";
+"SERVICE_PROMPT_NETWORK_ERROR" = "无法连接网络，请检查您的数据网络连接...";
 
 //*******************************************************************************
 // 按钮文本或常用短语字符串
@@ -541,5 +546,7 @@
 "SERVICE_STR_TAKE_PHOTO" = "拍照";
 "SERVICE_STR_SYSTERM_ERROR" = "系统错误，请稍候再试";
 "SERVICE_STR_MANUAL_CONNECT_AGENT" = "手动输入连接客服界面";
-"SERVICE_STR_APP_DEMO" = "融智客服Demo";
+"SERVICE_STR_APP_DEMO" = "融智用户";
 "SERVICE_STR_OKAY" = "好的";
+"SERVIEC_STR_ROBOT_AGNET" = "机器人客服";
+"SERVIEC_STR_AGNET" = "客服";
