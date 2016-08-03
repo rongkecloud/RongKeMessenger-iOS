@@ -3575,7 +3575,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rongkecloud.messenger.lan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b76a90ff-c992-4be5-a8ee-06649c83aa13";
+				PROVISIONING_PROFILE = "3f92995a-971c-44a2-b919-e58170370702";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
