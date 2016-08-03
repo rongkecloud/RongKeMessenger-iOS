@@ -147,7 +147,8 @@
     setChatTitleAlert.tag = ALERT_CREATE_NEW_GROUP_TAG;
     
     UITextField * titleField = [setChatTitleAlert textFieldAtIndex:0];
-    titleField.placeholder = NSLocalizedString(@"STR_TEMP_GROUP_NAME", "临时群");
+    titleField.text = NSLocalizedString(@"STR_TEMP_GROUP_NAME", "临时群");
+    
     //设置文本框代理
     titleField.delegate = delegate;
     titleField.tag = CHAT_TITLE_TEXTFIELD;

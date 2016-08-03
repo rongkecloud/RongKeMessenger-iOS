@@ -744,7 +744,7 @@
     // 减去搜索栏的位置的索引
     NSInteger index = section;
     
-    if (section < 1 || index >= [self.allSectionTitlesArray count])
+    if (section < 0 || index >= [self.allSectionTitlesArray count])
     {
         // 1、添加搜索title
         // 2、设备分组title

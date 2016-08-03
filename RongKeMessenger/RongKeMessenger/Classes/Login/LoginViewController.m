@@ -76,14 +76,15 @@
                                              selector:@selector(keyboardWillHideNotification:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    AppDelegate *appDelegate = [AppDelegate appDelegate];
-    if (appDelegate.userProfilesInfo.userAccount)
-    {
-        [self.passwordTextField becomeFirstResponder];
-    }
-    else {
-        [self.accountTextField becomeFirstResponder];
-    }
+    // 为了防止显示欢迎页时弹出键盘，故注释以下代码
+//    AppDelegate *appDelegate = [AppDelegate appDelegate];
+//    if (appDelegate.userProfilesInfo.userAccount)
+//    {
+//        [self.passwordTextField becomeFirstResponder];
+//    }
+//    else {
+//        [self.accountTextField becomeFirstResponder];
+//    }
 }
 
 - (void)viewDidAppear:(BOOL)animated

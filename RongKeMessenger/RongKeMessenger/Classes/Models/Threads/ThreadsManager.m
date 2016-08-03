@@ -578,10 +578,6 @@
     // Goto Main Tabbar View Controller
     [self.appDelegate createMainTabbarController];
     
-    // Jacky.Chen:2016.02.24,登录成功后添加是否展示引导页
-    // 显示引导页
-    [ToolsFunction showNewFeatureView];
-    
     // 登入云视互动帐号
     [self.appDelegate.userProfilesInfo loginRKCloudAccount];
 
