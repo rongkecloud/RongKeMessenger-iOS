@@ -63,11 +63,13 @@
     
     // 初始化界面
     // 左边按钮
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_EDIT", "编辑")
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(touchEditButton)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+    // 需求无此按键，故注释
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_EDIT", "编辑")
+//                                                                   style:UIBarButtonItemStylePlain
+//                                                                  target:self
+//                                                                  action:@selector(touchEditButton)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    
     self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_CREAT_CHAT", "发起群聊") style:UIBarButtonItemStylePlain target:self action:@selector(touchCreateChatButton)];
     
     // 添加修改好友备注名 修改群聊名称 通知
@@ -261,25 +263,26 @@
 #pragma mark -
 #pragma mark Touch Button Actions
 
-// 调用UITableView的编辑功能
-- (void)touchEditButton
-{
-    self.isSlideDelete = NO;
-    
-    [self.sessionListTableView setEditing:!self.sessionListTableView.editing animated:YES];
-	//self.sessionListTableView.editing = !self.sessionListTableView.editing;
-	if (self.sessionListTableView.editing)
-	{
-		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_FINISH", "完成");
-		self.navigationItem.rightBarButtonItem.enabled = NO;
-	}
-	else
-	{
-		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_EDIT", "编辑");
-		self.navigationItem.rightBarButtonItem.enabled = YES;
-	}
-    
-}
+    // 需求无编辑按键，故注释此按键调用的方法
+    // 调用UITableView的编辑功能
+//- (void)touchEditButton
+//{
+//    self.isSlideDelete = NO;
+//    
+//    [self.sessionListTableView setEditing:!self.sessionListTableView.editing animated:YES];
+//	//self.sessionListTableView.editing = !self.sessionListTableView.editing;
+//	if (self.sessionListTableView.editing)
+//	{
+//		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_FINISH", "完成");
+//		self.navigationItem.rightBarButtonItem.enabled = NO;
+//	}
+//	else
+//	{
+//		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_EDIT", "编辑");
+//		self.navigationItem.rightBarButtonItem.enabled = YES;
+//	}
+//    
+//}
 
 // 打开选择好友页面
 - (void)touchCreateChatButton
