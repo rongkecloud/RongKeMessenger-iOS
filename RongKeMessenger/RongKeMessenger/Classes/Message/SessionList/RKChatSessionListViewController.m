@@ -478,7 +478,7 @@
 {
     if ([RKCloudChatConfigManager getNotificationEnable]) {
         // 状态栏上显示提示消息
-        if (chatObj.isRemindStatus)
+        if (chatObj.isRemindStatus && [msgObj.senderName isEqualToString: [RKCloudBase getUserName]] == NO)
         {
             NSString *promptString = nil;
             if ([RKCloudChatConfigManager getMsgRemindSum]) //  显示详情
