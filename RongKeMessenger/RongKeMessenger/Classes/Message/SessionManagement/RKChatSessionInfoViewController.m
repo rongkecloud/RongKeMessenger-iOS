@@ -1399,6 +1399,11 @@
         if (self.sessionInfoTableView) {
             [self.sessionInfoTableView reloadData];
         }
+
+        // 发送转让群成功本地消息
+        LocalMessage *localMessage = [LocalMessage buildTipMsg:self.rkChatSessionViewController.currentSessionObject.sessionID withMsgContent:[NSString stringWithFormat:@"群已转让给 %@", friendTable.friendAccount] forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
+        [RKCloudChatMessageManager addLocalMsg:localMessage withSessionType:SESSION_GROUP_TYPE];
+
         
     } onFailed:^(int errorCode) {
         [UIAlertView hideWaitingMaskView];
