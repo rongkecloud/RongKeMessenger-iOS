@@ -116,7 +116,8 @@
 
 - (void)setTableViewAppearanceMode
 {
-    self.title = [self.appDelegate.contactManager displayFriendHighGradeName:self.userAccount];
+//    self.title = [self.appDelegate.contactManager displayFriendHighGradeName:self.userAccount];
+    self.title = @"详细资料";
     
     // 向服务器获取联系人详情
     [self getFriendInfoFromServer];
