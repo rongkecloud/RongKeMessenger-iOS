@@ -49,6 +49,10 @@
     {
         friendTable = [appDelegate.databaseManager getContactTableByFriendAccount: accountString];
         
+        if (friendTable == nil) {
+            friendTable = [[FriendTable alloc]init];
+            friendTable.friendAccount = accountString;
+        }
         if (friendTable != nil && [accountString isEqualToString:appDelegate.userProfilesInfo.userAccount] == NO)
         {
             [self.allFriendTableArray addObject:friendTable];
@@ -161,6 +165,10 @@
         friendTable = [self.allFriendTableArray objectAtIndex: i];
         
         friendTable.highGradeName = [appDelegate.contactManager displayFriendHighGradeName:friendTable.friendAccount];
+        
+        if (friendTable.highGradeName == nil || [friendTable.highGradeName length] == 0) {
+            friendTable.highGradeName = friendTable.friendAccount;
+        }
         
         // 默认按用户名称排序
         index = [collation sectionForObject:friendTable collationStringSelector:@selector(highGradeName)];
