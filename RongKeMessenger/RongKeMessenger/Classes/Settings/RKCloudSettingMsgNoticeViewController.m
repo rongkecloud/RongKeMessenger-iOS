@@ -39,7 +39,7 @@
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = COLOR_VIEW_BACKGROUND;
-    self.isEnable = [RKCloudChatConfigManager getNotificationEnable];
+    self.isEnable = ![ToolsFunction isDisableApnsNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,7 +90,16 @@
         {
             // 设置是否在通知栏中显示新消息
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTIFICATION_ENABLE", "通知栏提醒");
-            cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_ENABLE", @"已开启");
+            
+            if (self.isEnable)
+            {
+                cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_ENABLE", @"已开启");
+            }
+            else
+            {
+                cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_DISABLE", @"已关闭");
+            }
+            
 //            if ([ToolsFunction iSiOS7Earlier])
 //            {
 //                floatX -= 25;
