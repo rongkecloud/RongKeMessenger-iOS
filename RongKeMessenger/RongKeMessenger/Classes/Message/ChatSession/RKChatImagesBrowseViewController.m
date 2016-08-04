@@ -158,6 +158,11 @@
             case MESSAGE_STATE_SEND_ARRIVED:
             case MESSAGE_STATE_READED:
             {
+                BOOL isThumbnail = NO;
+                if ([ToolsFunction isFileExistsAtPath: ((ImageMessage *)messageObject).fileLocalPath] == NO)
+                {
+                    isThumbnail = YES;
+                }
                 controller = [self imagePreviewViewController:messageObject isThumbnail:NO];
                 break;
             }

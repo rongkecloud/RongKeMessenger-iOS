@@ -349,7 +349,7 @@
         NSString *stateString = nil;
         
         // 群聊不显示状态
-        if (!self.isMultiplayerSession)
+        if (self.isMultiplayerSession == NO && self.mmsObject.isHistoryMMS == NO)
         {
             UIColor *textColor = MESSAGE_ARRIVED_COLOR;
             [textColor set];
