@@ -785,7 +785,7 @@
         }
         
         // 如果当前消息和之前最后一条消息时间间隔大于TIME_BLANK 或者 当前消息和上一条消息有一个是邀请消息但另一个不是邀请消息时，建立新分组
-        NSString *dateString = [self createTimeGroupWithMessageCreateTime:[NSDate dateWithTimeIntervalSince1970:messageObject.createTime] andLastMessageDate:self.lastDivideGroupDate];
+        NSString *dateString = [self createTimeGroupWithMessageCreateTime:[NSDate dateWithTimeIntervalSince1970:messageObject.sendTime] andLastMessageDate:self.lastDivideGroupDate];
         if (dateString)
         {
             [mutableArray addObject:dateString];
@@ -885,7 +885,7 @@
             headmostMessageObject = [self.visibleSortMessageRecordArray objectAtIndex:i];
             if ([headmostMessageObject isKindOfClass:[RKCloudChatBaseMessage class]])
             {
-                headmostMessageTimestamp = headmostMessageObject.createTime;
+                headmostMessageTimestamp = headmostMessageObject.sendTime;
                 headmostMessageIndex = headmostMessageObject.indexStorage;
                 break;
             }
@@ -914,7 +914,7 @@
             headmostMessageObject = [self.visibleSortMessageRecordArray objectAtIndex:i];
             if ([headmostMessageObject isKindOfClass:[RKCloudChatBaseMessage class]])
             {
-                headmostMessageTimestamp = headmostMessageObject.createTime;
+                headmostMessageTimestamp = headmostMessageObject.sendTime;
                 headmostMessageIndex = headmostMessageObject.indexStorage;
                 break;
             }
@@ -1116,10 +1116,10 @@
     if (self.visibleSortMessageRecordArray && [self.visibleSortMessageRecordArray count] > 0)
     {
         // 存放消息列表内最后一条消息的到达时间
-        lastMessageDate = [NSDate dateWithTimeIntervalSince1970:lastMessage.createTime];
+        lastMessageDate = [NSDate dateWithTimeIntervalSince1970:lastMessage.sendTime];
     }
     
-    NSDate * currentObjectCreateDate = [NSDate dateWithTimeIntervalSince1970:currentObject.createTime];
+    NSDate * currentObjectCreateDate = [NSDate dateWithTimeIntervalSince1970:currentObject.sendTime];
     
     // 创建时间分组
     NSString *dateString = [self createTimeGroupWithMessageCreateTime:currentObjectCreateDate andLastMessageDate:lastMessageDate];
