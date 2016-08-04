@@ -215,7 +215,15 @@
                 break;
                 
             case FILE_TAG_OPEN: // 文件打开事件
+            {
+                if ([ToolsFunction isFileExistsAtPath: self.filesPath] == NO)
+                {
+                    [self downloadFileMessage];
+                    self.fileImageView.hidden = YES;
+                    return;
+                }
                 [self touchOpenFileButton];
+            }
                 break;
                 
             default:

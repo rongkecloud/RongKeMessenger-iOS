@@ -134,8 +134,14 @@
             case MESSAGE_STATE_SEND_ARRIVED:
             case MESSAGE_STATE_READED:
             {
+                BOOL isThumbnail = NO;
+                if ([ToolsFunction isFileExistsAtPath: ((ImageMessage *)self.messageObject).fileLocalPath] == NO)
+                {
+                    isThumbnail = YES;
+                    [RKCloudChatMessageManager downMediaFile:self.messageObject.messageID];
+                }
                 [self.vwcMessageSession pushImagePreviewViewController:self.messageObject
-                                                isThumbnail:NO];
+                                                isThumbnail: isThumbnail];
                 break;
             }
                 

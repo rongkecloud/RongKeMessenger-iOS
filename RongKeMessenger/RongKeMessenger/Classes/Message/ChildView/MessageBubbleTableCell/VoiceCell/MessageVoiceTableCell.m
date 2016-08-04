@@ -397,6 +397,11 @@
             case MESSAGE_STATE_SEND_ARRIVED: // 已送达
             case MESSAGE_STATE_READED: // 已读
             {
+                if ([ToolsFunction isFileExistsAtPath: self.audioMessage.fileLocalPath] == NO)
+                {
+                    [self downloadVoiceMessage];
+                    return;
+                }
                 // 如果当前正在播放，并且是当前点击的Cell对象
                 if ([self.vwcMessageSession.audioToolsKit isPlayingVoice] &&
                     [self.vwcMessageSession.audioToolsKit.playMessageObject.messageID isEqualToString:self.audioMessage.messageID])
@@ -404,7 +409,8 @@
                     // 让当前正在播放的Cell停止播放
                     [self touchStopButton];
                 }
-                else {
+                else
+                {
                     // 否则没有播放，或者不是当前的播放的对象则播放点击的语音
                     // 取消上次播放操作，如果点击太快则取消上次的操作，以免UI卡顿。
                     [NSObject cancelPreviousPerformRequestsWithTarget:self.vwcMessageSession selector:@selector(touchPlayButton:) object:self];
