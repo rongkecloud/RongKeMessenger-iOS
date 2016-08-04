@@ -378,13 +378,13 @@
             case 0:
             {
                 friendInfoTableViewCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                friendInfoTableViewCell.textLabel.text = NSLocalizedString(@"TITLE_REMARK_NAME", "备注名");
+                friendInfoTableViewCell.textLabel.text = NSLocalizedString(@"TITLE_REMARK_NAME", "备注");
                 
                 NSString *friendRemark = [self.appDelegate.databaseManager getFriendRemarkNameByFriendAccount:self.friendInfoTable.account];
                 
                 if (friendRemark == nil || [friendRemark length] == 0)
                 {
-                    friendInfoTableViewCell.detailTextLabel.text = NSLocalizedString(@"TITLE_NO_SETTING", "<未设置>");
+                    friendInfoTableViewCell.detailTextLabel.text = NSLocalizedString(@"TITLE_NO_SETTING", "未设置");
                 } else {
                     friendInfoTableViewCell.detailTextLabel.text = friendRemark;
                 }
