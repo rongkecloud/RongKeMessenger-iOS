@@ -749,6 +749,17 @@
         AppDelegate *appDelegate = [AppDelegate appDelegate];
         appDelegate.mainTabController.selectedIndex = 0;
         
+        if (self.allSessionArray == nil) {
+            self.allSessionArray = [NSMutableArray array];
+        }
+        [self.allSessionArray insertObject:chatSession atIndex:0];
+
+        // 刷新tableview
+        if (self.sessionListTableView)
+        {
+            [self.sessionListTableView reloadData];
+        }
+        
         // 跳转到RKChatSessionViewController页面，创建聊天会话
         [self createNewChatView:chatSession];
     });

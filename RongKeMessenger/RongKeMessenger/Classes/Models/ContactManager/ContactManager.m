@@ -864,11 +864,16 @@
     
     [self getContactInfoByUserAccount:friendsNotifyTable.friendAccount];
     
-    // 对方发送验证通过的消息
-    LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:nil forSenderName:friendsNotifyTable.friendAccount];
-    // 保存扩展信息
-    callLocalMessage.textContent = NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil);
-    [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+    
+    // 新建一个聊天会话,如果会话存在，打开聊天页面
+    [SingleChat buildSingleChat:friendAccount
+                      onSuccess:^{
+                          // 对方发送验证通过的消息
+                          LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:friendsNotifyTable.friendAccount];
+                          [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+                      }
+                       onFailed:^(int errorCode) {
+                       }];
 }
 
 /**
