@@ -713,6 +713,11 @@
                 [self.allSessionArray removeObject:sessionObject];
                 [self.allSessionArray insertObject:chatSession atIndex:0];
             }
+            else
+            {
+                // 替换原来的对象
+                [self.allSessionArray replaceObjectAtIndex:[self.allSessionArray indexOfObject: sessionObject] withObject:chatSession];
+            }
         }
         else
         {
