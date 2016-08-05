@@ -3530,7 +3530,6 @@
                 
                 if ((messageObject.messageType == MESSAGE_TYPE_FILE
                      || messageObject.messageType == MESSAGE_TYPE_VOICE
-                     || messageObject.messageType == MESSAGE_TYPE_IMAGE
                      || messageObject.messageType == MESSAGE_TYPE_VIDEO)
                     && messageObject.messageStatus == MESSAGE_STATE_RECEIVE_DOWNED)
                 {

@@ -408,7 +408,8 @@
         if (mmsType != MESSAGE_TYPE_TEXT
             && self.mmsObject.messageType != MESSAGE_TYPE_LOCAL
             &&(mmsStatus == MESSAGE_STATE_RECEIVE_RECEIVED
-             || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED))
+               || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED
+               || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNED))
 		{
             unReadImage = [UIImage imageNamed:@"unread_warning_icon"];
             float unReadImageOriginX = CGRectGetMaxX(self.bubbleRect) + CELL_DISTANCE_BETWEEN_READ_FLAG_AND_RIGHT_OF_RECEIVE_BUBBLE;
