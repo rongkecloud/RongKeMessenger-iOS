@@ -31,7 +31,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"TITLE_SETTING_NEW_MESSAGE", "新消息设置");
+        self.title = NSLocalizedString(@"TITLE_SETTING_NEW_MESSAGE", "新消息提醒");
     }
     return self;
 }

@@ -71,7 +71,7 @@
         case 0:
         {
             // 设置新消息是否声音提醒
-            cell.textLabel.text = NSLocalizedString(@"TITLE_SETTING_MESSAGE", "消息设置");
+            cell.textLabel.text = NSLocalizedString(@"TITLE_SETTING_NEW_MESSAGE", "新消息提醒");
 
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
