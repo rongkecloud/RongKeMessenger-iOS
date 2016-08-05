@@ -780,15 +780,19 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     //设置lebel背景色
     [labelAppName setBackgroundColor:[UIColor clearColor]];
     //设置label文字
-    [labelAppName setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
+    NSString * str = [NSString stringWithFormat:@"%@：", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
+    [labelAppName setText:str];
     //设置label字体大小
     [labelAppName setFont:[UIFont systemFontOfSize:13]];
     //设置label文字颜色
     labelAppName.textColor = COLOR_WITH_RGB(26, 100, 0);
+    //根据label文字内容改变label的宽度
+    CGSize textSize = [self getSizeFromString:labelAppName.text withFont:labelAppName.font];
+    labelAppName.frame = CGRectMake(5, 0, textSize.width, 20);
     [imageView addSubview:labelAppName];
     
     //创建label
-    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, UISCREEN_BOUNDS_SIZE.width-55, 20)];
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(labelAppName.bounds)+5, 0, UISCREEN_BOUNDS_SIZE.width-(CGRectGetMaxX(labelAppName.bounds)+5), 20)];
     //设置lebel背景色
     [messageLabel setBackgroundColor:[UIColor clearColor]];
     //设置label文字
