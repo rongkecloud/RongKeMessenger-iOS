@@ -1768,21 +1768,6 @@
     {
         [invCell setBackgroundColor: [UIColor clearColor]];
     }
-    // 创建分割线
-    for (int i= 0 ;i<2 ; i++) {
-        UIView *separatedLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0.5f)];
-        separatedLine.backgroundColor = COLOR_WITH_RGB(216, 216, 216);
-        if (i == 0) {
-            [separatedLine setTag:GROUP_MESSAGE_SEPARATEDLINE_L_TAG];
-        }
-        else
-        {
-            [separatedLine setTag:GROUP_MESSAGE_SEPARATEDLINE_R_TAG];
-        }
-        
-        [invCell addSubview:separatedLine];
-
-    }
     
     //创建显示邀请消息的label
     UILabel *tempLabel = [[UILabel alloc] init];
@@ -1980,6 +1965,35 @@
         if (invCell == nil) {
             invCell = [self createGroupInfoCell];
             isNewCreateCell = YES;
+        }
+        
+        // 创建分割线
+        UIView *separatedLeftLine = [invCell viewWithTag:GROUP_MESSAGE_SEPARATEDLINE_L_TAG];
+        UIView *separatedRightLine = [invCell viewWithTag:GROUP_MESSAGE_SEPARATEDLINE_R_TAG];
+
+        if (mmsType == MESSAGE_TYPE_TIME)
+        {
+            if (!separatedLeftLine) {
+                separatedLeftLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0.5f)];
+                [separatedLeftLine setTag:GROUP_MESSAGE_SEPARATEDLINE_L_TAG];
+                separatedLeftLine.backgroundColor = COLOR_WITH_RGB(216, 216, 216);
+                [invCell addSubview:separatedLeftLine];
+            }
+            if (!separatedRightLine) {
+                separatedRightLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0.5f)];
+                [separatedRightLine setTag:GROUP_MESSAGE_SEPARATEDLINE_R_TAG];
+                separatedRightLine.backgroundColor = COLOR_WITH_RGB(216, 216, 216);
+                [invCell addSubview:separatedRightLine];
+            }
+        }
+        else
+        {
+            if (separatedLeftLine) {
+                [separatedLeftLine removeFromSuperview];
+            }
+            if (separatedRightLine) {
+                [separatedRightLine removeFromSuperview];
+            }
         }
         // 更新表格单元内容
         [self initCellContentOf:invCell withString:tipMessageString];
