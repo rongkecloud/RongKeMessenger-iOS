@@ -285,7 +285,8 @@
                         // 如果是群聊会话则显示发送方的名字
                         if (sessionObject.sessionType == SESSION_GROUP_TYPE)
                         {
-                            if (messageObject.atUser && [messageObject.atUser length] > 0)
+                            if (messageObject.messageStatus == MESSAGE_STATE_RECEIVE_RECEIVED
+                                && messageObject.atUser && [messageObject.atUser length] > 0)
                             {
                                 if ([messageObject.atUser isEqualToString: @"all"])
                                 {
