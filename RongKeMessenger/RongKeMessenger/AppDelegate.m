@@ -480,9 +480,18 @@ static void uncaughtExceptionHandler(NSException * exception)
         NSLog(@"RKCLOUD-CHAT: didReceivedCustomUserMsg: dictCustomMessage = %@", customMessageDic);
         
         NSArray *requestStrArray = [((NSString *)[customMessageDic objectForKey:@"content"]) componentsSeparatedByString:@","];
-        if (requestStrArray.count > 0) {
+        if (requestStrArray.count > 0)
+        {
             NSString *contentTitle = [requestStrArray objectAtIndex:0];
             NSString *friendAccount = [customMessageDic objectForKey:@"srcname"];
+            
+            
+            if ([friendAccount isEqualToString: [RKCloudBase getUserName]])
+            {
+                // 多终端的登录
+                friendAccount = [customMessageDic objectForKey: @"dest"];
+            }
+            
             if ([contentTitle isEqualToString:@"add_request"])
             {
                 // 好友申请添加
@@ -491,7 +500,7 @@ static void uncaughtExceptionHandler(NSException * exception)
             else if ([contentTitle isEqualToString:@"add_confirm"])  
             {
                 // 对方通过验证添加
-                [self.contactManager friendAcceptAddReuest:friendAccount andRequestStrArray:requestStrArray];
+                [self.contactManager friendAcceptAddReuest:customMessageDic andRequestStrArray:requestStrArray];
             }
             else if ([contentTitle isEqualToString:@"delete_friend"])
             {
