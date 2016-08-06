@@ -29,7 +29,7 @@
 #define SESSIONINFO_SWITCH_SINGLECHAT_MESSAGE_PROMPT_TAG    604
 #define SESSIONINFO_SWITCH_INVITE_PROMPT_TAG    605
 
-@interface RKChatSessionInfoViewController () <UITableViewDelegate, UITableViewDataSource,  UIAlertViewDelegate, RKCloudChatDelegate,ChatSelectFriendsViewControllerDelegate, SelectGroupMemberDelegate>
+@interface RKChatSessionInfoViewController () <UITableViewDelegate, UITableViewDataSource,  UIAlertViewDelegate, RKCloudChatDelegate,ChatSelectFriendsViewControllerDelegate, SelectGroupMemberDelegate,UITextFieldDelegate>
 {
     CGFloat sessionContactListViewHeight;
 }
@@ -706,6 +706,17 @@
     }
 }
 
+#pragma mark -
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (range.location>=100)
+    {
+        return  NO;
+    }
+    return YES;
+}
 
 #pragma mark -
 #pragma mark action methods
@@ -950,6 +961,7 @@
     setChatTitleAlert.tag = ALERT_MODIFY_GROUP_NAME;
     
     UITextField * titleField = [setChatTitleAlert textFieldAtIndex:0];
+    titleField.delegate = self;
     //设置字体大小
     [titleField setFont:[UIFont systemFontOfSize:16]];
     //设置右边消除键出现模式
@@ -1237,6 +1249,9 @@
                 if (stringTrim == nil || [stringTrim length] <= 0){
                     [UIAlertView showAutoHidePromptView:@"群名称不能为空" background:nil showTime:1.5];
                     return;
+                }
+                if ([stringTrim length] > 100){
+                    stringTrim = [stringTrim substringToIndex:100];
                 }
                 
                 // 修改群聊的名字
