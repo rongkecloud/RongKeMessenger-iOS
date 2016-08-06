@@ -427,12 +427,13 @@ static HttpClientKit * instanceHttpKit = nil;
             
         case 0: //（无法访问）无法连接服务器或者域名不存在
         {
-            if ([ToolsFunction checkInternetReachability] == YES) {
-                rkHttpResult.opCode = ERROR_NO_CONNECT_SERVER;
-            }
-            else {
-                rkHttpResult.opCode = NO_NETWORK;
-            }
+//            if ([ToolsFunction checkInternetReachability] == YES) {
+//                rkHttpResult.opCode = ERROR_NO_CONNECT_SERVER;
+//            }
+//            else {
+//                rkHttpResult.opCode = NO_NETWORK;
+//            }
+            rkHttpResult.opCode = NO_NETWORK;
         }
             break;
             
