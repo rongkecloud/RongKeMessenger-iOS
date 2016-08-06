@@ -164,6 +164,9 @@
             if (textAttributedString.length > 0) {
                 // 使用属性化字符串
                 self.nameLabel.attributedText = textAttributedString;
+            } else {
+                // 当用户的名称中没有搜索的字符但id中有搜索的字符时，显示用户的名称，不高亮搜索的字符。
+                self.nameLabel.text = sessionName;
             }
         }
     }
