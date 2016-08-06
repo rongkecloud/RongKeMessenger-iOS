@@ -155,7 +155,12 @@
         self.headImageView.image = [UIImage imageNamed:@"default_icon_group_avatar"];
     }
     
-    if (sessionListType == SessionListShowTypeSearchSessionName) {
+    
+    // 当用户的名称中没有搜索的字符但id中有搜索的字符时，显示用户的名称，不高亮搜索的字符。
+    self.nameLabel.text = sessionName;
+
+    if (sessionListType == SessionListShowTypeSearchSessionName)
+    {
         // 需要高亮显示
         if (sessionName.length > 0 && markColorStr.length > 0) {
             
@@ -164,15 +169,8 @@
             if (textAttributedString.length > 0) {
                 // 使用属性化字符串
                 self.nameLabel.attributedText = textAttributedString;
-            } else {
-                // 当用户的名称中没有搜索的字符但id中有搜索的字符时，显示用户的名称，不高亮搜索的字符。
-                self.nameLabel.text = sessionName;
             }
         }
-    }
-    else
-    {
-        self.nameLabel.text = sessionName;
     }
 }
 
