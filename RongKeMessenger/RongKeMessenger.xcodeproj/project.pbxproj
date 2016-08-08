@@ -533,6 +533,8 @@
 		2CAE95531D4A1D880097286B /* RKCustomerRobotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95391D4A1D880097286B /* RKCustomerRobotCell.xib */; };
 		2CAE95541D4A1D880097286B /* libRKCustomerServiceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAE953B1D4A1D880097286B /* libRKCustomerServiceSDK.a */; };
 		2CAE95551D4A1D880097286B /* libRKCustomerServiceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAE953B1D4A1D880097286B /* libRKCustomerServiceSDK.a */; };
+		4FBD4D1F1D542A9000EA1E45 /* rkcloud_chat_sound_custom.caf in Resources */ = {isa = PBXBuildFile; fileRef = 168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */; };
+		4FBD4D201D542AAE00EA1E45 /* message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 16A903011CAD129A001169A3 /* message.caf */; };
 		D53331261C7D54E9005817BB /* DownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = D53331241C7D54E9005817BB /* DownloadIndicator.m */; };
 		D53331271C7D54E9005817BB /* DownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = D53331241C7D54E9005817BB /* DownloadIndicator.m */; };
 		D533312C1C7DAF33005817BB /* NewFeatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = D533312B1C7DAF33005817BB /* NewFeatureView.m */; };
@@ -2822,6 +2824,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FBD4D201D542AAE00EA1E45 /* message.caf in Resources */,
+				4FBD4D1F1D542A9000EA1E45 /* rkcloud_chat_sound_custom.caf in Resources */,
 				164757A51CC9FF070075998E /* RKSessionListSearchViewController.xib in Resources */,
 				2825EE621CBDE3CE00E0B0B1 /* MessageVideoCell.xib in Resources */,
 				2CAE95531D4A1D880097286B /* RKCustomerRobotCell.xib in Resources */,
