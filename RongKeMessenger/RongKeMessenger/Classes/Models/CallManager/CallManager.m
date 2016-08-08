@@ -323,7 +323,7 @@
             case AV_CALLEE_NO_ANSWER: // 被叫未接听，主要给主叫呼叫超时使用
             case AV_CALLEE_ANSWER_TIMEOUT: // 被叫未接听，主要给被叫应答超时使用
             {
-                if (self.callViewController.isIncomingCall)
+                if (self.callViewController == nil || self.callViewController.isIncomingCall)
                 {
                     // "未接来电"
                     self.strCallRecordMsgContent = NSLocalizedString(@"RKCLOUD_AV_MSG_CALL_MISSED", "未接来电");
