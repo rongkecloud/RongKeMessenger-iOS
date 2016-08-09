@@ -13,27 +13,27 @@
 #pragma mark -
 #pragma mark 提示窗口的tag值
 
-// 提示窗口使用(1000~1100)
-#define ALERT_PROMPT_WAITING_TAG			1000	// 提示等待alert窗口
-#define ALERT_UPLOAD_ADDRESSBOOK_TAG		1001	// 上传通讯录提示
-#define ALERT_FORCED_UPDATE_VERSION_TAG		1004	// 提示用户强制程序版本升级
-#define ALERT_UPDATE_VERSION_TAG			1005	// 提示用户程序版本升级
-#define ALERT_REPEAT_LOGIN_TAG				1006	// 提示用户重复登录
-#define ALERT_PUSH_NOTIFICATIONS_TAG		1007	// 提示用户开启推送通知
-#define ALERT_BANNED_USERS_TAG				1009    // 提示用户被禁止使用
-#define ALERT_ADDRESSBOOK_DISEABLE_TAG      1010    // 提示用户开启通讯录使用权限（ios5之后使用）
-#define ALERT_CLEAR_MESSAGES_TAG            1011	// 提示用户清空消息记录的TAG
-#define ALERT_EXIT_SESSION_TAG              1012	// 提示用户退出会话的TAG
-#define ALERT_CREATE_NEW_GROUP_TAG          1013	// 提示创建一个新的群聊提示Tag
-#define ALERT_PROMPT_REGISTER_TAG           1014    // 注册alert窗口
-#define ALERT_CONTACT_GROUPS_NAME_NEW       1015    // 添加新分组ALERTVIEW的Tag值
-#define ALERT_CONTACT_GROUPS_NAME_DELETE    1016    // 删除分组ALERTVIEW的Tag值
-#define ALERT_CONTACT_GROUPS_NAME_CHANGE    1017    // 编辑分组ALERTVIEW的Tag值
-#define ALERT_FORWARD_MESSAGE_TAG           1018	// 提示转发消息操作
-#define ALERT_CLOSE_CHAT_SESSION_TAG        1019    // 提示被踢或者群解散时的Tag值
+// 提示窗口使用(100~120)
+#define ALERT_PROMPT_WAITING_TAG			100	// 提示等待alert窗口
+#define ALERT_UPLOAD_ADDRESSBOOK_TAG		101	// 上传通讯录提示
+#define ALERT_FORCED_UPDATE_VERSION_TAG		104	// 提示用户强制程序版本升级
+#define ALERT_UPDATE_VERSION_TAG			105	// 提示用户程序版本升级
+#define ALERT_REPEAT_LOGIN_TAG				106	// 提示用户重复登录
+#define ALERT_PUSH_NOTIFICATIONS_TAG		107	// 提示用户开启推送通知
+#define ALERT_BANNED_USERS_TAG				109    // 提示用户被禁止使用
+#define ALERT_ADDRESSBOOK_DISEABLE_TAG      110    // 提示用户开启通讯录使用权限（ios5之后使用）
+#define ALERT_CLEAR_MESSAGES_TAG            111	// 提示用户清空消息记录的TAG
+#define ALERT_EXIT_SESSION_TAG              112	// 提示用户退出会话的TAG
+#define ALERT_CREATE_NEW_GROUP_TAG          113	// 提示创建一个新的群聊提示Tag
+#define ALERT_PROMPT_REGISTER_TAG           114    // 注册alert窗口
+#define ALERT_CONTACT_GROUPS_NAME_NEW       115    // 添加新分组ALERTVIEW的Tag值
+#define ALERT_CONTACT_GROUPS_NAME_DELETE    116    // 删除分组ALERTVIEW的Tag值
+#define ALERT_CONTACT_GROUPS_NAME_CHANGE    117    // 编辑分组ALERTVIEW的Tag值
+#define ALERT_FORWARD_MESSAGE_TAG           118	// 提示转发消息操作
+#define ALERT_CLOSE_CHAT_SESSION_TAG        119    // 提示被踢或者群解散时的Tag值
 
-#define MMSWINDOW_TAG						1101	// 状态栏新消息提醒中使用的window tag
-#define PROMPT_WAITING_VIEW_TAG             1102	// 提示view 遮罩层TAG
+#define MMSWINDOW_TAG						121	// 状态栏新消息提醒中使用的window tag
+#define PROMPT_WAITING_VIEW_TAG             122	// 提示view 遮罩层TAG
 
 //#define ADD_CONTACT_BUTTON					1105    // 会话消息的添加联系人按钮
 
