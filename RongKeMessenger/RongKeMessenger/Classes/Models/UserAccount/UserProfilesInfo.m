@@ -641,10 +641,10 @@
     [appDelegate.databaseManager closeDataBase];
     
     // 退出云视互动服务
-    [RKCloudBase unInit];
-    [RKCloudChat unInit];
     [RKCloudMeeting unInit];
     [RKCloudAV unInit];
+    [RKCloudChat unInit];
+    [RKCloudBase unInit];
     
     // 取消注册Push Notification通知
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];

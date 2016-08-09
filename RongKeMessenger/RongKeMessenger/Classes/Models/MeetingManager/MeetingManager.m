@@ -432,7 +432,8 @@
     
     // 重置会议状态
     self.joinMeetingType = JoinMeetingNoneType;
-    
+    [RKCloudMeeting hangup];
+
     if ([AppDelegate appDelegate].applicationRunState == APPSTATE_RESET_USER)
     {
         // 挂断 会议页面置空

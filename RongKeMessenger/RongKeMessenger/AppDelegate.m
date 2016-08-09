@@ -448,8 +448,6 @@ static void uncaughtExceptionHandler(NSException * exception)
             case 1: // 重复登录
             {
                 // 开发者需要提示用户重复登录，并注销此用户回到用户登录页面
-                [self.userProfilesInfo logoutRKCloudAccount];
-                
                 // CS SessionID失效则提示用户重新登录CS
                 [self.userProfilesInfo promptRepeatLogin];
             }
