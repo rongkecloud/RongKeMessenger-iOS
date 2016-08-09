@@ -793,8 +793,7 @@
                                                  break;
                                          }
                                          
-                                         // 弹出提示信息
-                                         [UIAlertView showAutoHidePromptView:[NSString stringWithFormat:@"%@\n(%d)", errString, errorCode] background:nil showTime:1.5];
+                                         [UIAlertView showSimpleAlert: [NSString stringWithFormat:@"%@\n %d", errString, errorCode]];
                                          
                                      }];
     }
