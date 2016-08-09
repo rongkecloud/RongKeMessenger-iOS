@@ -413,7 +413,7 @@
 		{
             unReadImage = [UIImage imageNamed:@"unread_warning_icon"];
             float unReadImageOriginX = CGRectGetMaxX(self.bubbleRect) + CELL_DISTANCE_BETWEEN_READ_FLAG_AND_RIGHT_OF_RECEIVE_BUBBLE;
-            float unReadImageOriginY = CGRectGetMaxY(self.bubbleRect) - unReadImage.size.height/2 - CELL_DISTANCE_BETWEEN_READ_FLAG_AND_BOTTOM_OF_RECEIVE_BUBBLE;
+            float unReadImageOriginY = CGRectGetMaxY(self.bubbleRect) - CGRectGetHeight(self.bubbleRect)/2 - unReadImage.size.height/2;
             [unReadImage drawInRect:CGRectMake(unReadImageOriginX,
                                                unReadImageOriginY,
                                                unReadImage.size.width,
