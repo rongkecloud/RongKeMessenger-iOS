@@ -3354,7 +3354,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "402281c8-5b1a-4dd5-b0ff-169b0a6a3335";
+				PROVISIONING_PROFILE = "b53a9cb5-1e68-4271-88b8-9000b87a75af";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3618,7 +3618,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG_LOG,
 					DEBUG_WRITE_LOG,
-					LAN_SERVER,
 				);
 				INFOPLIST_FILE = "RongKeMessenger/RongKeMessengerLan-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
