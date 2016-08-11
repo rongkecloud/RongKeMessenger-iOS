@@ -276,6 +276,8 @@
         [self.callViewController onStateCallBack:state withReason:stateReason];
     }
     
+    BOOL isSaveMessage = YES;
+    
     // 通话如果挂断则保存通话记录到消息会话中
     if (state == AV_CALL_STATE_HANGUP)
     {
@@ -284,7 +286,8 @@
         RKCloudAVCallInfo *avCallInfo = [RKCloudAV getAVCallInfo];
         NSAssert(avCallInfo != nil, @"ERROR: avCallInfo == nil");
         
-        switch (stateReason) {
+        switch (stateReason)
+        {
             case AV_NO_REASON:
             {
                 // 格式化通话时长显示格式
@@ -355,13 +358,18 @@
                 // "呼叫失败"
                 self.strCallRecordMsgContent = NSLocalizedString(@"RKCLOUD_AV_MSG_CALLER_CALL_FAILED", "呼叫失败");
                 break;
-                
+            case AV_CALLEE_OTHER_PLATFORM_ANSWER:
+                isSaveMessage = NO;
+                break;
             default:
                 break;
         }
         
-        // 插入消息记录中保存通话记录
-        [self saveCallRecordToChatLocalMessage:avCallInfo.peerAccount withIsCaller:avCallInfo.isCaller withIsVideoCall:avCallInfo.isStartVideoCall withIsMissedCall:isMissCall withCallTime:[ToolsFunction getCurrentSystemDateSecond]];
+        if (isSaveMessage)
+        {
+            // 插入消息记录中保存通话记录
+            [self saveCallRecordToChatLocalMessage:avCallInfo.peerAccount withIsCaller:avCallInfo.isCaller withIsVideoCall:avCallInfo.isStartVideoCall withIsMissedCall:isMissCall withCallTime:[ToolsFunction getCurrentSystemDateSecond]];
+        }
     }
 }
 
