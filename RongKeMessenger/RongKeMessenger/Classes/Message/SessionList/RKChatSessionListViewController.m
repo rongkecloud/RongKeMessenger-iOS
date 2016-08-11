@@ -746,14 +746,38 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         // 选择会话tabbar
-        AppDelegate *appDelegate = [AppDelegate appDelegate];
-        appDelegate.mainTabController.selectedIndex = 0;
+        BOOL isExist = NO;
+        RKCloudChatBaseChat *sessionObject = nil;
         
-        if (self.allSessionArray == nil) {
-            self.allSessionArray = [NSMutableArray array];
+        for (int i = 0; i < [self.allSessionArray count]; i++)
+        {
+            sessionObject = (RKCloudChatBaseChat *)[self.allSessionArray objectAtIndex:i];
+            if ([chatSession.sessionID isEqualToString:sessionObject.sessionID])
+            {
+                isExist = YES;
+                break;
+            }
         }
-        [self.allSessionArray insertObject:chatSession atIndex:0];
-
+        
+        // 重新获取会话记录
+        if (isExist)
+        {
+            if ([sessionObject.lastMessageObject.sessionID isEqualToString: chatSession.lastMessageObject.sessionID] == NO)
+            {
+                [self.allSessionArray removeObject:sessionObject];
+                [self.allSessionArray insertObject:chatSession atIndex:0];
+            }
+            else
+            {
+                // 替换原来的对象
+                [self.allSessionArray replaceObjectAtIndex:[self.allSessionArray indexOfObject: sessionObject] withObject:chatSession];
+            }
+        }
+        else
+        {
+            [self.allSessionArray insertObject:chatSession atIndex:0];
+        }
+        
         // 刷新tableview
         if (self.sessionListTableView)
         {
@@ -761,7 +785,7 @@
         }
         
         // 跳转到RKChatSessionViewController页面，创建聊天会话
-        [self createNewChatView:chatSession];
+        // [self createNewChatView:chatSession];
     });
 }
 
