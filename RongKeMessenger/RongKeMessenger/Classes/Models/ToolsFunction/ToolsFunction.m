@@ -25,7 +25,7 @@
 
 #define IMAGE_SCALE_SHORTEST_LENGTH_720      720 // 普通图片缩放时最短边的长度
 
-#define MMSWINDOW_TAG 1101	// 状态栏新消息提醒中使用的window tag
+#define MMS_PROMPT_WINDOW_TAG 1101	// 状态栏新消息提醒中使用的window tag
 // 程序状态栏字体颜色
 #define COLOR_STATUSBAR_TEXT_RED		26/255.0f
 #define COLOR_STATUSBAR_TEXT_GREEN	 100.0/255.0f
@@ -760,7 +760,7 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
         UIWindow *windowStatusBar = [[UIWindow alloc] initWithFrame:frame];
         [windowStatusBar setBackgroundColor:[UIColor clearColor]];
         [windowStatusBar setWindowLevel:UIWindowLevelStatusBar];
-        windowStatusBar.tag = MMSWINDOW_TAG;
+        windowStatusBar.tag = MMS_PROMPT_WINDOW_TAG;
         statusBarWindow = windowStatusBar;
     }
     
