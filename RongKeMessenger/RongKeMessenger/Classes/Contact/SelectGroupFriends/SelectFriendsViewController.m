@@ -443,7 +443,15 @@
         [SingleChat buildSingleChat:friendTable.friendAccount
                           onSuccess:^{
                               // 视图返回到根视图
-                              [self.navigationController popToRootViewControllerAnimated:NO];
+                              // [self.navigationController popToRootViewControllerAnimated:NO];
+                              
+                              AppDelegate *appDelegate = [AppDelegate appDelegate];
+                              appDelegate.mainTabController.selectedIndex = 0;
+                              
+                              RKCloudChatBaseChat *sessionObject = [RKCloudChatMessageManager queryChat: friendTable.friendAccount];
+                              // 新建一个聊天会话,如果会话存在，打开聊天页面
+                              [appDelegate.rkChatSessionListViewController createNewChatView:sessionObject];
+                              
                           }
                            onFailed:^(int errorCode) {
                                
