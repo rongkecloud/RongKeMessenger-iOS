@@ -60,7 +60,7 @@
     }
     
     GroupChat *groupChat = (GroupChat *)[RKCloudChatMessageManager queryChat: self.groupId];
-    if (groupChat.groupCreater && [groupChat.groupCreater isEqualToString: appDelegate.userProfilesInfo.userAccount])
+    if (self.isAtGroupMember && groupChat.groupCreater && [groupChat.groupCreater isEqualToString: appDelegate.userProfilesInfo.userAccount])
     {
         self.isAtAllGroupMember = YES;
     }
