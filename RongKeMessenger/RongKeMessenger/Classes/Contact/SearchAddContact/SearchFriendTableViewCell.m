@@ -124,7 +124,8 @@
                                       LocalMessage *callLocalMessage = nil;
                                       
                                       // 向对方发送验证通过的消息
-                                      callLocalMessage = [LocalMessage buildReceivedMsg:self.friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
+                                      callLocalMessage = [LocalMessage buildReceivedMsg:self.friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:self.friendsNotifyTable.friendAccount];
+                                      
                                       // 保存扩展信息
                                       [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
                                       
