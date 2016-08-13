@@ -3777,6 +3777,7 @@
     {
         // 如果该会话为群聊，则查找该会话中的人数
         self.title = [NSString stringWithFormat:@"%@(%d)", self.currentSessionObject.sessionShowName, self.currentSessionObject.userCounts];
+        [self.messageSessionContentTableView reloadData];
     }
     
     // 会话信息管理页面
