@@ -878,18 +878,9 @@
     // 新建一个聊天会话,如果会话存在，打开聊天页面
     [SingleChat buildSingleChat:friendAccount
                       onSuccess:^{
-                          if (isSelfSend)
-                          {
-                              // 对方发送验证通过的消息
-                              LocalMessage *callLocalMessage = [LocalMessage buildSendMsg:friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:friendsNotifyTable.friendAccount];
-                              [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
-                          }
-                          else
-                          {
-                              // 对方发送验证通过的消息
-                              LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:friendsNotifyTable.friendAccount];
-                              [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
-                          }
+                          // 对方发送验证通过的消息
+                          LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:friendsNotifyTable.friendAccount];
+                          [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
                       }
                        onFailed:^(int errorCode) {
                        }];

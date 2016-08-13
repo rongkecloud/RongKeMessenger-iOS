@@ -557,6 +557,8 @@
             // 新建一个聊天会话,如果会话存在，打开聊天页面
           [SingleChat buildSingleChat:self.friendInfoTable.account
                               onSuccess:^{
+                                  [self.navigationController popViewControllerAnimated: NO];
+                                  
                                   AppDelegate *appDelegate = [AppDelegate appDelegate];
                                   appDelegate.mainTabController.selectedIndex = 0;
                                   
@@ -648,7 +650,23 @@
                         [self setTableViewAppearanceMode];
                         
                         [self.friendInfoTableView reloadData];
-                    } else {
+                        
+                        // 新建一个聊天会话,如果会话存在，打开聊天页面
+                        [SingleChat buildSingleChat:self.friendsNotifyTable.friendAccount
+                                          onSuccess:^{
+                                              LocalMessage *callLocalMessage = nil;
+                                              
+                                              // 向对方发送验证通过的消息
+                                              callLocalMessage = [LocalMessage buildReceivedMsg:self.friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
+                                              // 保存扩展信息
+                                              [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+                                              
+                                          }
+                                           onFailed:^(int errorCode) {
+                                           }];
+                    }
+                    else
+                    {
                         // 弹出申请AlertView
                         UIAlertView *addContactAlertView = [[UIAlertView alloc]
                                                             initWithTitle:NSLocalizedString(@"TITLE_ADD_CONTACT_TITLE", @"对方需要验证")

@@ -3023,13 +3023,16 @@
     
     // Jacky.Chen.2016.03.24.增加键盘弹起时若当前tableView显示的最后一条消息不是数组中最后一条则滚动到最底部
     // 最后一条消息的index
-    if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 1 && isRecordTye) {
+    if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 1 && isRecordTye)
+    {
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.visibleSortMessageRecordArray.count - 1 inSection:0];
         // 取出可见的cell数组
         NSArray *visibleCells = [self.messageSessionContentTableView visibleCells];
+        
         // 判断显示的最后一条是否为数组中最后一条
-        if ([[visibleCells lastObject] isEqual:[self.messageSessionContentTableView cellForRowAtIndexPath:indexPath]] == NO ) {
+        if ([[visibleCells lastObject] isEqual:[self.messageSessionContentTableView cellForRowAtIndexPath:indexPath]] == NO )
+        {
             // 不是则滚动到底部
             [self.messageSessionContentTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }

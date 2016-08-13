@@ -284,7 +284,10 @@
         BOOL isMissCall = NO;
         // 获取当前通话的信息对象RKCloudAVCallInfo
         RKCloudAVCallInfo *avCallInfo = [RKCloudAV getAVCallInfo];
-        NSAssert(avCallInfo != nil, @"ERROR: avCallInfo == nil");
+        // NSAssert(avCallInfo != nil, @"ERROR: avCallInfo == nil");
+        if (avCallInfo == nil) {
+            return;
+        }
         
         switch (stateReason)
         {
