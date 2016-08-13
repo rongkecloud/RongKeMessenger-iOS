@@ -210,6 +210,10 @@
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
+        if (self.searchContactArray == nil || [self.searchContactArray count] == 0)
+        {
+            return;
+        }
         FriendsNotifyTable *friendsNotifyTable = [self.searchContactArray objectAtIndex:indexPath.row];
         
         NSString *paramUserId = friendsNotifyTable.friendAccount;
