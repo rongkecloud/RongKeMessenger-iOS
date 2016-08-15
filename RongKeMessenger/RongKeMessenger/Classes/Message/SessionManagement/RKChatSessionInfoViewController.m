@@ -971,7 +971,6 @@
     titleField.keyboardType = UIKeyboardTypeDefault;
     titleField.text = self.rkChatSessionViewController.currentSessionObject.sessionShowName;
     titleField.placeholder = NSLocalizedString(@"TITLE_PLEASE_INPUT_NEW_NAME", "请输入新名称");
-    [titleField becomeFirstResponder];
     
     [setChatTitleAlert show];
 
