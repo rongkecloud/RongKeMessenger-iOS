@@ -71,6 +71,13 @@
     
     // 默认的是有添加联系人的按钮
     NSUInteger needAddCounts = [contactArray count] + 1;
+    
+    // 如果是创建者，并且群组中只有一个人，那么只显示添加按钮
+    if (isCreate && [contactArray count] == 1)
+    {
+        isCreate = NO;
+    }
+    
     // 如果是创建者的话，会有删除的按钮
     if (isCreate) {
         needAddCounts++;

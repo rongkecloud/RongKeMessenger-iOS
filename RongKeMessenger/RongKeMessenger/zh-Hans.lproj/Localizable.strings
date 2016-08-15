@@ -300,7 +300,7 @@
 "TITLE_SETTING" = "设置";
 "TITLE_CHANGE_SECRET" = "修改密码";
 "TITLE_SETTING_MESSAGE" = "消息设置";
-"TITLE_SETTING_NEW_MESSAGE" = "新消息设置";
+"TITLE_SETTING_NEW_MESSAGE" = "新消息提醒";
 "TITLE_CLEAN_CHAT_RECORD" = "清空消息";
 "TITLE_LOGIN_ACCOUNNT" = "登录账号";
 "TITLE_FEEDBACK_ADVICE" = "意见反馈";
@@ -347,7 +347,7 @@
 "TITLE_DOWNLOAD_AVATAR_FAIL" = "下载失败";
 "TITLE_COMMIT_SUCCESS" = "提交成功";
 "TITLE_CHAT_MESSAGE_RECORD" = "    聊天记录";
-"TITLE_CHAT_SESSION_RECORD" = "    会话记录";
+"TITLE_CHAT_SESSION_RECORD" = "    会话名称";
 
 "PROMPT_NULL_ADDRESS" = "地址不能为空";
 "PROMPT_CHANGE_NONE" = "未修改";
@@ -365,6 +365,7 @@
 "PROMPT_GET_NOTICE_SHOW_DETAIL" = "通知显示消息详情";
 "PROMPT_GET_NOTICE_NEW_MESSAGE_SOUND" = "新消息提示音";
 "PROMPT_GET_NOTICE_ENABLE" = "已开启";
+"PROMPT_GET_NOTICE_DISABLE" = "已关闭";
 
 //*******************************************************************************
 // 融科通server error code
@@ -425,8 +426,8 @@
 
 //*******************************************************************************
 // 好友详情界面
-"TITLE_REMARK_NAME" = "备注名";
-"TITLE_NO_SETTING" = "<未设置>";
+"TITLE_REMARK_NAME" = "备注";
+"TITLE_NO_SETTING" = "未设置";
 
 //*******************************************************************************
 // 群信息设置
@@ -434,12 +435,15 @@
 "TITLE_GROUP_CHAT_LIST" = "群聊列表";
 "TITLE_GROUP_CHAT_MESSAGE" = "聊天信息";
 "TITLE_GROUP_NAME" = "群名称";
+"TITLE_GROUP_DESCRIPTION" = "群描述";
+"TITLE_GROUP_TRANSFER" = "群转让";
 "TITLE_CHAT_ON_TOP" = "置顶聊天";
 "TITLE_MESSAGE_REMIND" = "消息提醒";
 "TITLE_INVITE_JURISDICTION" = "邀请权限";
 "TITLE_SETTING_CHAT_BACKGROUND" = "设置聊天背景";
 "TITLE_CLEAN_MESSAGE_RECORD" = "清空消息记录";
 "TITLE_PLEASE_INPUT_NEW_NAME" = "请输入新名称";
+"TITLE_PLEASE_INPUT_GROUP_DESCRIPTION" = "请输入群的描述";
 
 "PROMPT_SURE_TO_DISMISS_GROUP" = "您确认解散当前群吗？";
 "PROMPT_SURE_TO_QUIT_GROUP" = "您确认退出当前群吗？";
@@ -470,6 +474,11 @@
 "SERVICE_PROMPT_TRANSFOTRM_AGENT" = "已为您转接至客服 %@";
 "SERVICE_PROMPT_LOGOUT_EVALUATION" = "确定退出会话？您还未对本次服务评价";
 "SERVICE_PROMPT_LOGOUT_SYSTEM" = "您确定要退出吗？";
+"SERVICE_PROMPT_TRANSFORM_AGENT_SUCESS" = "转接至人工客服";
+"SERVICE_PROMPT_ROBOT_QUESTION_LIST" = "您问的是否是以下问题？点击或回复序号即可得到对应问题的答案：";
+"SERVICE_PROMPT_NEWWORK_ERROR" = "与服务器连接中断，您可能无法正常使用系统";
+"SERVICE_PROMPT_BLANKET" = "会话已经结束\n重新接入 去留言";
+"SERVICE_PROMPT_NETWORK_ERROR" = "无法连接网络，请检查您的数据网络连接...";
 
 //*******************************************************************************
 // 按钮文本或常用短语字符串
@@ -538,5 +547,7 @@
 "SERVICE_STR_TAKE_PHOTO" = "拍照";
 "SERVICE_STR_SYSTERM_ERROR" = "系统错误，请稍候再试";
 "SERVICE_STR_MANUAL_CONNECT_AGENT" = "手动输入连接客服界面";
-"SERVICE_STR_APP_DEMO" = "融智客服Demo";
+"SERVICE_STR_APP_DEMO" = "融智用户";
 "SERVICE_STR_OKAY" = "好的";
+"SERVIEC_STR_ROBOT_AGNET" = "机器人客服";
+"SERVIEC_STR_AGNET" = "客服";

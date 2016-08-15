@@ -20,19 +20,19 @@
 }
 
 @property (nonatomic, strong) UIButton *nMessagePromptButton;          // 新消息提醒button
-@property (nonatomic) int addNewMessageCount;          // 累积的新消息个数(一般用于用户正翻看历史消息时)
 @property (nonatomic, strong) UIButton *nMessageUnReadButton;          // 未读消息提醒button
 @property (nonatomic, strong) NSArray  *unReadMessageArray;            // 未读消息数组(一般用于用户从list进入后，一屏显示的数据不够显示所有未读消息的情况)
 
 @property (nonatomic, strong) ToolsControlView * toolsControlView;                // 工具控制窗口
 @property (nonatomic, strong) RKCloudChatAudioToolsKit * audioToolsKit;                    // 录音播放工具类
 @property (nonatomic, strong) RKCloudChatBaseChat * currentSessionObject;         // 当前的会话对象
-@property (nonatomic) SessionListShowType sessionShowType;  // 会话显示模式：主要是搜索与Nomal的区别
-
 @property (nonatomic, strong) NSMutableArray *arrayVoiceJustDownload; // 刚下载的语音文件，等待播放，如果播放了已经下载的语音，则清空这个数组
 
 @property (nonatomic, assign) id parentChatSessionListViewController; // 父窗口列表指针
+@property (nonatomic) SessionListShowType sessionShowType;  // 会话显示模式：主要是搜索与Nomal的区别
+
 @property (nonatomic) BOOL isAppearFirstly; // 是否为初次显示
+@property (nonatomic) int addNewMessageCount;          // 累积的新消息个数(一般用于用户正翻看历史消息时)
 
 //############################ Custom Actions #################################
 

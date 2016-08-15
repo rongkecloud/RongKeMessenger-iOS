@@ -155,7 +155,12 @@
         self.headImageView.image = [UIImage imageNamed:@"default_icon_group_avatar"];
     }
     
-    if (sessionListType == SessionListShowTypeSearchSessionName) {
+    
+    // 当用户的名称中没有搜索的字符但id中有搜索的字符时，显示用户的名称，不高亮搜索的字符。
+    self.nameLabel.text = sessionName;
+
+    if (sessionListType == SessionListShowTypeSearchSessionName)
+    {
         // 需要高亮显示
         if (sessionName.length > 0 && markColorStr.length > 0) {
             
@@ -166,10 +171,6 @@
                 self.nameLabel.attributedText = textAttributedString;
             }
         }
-    }
-    else
-    {
-        self.nameLabel.text = sessionName;
     }
 }
 
@@ -251,7 +252,8 @@
     {
         // 如果有草稿存在则优先显示草稿内容
         NSString *textDraft = [RKCloudChatMessageManager getDraft:sessionObject.sessionID];
-        if ([textDraft length] > 0) {
+        if ([textDraft length] > 0)
+        {
             // 通过文本字串创建属性化字串
             NSMutableAttributedString *textAttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"[%@] %@", NSLocalizedString(@"STR_DRAFT_DESCRIBE", "草稿"), textDraft] attributes:nil];
             
@@ -261,11 +263,13 @@
             // 使用属性化字符串
             self.descriptionLabel.attributedText = textAttributedString;
         }
-        else if (messageObject && [messageObject isKindOfClass:[RKCloudChatBaseMessage class]]) {
+        else if (messageObject && [messageObject isKindOfClass:[RKCloudChatBaseMessage class]])
+        {
             
             NSMutableString *strDescription = [NSMutableString string];
             
-            switch (sessionListType) {
+            switch (sessionListType)
+            {
                 case SessionListShowTypeNomal:
                 case SessionListShowTypeSearchSessionName:
                 {
@@ -278,9 +282,32 @@
                     }
                     else
                     {
+                        BOOL isAttributedString = NO;
                         // 如果是群聊会话则显示发送方的名字
                         if (sessionObject.sessionType == SESSION_GROUP_TYPE)
                         {
+                            if (messageObject.messageStatus == MESSAGE_STATE_RECEIVE_RECEIVED
+                                && messageObject.atUser && [messageObject.atUser length] > 0)
+                            {
+                                if ([messageObject.atUser isEqualToString: @"all"])
+                                {
+                                    isAttributedString = YES;
+                                    [strDescription appendString:@"[有人@我]"];
+                                }
+                                else
+                                {
+                                    NSArray *atArray = [messageObject.atUser JSONValue];
+                                    if (atArray && [atArray count] > 0)
+                                    {
+                                        if ([atArray containsObject: [AppDelegate appDelegate].userProfilesInfo.userAccount])
+                                        {
+                                            isAttributedString = YES;
+                                            [strDescription appendString:@"[有人@我]"];
+                                        }
+                                    }
+                                }
+                            }
+                            
                             NSString *nameSender = nil;
                             if ([messageObject.senderName isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
                             {
@@ -292,12 +319,32 @@
                             
                             [strDescription appendFormat:@"%@: ", nameSender];
                         }
+                        
+                        
                         messageInfo = [ChatManager getMessageDescription:messageObject];
-                        if (messageInfo) {
+                        if (messageInfo)
+                        {
                             // 获取消息在消息会话列表上最后一条的描述信息
                             [strDescription appendString:messageInfo];
                         }
-                        self.descriptionLabel.text = strDescription;
+                        
+                        if (isAttributedString)
+                        {
+                            NSMutableAttributedString *textAttributedString = [[NSMutableAttributedString alloc] initWithString: strDescription];
+                            
+                            NSRange range = [strDescription rangeOfString: @"[有人@我]"];
+                            // 设置字体颜色
+                            [textAttributedString addAttribute:NSForegroundColorAttributeName value:COLOR_WITH_RGB(183, 20, 20) range:range];
+                            
+                            if (textAttributedString.length > 0) {
+                                // 使用属性化字符串
+                                self.descriptionLabel.attributedText = textAttributedString;
+                            }
+                        }
+                        else
+                        {
+                            self.descriptionLabel.text = strDescription;
+                        }
                     }
                 }
                     break;
@@ -310,7 +357,8 @@
                     
                 case SessionListShowTypeSearchListCategory:
                 {
-                    if (sessionObject.lastMessageObject.textContent.length > 0 && markColorStr.length > 0) {
+                    if (sessionObject.lastMessageObject.textContent.length > 0 && markColorStr.length > 0)
+                    {
                         
                         NSMutableAttributedString *textAttributedString = [self applyAttributedString:sessionObject.lastMessageObject.textContent pattern:markColorStr];
                         

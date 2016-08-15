@@ -739,6 +739,11 @@
         {
             // 弹出通话页面
             [self popCallViewController];
+            
+            if (stateReason == AV_CALLEE_OTHER_PLATFORM_ANSWER)
+            {
+                [UIAlertView showAutoHidePromptView: @"通话已在其它终端接听"];
+            }
         }
             break;
             

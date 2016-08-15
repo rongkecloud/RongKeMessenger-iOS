@@ -93,7 +93,7 @@ static HttpClientKit * instanceHttpKit = nil;
     switch (result) {
             // 以下为客户端定义的错误代码
         case NO_NETWORK:
-            message = NSLocalizedString(@"STR_NO_NETWORK", "无网络，请检查您的网络连接...");
+            message = NSLocalizedString(@"PROMPT_NETWORK_ERROR", "无网络，请检查您的网络连接...");
             break;
         case ERROR_API_TIMEROUT: // API访问超时
         case ERROR_API_WARNING: // API返回值错误(脚本有报错) Notice & Warning
@@ -427,12 +427,13 @@ static HttpClientKit * instanceHttpKit = nil;
             
         case 0: //（无法访问）无法连接服务器或者域名不存在
         {
-            if ([ToolsFunction checkInternetReachability] == YES) {
-                rkHttpResult.opCode = ERROR_NO_CONNECT_SERVER;
-            }
-            else {
-                rkHttpResult.opCode = NO_NETWORK;
-            }
+//            if ([ToolsFunction checkInternetReachability] == YES) {
+//                rkHttpResult.opCode = ERROR_NO_CONNECT_SERVER;
+//            }
+//            else {
+//                rkHttpResult.opCode = NO_NETWORK;
+//            }
+            rkHttpResult.opCode = NO_NETWORK;
         }
             break;
             

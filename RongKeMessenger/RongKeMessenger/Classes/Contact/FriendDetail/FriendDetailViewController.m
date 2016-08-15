@@ -116,7 +116,8 @@
 
 - (void)setTableViewAppearanceMode
 {
-    self.title = [self.appDelegate.contactManager displayFriendHighGradeName:self.userAccount];
+//    self.title = [self.appDelegate.contactManager displayFriendHighGradeName:self.userAccount];
+    self.title = @"详细资料";
     
     // 向服务器获取联系人详情
     [self getFriendInfoFromServer];
@@ -137,10 +138,12 @@
     {
         // 获取对应的FriendsNotifyTable、得到当前的状态
         FriendsNotifyTable *friendsNotifyTable = [self.appDelegate.databaseManager getFriendsNotifyTableByFriendAccout:self.userAccount];
-        if (friendsNotifyTable) {
+        if (friendsNotifyTable)
+        {
             // 若是已经申请状态则不需要显示添加好友按钮
-            if ([friendsNotifyTable.status integerValue] == AddFriendCurrentStateWaitingValidation) {
-                return;
+            if ([friendsNotifyTable.status integerValue] == AddFriendCurrentStateWaitingValidation)
+            {
+                // return;
             }
         }
         
@@ -375,13 +378,13 @@
             case 0:
             {
                 friendInfoTableViewCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                friendInfoTableViewCell.textLabel.text = NSLocalizedString(@"TITLE_REMARK_NAME", "备注名");
+                friendInfoTableViewCell.textLabel.text = NSLocalizedString(@"TITLE_REMARK_NAME", "备注");
                 
                 NSString *friendRemark = [self.appDelegate.databaseManager getFriendRemarkNameByFriendAccount:self.friendInfoTable.account];
                 
                 if (friendRemark == nil || [friendRemark length] == 0)
                 {
-                    friendInfoTableViewCell.detailTextLabel.text = NSLocalizedString(@"TITLE_NO_SETTING", "<未设置>");
+                    friendInfoTableViewCell.detailTextLabel.text = NSLocalizedString(@"TITLE_NO_SETTING", "未设置");
                 } else {
                     friendInfoTableViewCell.detailTextLabel.text = friendRemark;
                 }
@@ -540,99 +543,6 @@
         }
     });
 }
-/*
-- (void)touchOptionButton:(id)sender
-{
-    NSInteger buttonTag = ((UIButton *)sender).tag;
-    switch (buttonTag - FRIEND_FETAIL_OPTION_BUTTON_TAG) {
-        case 0:   // 发消息
-        {
-            // 新建一个聊天会话,如果会话存在，打开聊天页面
-            [SingleChat buildSingleChat:self.friendInfoTable.account
-                              onSuccess:^{
-                                  [self.navigationController popToRootViewControllerAnimated:NO];
-                                  NSLog(@"DEBUG: buildSingleChat: chatUserName = %@, onSuccess", self.friendInfoTable.account);
-                              }
-                               onFailed:^(int errorCode) {
-                                   NSLog(@"DEBUG: buildSingleChat: chatUserName = %@, onFailed: errorCode = %d", self.friendInfoTable.account, errorCode);
-                               }];
-        }
-            break;
-        case 1:   // 发起视频通话
-        {
-            UIActionSheet *photoActionSheet = [[UIActionSheet alloc]
-                                               initWithTitle:nil
-                                               delegate:self
-                                               cancelButtonTitle:NSLocalizedString(@"STR_CANCEL",nil)
-                                               destructiveButtonTitle:nil
-                                               otherButtonTitles:NSLocalizedString(@"STR_FRIEND_OPERATION_AUDIO", "语音"),NSLocalizedString(@"STR_FRIEND_OPERATION_VIDIO", "视频"),
-                                               nil];
-            [photoActionSheet showInView:self.view];
-        }
-            break;
-        case 2:  // 删除好友
-        {
-            UIAlertView *deleteFriendAlertView = [[UIAlertView alloc]
-                                                  initWithTitle:@"提示" message:NSLocalizedString(@"PROMPT_FRIEND_OPERATION_DELETE_FRIEND", "确定删除好友？")
-                                                  delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"STR_CANCEL", @"") otherButtonTitles:NSLocalizedString(@"STR_OK", @""), nil];
-            
-            deleteFriendAlertView.tag = ALERTVIEW_FRIEND_DETAIL_DELETE_TAG;
-            
-            [deleteFriendAlertView show];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)touchAddFriendButton:(id)sender
-{
-    self.friendsNotifyTable = [[FriendsNotifyTable alloc] init];
-    self.friendsNotifyTable.friendAccount = self.friendInfoTable.account;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        BOOL isSuccess = [self.appDelegate.contactManager syncAddFriend:self.friendsNotifyTable];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (isSuccess == YES)
-            {
-                self.personalDetailType = PersonalDetailTypeFriend;
-                
-                [self setTableViewAppearanceMode];
-                
-                [self.friendInfoTableView reloadData];
-            } else {
-                // 弹出申请AlertView
-                UIAlertView *addContactAlertView = [[UIAlertView alloc]
-                                                    initWithTitle:NSLocalizedString(@"TITLE_ADD_CONTACT_TITLE", @"对方需要验证")
-                                                    message:nil
-                                                    delegate:self
-                                                    cancelButtonTitle:NSLocalizedString(@"STR_CANCEL", @"")
-                                                    otherButtonTitles:NSLocalizedString(@"STR_OK", @""), nil];
-                addContactAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-                addContactAlertView.tag = ALERTVIEW_FRIEND_DETAIL_ADD_TAG;
-                
-                UITextField *addTitleTextField = [addContactAlertView textFieldAtIndex:0];
-                addTitleTextField.delegate = self;
-                NSString *disPlayName = [[AppDelegate appDelegate].userInfoManager displayPersonalHighGradeName];
-                
-                NSString *stringResultName = disPlayName;
-                // 优化个人姓名显示 长度不超过20位 否则无法添加好友
-                if (disPlayName != nil && [disPlayName length] > 20)
-                {
-                    stringResultName = [disPlayName substringToIndex:20];
-                }
-                addTitleTextField.text = [NSString stringWithFormat:@"%@ 请求添加您为好友。", stringResultName];
-                
-                [addContactAlertView show];
-            }
-        });
-    });
-}
-*/
 
 #pragma mark -
 #pragma mark - FriendDetailOptionViewDelegate Method
@@ -645,9 +555,17 @@
         case 0:   // 发消息
         {
             // 新建一个聊天会话,如果会话存在，打开聊天页面
-            [SingleChat buildSingleChat:self.friendInfoTable.account
+          [SingleChat buildSingleChat:self.friendInfoTable.account
                               onSuccess:^{
-                                  [self.navigationController popToRootViewControllerAnimated:NO];
+                                  [self.navigationController popViewControllerAnimated: NO];
+                                  
+                                  AppDelegate *appDelegate = [AppDelegate appDelegate];
+                                  appDelegate.mainTabController.selectedIndex = 0;
+                                  
+                                  RKCloudChatBaseChat *sessionObject = [RKCloudChatMessageManager queryChat: self.friendTable.friendAccount];
+                                  // 新建一个聊天会话,如果会话存在，打开聊天页面
+                                  [appDelegate.rkChatSessionListViewController createNewChatView:sessionObject];
+                                  
                                   NSLog(@"DEBUG: buildSingleChat: chatUserName = %@, onSuccess", self.friendInfoTable.account);
                               }
                                onFailed:^(int errorCode) {
@@ -732,7 +650,23 @@
                         [self setTableViewAppearanceMode];
                         
                         [self.friendInfoTableView reloadData];
-                    } else {
+                        
+                        // 新建一个聊天会话,如果会话存在，打开聊天页面
+                        [SingleChat buildSingleChat:self.friendsNotifyTable.friendAccount
+                                          onSuccess:^{
+                                              LocalMessage *callLocalMessage = nil;
+                                              
+                                              // 向对方发送验证通过的消息
+                                              callLocalMessage = [LocalMessage buildReceivedMsg:self.friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:self.friendsNotifyTable.friendAccount];
+                                              // 保存扩展信息
+                                              [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+                                              
+                                          }
+                                           onFailed:^(int errorCode) {
+                                           }];
+                    }
+                    else
+                    {
                         // 弹出申请AlertView
                         UIAlertView *addContactAlertView = [[UIAlertView alloc]
                                                             initWithTitle:NSLocalizedString(@"TITLE_ADD_CONTACT_TITLE", @"对方需要验证")

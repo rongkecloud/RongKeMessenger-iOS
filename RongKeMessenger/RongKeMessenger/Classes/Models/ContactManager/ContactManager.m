@@ -831,9 +831,19 @@
  *
  *  @param friendAccount 好友账号
  */
-- (void)friendAcceptAddReuest:(NSString *)friendAccount andRequestStrArray:(NSArray *)requestStrArray
+- (void)friendAcceptAddReuest:(NSDictionary *)customMessageDic andRequestStrArray:(NSArray *)requestStrArray
 {
-    NSLog(@"CONTACT-DEBUG: friendAcceptAddReuest: friendAccount = %@, requestStrArray = %@", friendAccount, requestStrArray);
+    NSLog(@"CONTACT-DEBUG: friendAcceptAddReuest: friendAccount = %@, requestStrArray = %@", customMessageDic, requestStrArray);
+    
+    NSString *friendAccount = [customMessageDic objectForKey:@"srcname"];
+    
+    BOOL isSelfSend = NO;
+    if ([friendAccount isEqualToString: [RKCloudBase getUserName]])
+    {
+        // 多终端的登录
+        isSelfSend = YES;
+        friendAccount = [customMessageDic objectForKey: @"dest"];
+    }
     
     FriendsNotifyTable *friendsNotifyTable = [self.appDelegate.databaseManager getFriendsNotifyTableByFriendAccout:friendAccount];
     if (friendsNotifyTable == nil)
@@ -864,11 +874,16 @@
     
     [self getContactInfoByUserAccount:friendsNotifyTable.friendAccount];
     
-    // 对方发送验证通过的消息
-    LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:nil forSenderName:friendsNotifyTable.friendAccount];
-    // 保存扩展信息
-    callLocalMessage.textContent = NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil);
-    [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+    
+    // 新建一个聊天会话,如果会话存在，打开聊天页面
+    [SingleChat buildSingleChat:friendAccount
+                      onSuccess:^{
+                          // 对方发送验证通过的消息
+                          LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:friendsNotifyTable.friendAccount];
+                          [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+                      }
+                       onFailed:^(int errorCode) {
+                       }];
 }
 
 /**

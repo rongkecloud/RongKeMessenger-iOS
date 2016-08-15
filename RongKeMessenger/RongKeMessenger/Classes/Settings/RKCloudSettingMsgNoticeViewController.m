@@ -14,13 +14,14 @@
 #define UISWITCH_NOTICE_TAG     702
 #define UISWITCH_VIBRATE_TAG    703
 
-@interface RKCloudSettingMsgNoticeViewController ()
+@interface RKCloudSettingMsgNoticeViewController ()<UIActionSheetDelegate>
 
 @property (strong, nonatomic) UISwitch *enableSwitch; // 通知栏提醒
 @property (strong, nonatomic) UISwitch *soundSwitch; // 声音提醒
 @property (strong, nonatomic) UISwitch *vibrateSwitch; // 振动提醒
 @property (strong, nonatomic) UISwitch *showDetailSwitch; // 振动提醒
 @property (assign, nonatomic) BOOL isEnable; // 是否通知栏提醒
+@property (assign, nonatomic) BOOL isSystemNotifyRing; //是否系统铃声
 
 @end
 
@@ -30,7 +31,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"TITLE_SETTING_NEW_MESSAGE", "新消息设置");
+        self.title = NSLocalizedString(@"TITLE_SETTING_NEW_MESSAGE", "新消息提醒");
     }
     return self;
 }
@@ -39,7 +40,8 @@
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = COLOR_VIEW_BACKGROUND;
-    self.isEnable = [RKCloudChatConfigManager getNotificationEnable];
+    self.isEnable = ![ToolsFunction isDisableApnsNotifications];
+    self.isSystemNotifyRing = ![RKCloudChatConfigManager getNotifyRingUri].lastPathComponent;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,7 +92,16 @@
         {
             // 设置是否在通知栏中显示新消息
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTIFICATION_ENABLE", "通知栏提醒");
-            cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_ENABLE", @"已开启");
+            
+            if (self.isEnable)
+            {
+                cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_ENABLE", @"已开启");
+            }
+            else
+            {
+                cell.detailTextLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_DISABLE", @"已关闭");
+            }
+            
 //            if ([ToolsFunction iSiOS7Earlier])
 //            {
 //                floatX -= 25;
@@ -168,11 +179,15 @@
         {
             // 设置新消息是否振动提醒
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_NEW_MESSAGE_SOUND", "新消息提示音");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             
             if (self.isEnable == YES)
             {
-                
-                cell.detailTextLabel.text = [RKCloudChatConfigManager getNotifyRingUri].lastPathComponent;
+                if (self.isSystemNotifyRing) {
+                    cell.detailTextLabel.text = @"系统铃声";
+                } else {
+                    cell.detailTextLabel.text = @"自定义铃声";
+                }
             }
         }
             break;
@@ -211,8 +226,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //选中后的反显颜色即刻消失
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.row) {
+        case 4: // 新消息提示音
+        {
+            UIActionSheet *changeNotifyRingActionSheet = [[UIActionSheet alloc]
+                                                  initWithTitle:nil
+                                                  delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"STR_CANCEL", "取消")
+                                                  destructiveButtonTitle:nil
+                                                  otherButtonTitles:@"系统铃声",@"自定义铃声", nil];
+            [changeNotifyRingActionSheet showInView:self.view];
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -231,6 +260,34 @@
     return headerView;
     
 }
+
+#pragma mark - UIActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0: // 系统铃声
+        {
+            [RKCloudChatConfigManager setNotifyRingUri:nil];
+            self.isSystemNotifyRing = YES;
+            [self.tableView reloadData];
+        }
+            break;
+        
+        case 1: // 自定义铃声
+        {
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"rkcloud_chat_sound_custom" ofType:@"caf"];
+            [RKCloudChatConfigManager setNotifyRingUri:filePath];
+            self.isSystemNotifyRing = NO;
+            [self.tableView reloadData];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - Custom Method
 
 // 设置是否在通知栏中显示新消息

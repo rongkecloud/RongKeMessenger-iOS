@@ -33,6 +33,9 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "VideoMessage.h"
 #import "MessageVideoCell.h"
+#import "SelectGroupMemberViewController.h"
+#import "HPTextViewInternal.h"
+#import "MJRefresh.h"
 
 // 键盘的高度
 #define TOOLVIEW_HEIGHT 190
@@ -66,7 +69,7 @@
 // 群消息信息（邀请/时间等）表格单元标识符
 #define CELL_MESSAGEGROUPINFO @"MessageMCTableCell"
 
-@interface RKChatSessionViewController () <RKMessageContainerToolsViewDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface RKChatSessionViewController () <RKMessageContainerToolsViewDelegate,UITableViewDataSource,UITableViewDelegate, SelectGroupMemberDelegate>
 {
 	NSInteger currentTextViewLocation;  // 文本输入当前光标位置
 	
@@ -77,6 +80,7 @@
     CGRect systemKeyboardRect;   // 系统键盘的矩形位置
     NSInteger  loadMessageCount;       // 记录当前载入的消息个数（不包括分组的时间消息及其他未存入数据库的消息）
                                  /*Jacky.Chen:2016.02.16:添加成员变量记录从数据库中加载显示的消息个数,作为下拉加载更多的判断条件，解决当前项目中历史消息显示不全的问题*/
+    BOOL isFirstLoadMMS;
 }
 
 @property (nonatomic, strong) UITableView *messageSessionContentTableView;        // 此表用于显示消息记录的具体内容
@@ -107,6 +111,12 @@
 @property (nonatomic, assign) BOOL isRefreshing; // Jacky.Chen ,03.18 ,Add增加属性防止多次重复刷新阻塞主线程
 
 @property (nonatomic, assign) CGPoint lastTouchPoint; // Jacky.Chen.03.10.记录录音时手指最后的触摸点
+
+// 增加@功能
+@property (nonatomic, strong) NSMutableArray *atUserArray;  // @指定的用户
+@property (nonatomic) BOOL isAtAll;      // 是否@all
+@property (nonatomic) BOOL isExecuteAt;  // 是否执行@功能
+@property (nonatomic) BOOL isPushAtView; // 是否弹出@选择页面
 
 @end
 
@@ -141,7 +151,7 @@
     [self setupRecordingView];
     
     // 按组载入消息记录
-    [self loadMessageRecord:YES];
+    // [self loadMessageRecord:YES];
     
     // 初始化底部的工具栏View
     [self createMessageToolsContainerView];
@@ -158,6 +168,9 @@
     // 初始化UI和控件窗口
     [self initUIControlView];
     
+    // 初始化聊天会话上滑和下拉控件和加载数据的block
+    [self initChatSessionRefreshingControl];
+
     // 注册更新昵称和头像的通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateUserProfileNotification:)
@@ -170,18 +183,16 @@
                                                  name:NOTIFICATION_CLEAR_MESSAGES_OF_SESSION
                                                object:nil];
     
-    [RKCloudChatMessageManager queryMessageKeyword:@"jd" onSuccess:^(NSArray<NSDictionary *> *messageObjectArray) {
-        
-    } onFailed:^(int errorCode) {
-        
-    }];
+    // 告知其它平台清空新消息提示
+    [RKCloudChatMessageManager clearOtherPlatformNewMMSCounts: self.currentSessionObject.sessionID];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     NSLog(@"DEBUG: RKChatSessionViewController - viewWillAppear begin");
-        
+    self.isPushAtView = NO;
+    
     // 给meetingManager的会话对象赋值 用于本地进出多人语音添加提示语
     [AppDelegate appDelegate].meetingManager.currentSessionObject = self.currentSessionObject;
     
@@ -293,7 +304,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillChangeStatusBarFrameNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextViewTextDidChangeNotification object:nil];
+
     // 更新输入框的位置
     chatTextViewRect = self.messageContainerToolsView.frame;
     
@@ -422,7 +434,7 @@
     self.messageSessionContentTableView.dataSource = self;
     self.messageSessionContentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.messageSessionContentTableView.backgroundColor = COLOR_CHAT_VIEW_BACKGROUND;
-
+    
 }
 
 // Jacky.Chen:2016.02.24 add
@@ -508,6 +520,10 @@
     loadMessageCount         = 0;
     self.isRefreshing        = NO;
     self.lastTouchPoint      = CGPointZero;
+    self.isExecuteAt = YES;
+    self.isAtAll = NO;
+    self.atUserArray = [NSMutableArray array];
+    isFirstLoadMMS = YES;
 }
 
 // 初始化bar上的button
@@ -626,6 +642,94 @@
                                              selector:@selector(willChangeStatusBarFrameNotification:)
                                                  name:UIApplicationWillChangeStatusBarFrameNotification
                                                object:nil];
+    
+    // 提醒功能只对群聊启用
+    if (self.currentSessionObject.sessionType == SESSION_GROUP_TYPE)
+    {
+        // 注册UITextView的text改变的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(textViewTextDidChangeNotification:)
+                                                     name:UITextViewTextDidChangeNotification
+                                                   object: nil];
+    }
+}
+
+// 初始化聊天会话上滑和下拉控件和加载数据的block
+- (void)initChatSessionRefreshingControl
+{
+    
+    // 为了dealloc方法能够响应，必须使用weakSelf指针
+    __weak RKChatSessionViewController *weakSelf = self;
+    
+    // 增加下拉刷新
+    weakSelf.messageSessionContentTableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        
+        NSString *messageId = nil;
+        if (self.visibleSortMessageRecordArray && [self.visibleSortMessageRecordArray count] > 0)
+        {
+            for (RKCloudChatBaseMessage *existMessageObject in self.visibleSortMessageRecordArray)
+            {
+                // 判断消息记录是否存在
+                if ([existMessageObject isKindOfClass:[RKCloudChatBaseMessage class]])
+                {
+                    messageId = existMessageObject.messageID;
+                    break;
+                }
+            }
+        }
+        
+        [RKCloudChatMessageManager queryChatMsgs:weakSelf.currentSessionObject.sessionID
+                                        chatType:(weakSelf.currentSessionObject.sessionType+1)
+                                           msgId:messageId
+                                       msgCounts:LOAD_MESSAGE_COUNT
+                                        callBack:^(NSArray<RKCloudChatBaseMessage *> *messageObjectArray) {
+                                            int row = (int)weakSelf.visibleSortMessageRecordArray.count;
+                                            if (messageObjectArray && [messageObjectArray count] > 0) {
+                                                // 加载排序后的消息内容
+                                                [weakSelf loadSortMessageRecord:messageObjectArray withLoadDirection:LoadMessageOld];
+                                            }
+                                            row = (int)self.visibleSortMessageRecordArray.count - row;
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                [self.messageSessionContentTableView.header endRefreshing];
+                                                
+                                                // 重新加载表格数据
+                                                [self reloadTableView];
+                                                // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
+                                                [self voiceCellPlaying];
+                                                
+                                                
+                                                if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 0)
+                                                {
+                                                    if (isFirstLoadMMS == NO)
+                                                    {
+                                                        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                                    }
+                                                    else
+                                                    {
+                                                        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.visibleSortMessageRecordArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                                                    }
+                                                }
+                                                
+                                                isFirstLoadMMS = NO;
+
+                                            });
+                                            
+                                            // 获取所有的未读消息，用于页面一屏显示的数据不足全部未读条数，右上角提醒按钮使用
+                                            /*if (isFirstLoadMMS == YES && self.unReadMessageArray == nil)
+                                            {
+                                                self.unReadMessageArray = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                                                                                         withCreateDate:headmostMessageTimestamp
+                                                                                                       withStorageIndex:0
+                                                                                                           messageCount:self.currentSessionObject.unReadMsgCnt];
+                                            }*/
+                                            
+                                            
+                                        }];
+        
+    }];
+    
+    // 加载历史记录
+    [self.messageSessionContentTableView.header beginRefreshing];
 }
 
 
@@ -681,8 +785,9 @@
         }
         
         // 如果当前消息和之前最后一条消息时间间隔大于TIME_BLANK 或者 当前消息和上一条消息有一个是邀请消息但另一个不是邀请消息时，建立新分组
-        NSString *dateString = [self createTimeGroupWithMessageCreateTime:[NSDate dateWithTimeIntervalSince1970:messageObject.createTime] andLastMessageDate:self.lastDivideGroupDate];
-        if (dateString) {
+        NSString *dateString = [self createTimeGroupWithMessageCreateTime:[NSDate dateWithTimeIntervalSince1970:messageObject.sendTime] andLastMessageDate:self.lastDivideGroupDate];
+        if (dateString)
+        {
             [mutableArray addObject:dateString];
         }
         
@@ -691,24 +796,29 @@
     }
     
     // 如果有数据，添加到visibleSortMessageRecordArray中
-    if (mutableArray) {
+    if (mutableArray)
+    {
         NSLog(@"MMS: loadSortMessageRecord: mutableArray count = %lu", (unsigned long)[mutableArray count]);
         
-        switch (loadDirection) {
-            case LoadMessageOld: {
+        switch (loadDirection)
+        {
+            case LoadMessageOld:
+            {
                 {
                     [mutableArray addObjectsFromArray:self.visibleSortMessageRecordArray];
                     self.visibleSortMessageRecordArray = mutableArray;
                 }
                 break;
             }
-            case LoadMessageNew: {
+            case LoadMessageNew:
+            {
                 {
                     [self.visibleSortMessageRecordArray addObjectsFromArray:mutableArray];
                 }
                 break;
             }
-            default: {
+            default:
+            {
                 break;
             }
         }
@@ -717,26 +827,34 @@
     }
 }
 
+// 进入消息窗口页面时，调用的加载消息
 - (void)loadMessageRecord:(BOOL)isFirstLoad
 {
-    switch (self.sessionShowType) {
-        case SessionListShowTypeNomal: {
+    switch (self.sessionShowType)
+    {
+        case SessionListShowTypeNomal:
+        {
             {
                 [self loadMessageSessionRecord:isFirstLoad withLoadDirection:LoadMessageOld];
             }
             break;
         }
         case SessionListShowTypeSearchListMain:
-        case SessionListShowTypeSearchListCategory: {
+        case SessionListShowTypeSearchListCategory:
+        {
             {
-                if (isFirstLoad) {
+                if (isFirstLoad)
+                {
                     // 查询搜索消息前后的MessageObjec对象
-                    [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID withCurrentMessageId:self.currentSessionObject.lastMessageObject.messageID messageCounts:20 onSuccess:^(NSArray<RKCloudChatBaseMessage *> *resultArray) {
-                        if (resultArray && resultArray.count > 0)
-                        {
-                            [self.visibleSortMessageRecordArray addObjectsFromArray:resultArray];
-                        }
-                    } onFailed:^(int errorCode) {
+                    [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                             withCurrentMessageId:self.currentSessionObject.lastMessageObject.messageID
+                                                    messageCounts:20
+                                                        onSuccess:^(NSArray<RKCloudChatBaseMessage *> *resultArray) {
+                                                            if (resultArray && resultArray.count > 0)
+                                                            {
+                                                                [self.visibleSortMessageRecordArray addObjectsFromArray:resultArray];
+                                                            }
+                                                        } onFailed:^(int errorCode) {
                         
                     }];
                 }
@@ -767,7 +885,7 @@
             headmostMessageObject = [self.visibleSortMessageRecordArray objectAtIndex:i];
             if ([headmostMessageObject isKindOfClass:[RKCloudChatBaseMessage class]])
             {
-                headmostMessageTimestamp = headmostMessageObject.createTime;
+                headmostMessageTimestamp = headmostMessageObject.sendTime;
                 headmostMessageIndex = headmostMessageObject.indexStorage;
                 break;
             }
@@ -775,7 +893,10 @@
     }
     
     // 获取排序后消息数据库对象数组（RKCloudChatBaseMessage）
-    NSArray *arraySortMessageRecord = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID withCreateDate:headmostMessageTimestamp withStorageIndex:headmostMessageIndex messageCount:LOAD_MESSAGE_COUNT];
+    NSArray *arraySortMessageRecord = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                                                     withCreateDate:headmostMessageTimestamp
+                                                                   withStorageIndex:headmostMessageIndex
+                                                                       messageCount:LOAD_MESSAGE_COUNT];
     
     return arraySortMessageRecord;
 }
@@ -793,7 +914,7 @@
             headmostMessageObject = [self.visibleSortMessageRecordArray objectAtIndex:i];
             if ([headmostMessageObject isKindOfClass:[RKCloudChatBaseMessage class]])
             {
-                headmostMessageTimestamp = headmostMessageObject.createTime;
+                headmostMessageTimestamp = headmostMessageObject.sendTime;
                 headmostMessageIndex = headmostMessageObject.indexStorage;
                 break;
             }
@@ -823,7 +944,8 @@
     long headmostMessageTimestamp = [ToolsFunction getCurrentSystemDateSecond];
     
     // 从数据库中获取相关的数据
-    switch (loadDirection) {
+    switch (loadDirection)
+    {
         case LoadMessageOld:
         {
             arraySortMessageRecord = [self loadOldMessage:headmostMessageTimestamp];
@@ -837,7 +959,8 @@
             break;
     }
     
-    if ([arraySortMessageRecord count] > 0) {
+    if ([arraySortMessageRecord count] > 0)
+    {
         // 加载排序后的消息内容
         [self loadSortMessageRecord:arraySortMessageRecord withLoadDirection:loadDirection];
     }
@@ -845,7 +968,10 @@
     // 获取所有的未读消息，用于页面一屏显示的数据不足全部未读条数，右上角提醒按钮使用
     if (isFirstLoad == YES && self.unReadMessageArray == nil)
     {
-        self.unReadMessageArray = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID withCreateDate:headmostMessageTimestamp withStorageIndex:0 messageCount:self.currentSessionObject.unReadMsgCnt];
+        self.unReadMessageArray = [RKCloudChatMessageManager queryLocalChatMsgs:self.currentSessionObject.sessionID
+                                                                 withCreateDate:headmostMessageTimestamp
+                                                               withStorageIndex:0
+                                                                   messageCount:self.currentSessionObject.unReadMsgCnt];
     }
     
     NSLog(@"MMS: ***** loadMessageSessionRecord end *****");
@@ -868,7 +994,8 @@
     // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
     [self voiceCellPlaying];
     
-    if (loadDirection == LoadMessageOld) {
+    if (loadDirection == LoadMessageOld)
+    {
         // (Jacky.Chen:2016.02.16:优化原有滚动方法）滚动至加载前表格位置(无动画)
         [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
@@ -989,10 +1116,10 @@
     if (self.visibleSortMessageRecordArray && [self.visibleSortMessageRecordArray count] > 0)
     {
         // 存放消息列表内最后一条消息的到达时间
-        lastMessageDate = [NSDate dateWithTimeIntervalSince1970:lastMessage.createTime];
+        lastMessageDate = [NSDate dateWithTimeIntervalSince1970:lastMessage.sendTime];
     }
     
-    NSDate * currentObjectCreateDate = [NSDate dateWithTimeIntervalSince1970:currentObject.createTime];
+    NSDate * currentObjectCreateDate = [NSDate dateWithTimeIntervalSince1970:currentObject.sendTime];
     
     // 创建时间分组
     NSString *dateString = [self createTimeGroupWithMessageCreateTime:currentObjectCreateDate andLastMessageDate:lastMessageDate];
@@ -1317,6 +1444,111 @@
     [self.audioToolsKit startPalyVoice:voiceCell.audioMessage];
 }
 
+- (void)pushSelectedGroupMemberView
+{
+    SelectGroupMemberViewController *viewController = [[SelectGroupMemberViewController alloc] initWithNibName:@"SelectGroupMemberViewController" bundle:nil];
+    viewController.groupId = self.currentSessionObject.sessionID;
+    viewController.delegate = self;
+    viewController.isAtGroupMember = YES;
+    
+    AppDelegate *appDelegate = [AppDelegate appDelegate];
+    [ToolsFunction moveUpTransition:YES forLayer: appDelegate.window.layer];
+    [self.navigationController pushViewController:viewController animated: NO];
+}
+
+- (void)textViewTextDidChangeNotification:(NSNotification *)notification
+{
+    if (self.isExecuteAt == NO || self.isPushAtView)
+    {
+        return;
+    }
+
+    HPTextViewInternal *textView = (HPTextViewInternal *)[notification object];
+    
+    if (textView.text && [textView.text length] > 0)
+    {
+        NSString *inputString = textView.text;
+        if ([inputString hasSuffix: @"@"])
+        {
+            if (self.isPushAtView == NO) {
+                self.isPushAtView = YES;
+            }
+            
+            [self pushSelectedGroupMemberView];
+        }
+    }
+}
+
+// 检测发送的文本中是否存在at的成员
+- (void)derectAtGroupMember:(NSString *)sendText
+{
+    if (self.isAtAll || [self.atUserArray count] == 0)
+    {
+        return;
+    }
+    
+    NSString *atAccount = nil;
+    NSRange range;
+    for (int i = 0; i < [self.atUserArray count]; i++)
+    {
+        atAccount = [self.atUserArray objectAtIndex: i];
+        range = [sendText rangeOfString: atAccount];
+        if (range.length <= 0)
+        {
+            [self.atUserArray removeObject: atAccount];
+        }
+    }
+}
+
+
+#pragma mark -
+#pragma mark SelectGroupMemberDelegate methods
+
+- (void)selectedGroupMember:(NSArray *)selectedMemberArray
+{
+    if (selectedMemberArray == nil || [selectedMemberArray count] == 0)
+    {
+        return;
+    }
+    
+    FriendTable *friendTable = [selectedMemberArray firstObject];
+    
+    if (friendTable.friendAccount == nil)
+    {
+        return;
+    }
+    self.isAtAll = NO;
+    
+    [self insertStringToTextView: friendTable.friendAccount];
+    
+    // 添加@的人
+    [self.atUserArray addObject: friendTable.friendAccount];
+}
+
+- (void)atAllGroupMember
+{
+    self.isAtAll = YES;
+    
+    [self.atUserArray removeAllObjects];
+    
+    [self insertStringToTextView: @"所有成员"];
+}
+
+- (void)insertStringToTextView:(NSString *)textString
+{
+    // 将表情符号插入到相应的textView输入框的光标处
+    NSMutableString *stringText = [NSMutableString stringWithString:self.messageContainerToolsView.inputContainerToolsView.growingTextView.text];
+    [stringText insertString:textString atIndex:currentTextViewLocation];
+    
+    // 显示到textView输入框中
+    self.messageContainerToolsView.inputContainerToolsView.growingTextView.text = stringText;
+    
+    // 移动当前光标位置
+    currentTextViewLocation += [textString length];
+    
+    // 设置光标到输入表情的后面
+    self.messageContainerToolsView.inputContainerToolsView.growingTextView.selectedRange = NSMakeRange(currentTextViewLocation, 0);
+}
 
 #pragma mark - Show New Message Prompt View
 
@@ -1536,21 +1768,6 @@
     {
         [invCell setBackgroundColor: [UIColor clearColor]];
     }
-    // 创建分割线
-    for (int i= 0 ;i<2 ; i++) {
-        UIView *separatedLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0.5f)];
-        separatedLine.backgroundColor = COLOR_WITH_RGB(216, 216, 216);
-        if (i == 0) {
-            [separatedLine setTag:GROUP_MESSAGE_SEPARATEDLINE_L_TAG];
-        }
-        else
-        {
-            [separatedLine setTag:GROUP_MESSAGE_SEPARATEDLINE_R_TAG];
-        }
-        
-        [invCell addSubview:separatedLine];
-
-    }
     
     //创建显示邀请消息的label
     UILabel *tempLabel = [[UILabel alloc] init];
@@ -1749,6 +1966,35 @@
             invCell = [self createGroupInfoCell];
             isNewCreateCell = YES;
         }
+        
+        // 创建分割线
+        UIView *separatedLeftLine = [invCell viewWithTag:GROUP_MESSAGE_SEPARATEDLINE_L_TAG];
+        UIView *separatedRightLine = [invCell viewWithTag:GROUP_MESSAGE_SEPARATEDLINE_R_TAG];
+
+        if (mmsType == MESSAGE_TYPE_TIME)
+        {
+            if (!separatedLeftLine) {
+                separatedLeftLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0.5f)];
+                [separatedLeftLine setTag:GROUP_MESSAGE_SEPARATEDLINE_L_TAG];
+                separatedLeftLine.backgroundColor = COLOR_WITH_RGB(216, 216, 216);
+                [invCell addSubview:separatedLeftLine];
+            }
+            if (!separatedRightLine) {
+                separatedRightLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 0.5f)];
+                [separatedRightLine setTag:GROUP_MESSAGE_SEPARATEDLINE_R_TAG];
+                separatedRightLine.backgroundColor = COLOR_WITH_RGB(216, 216, 216);
+                [invCell addSubview:separatedRightLine];
+            }
+        }
+        else
+        {
+            if (separatedLeftLine) {
+                [separatedLeftLine removeFromSuperview];
+            }
+            if (separatedRightLine) {
+                [separatedRightLine removeFromSuperview];
+            }
+        }
         // 更新表格单元内容
         [self initCellContentOf:invCell withString:tipMessageString];
         
@@ -1844,6 +2090,14 @@
 
 - (BOOL)growingTextView:(HPGrowingTextView *)growingTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)atext
 {
+    if ([atext isEqualToString: @""])
+    {
+        self.isExecuteAt = NO;
+    }
+    else
+    {
+        self.isExecuteAt = YES;
+    }
     return YES;
 }
 
@@ -1934,8 +2188,8 @@
 }
 
 // 发送文字消息
-- (void)sendTextMessage {
-    
+- (void)sendTextMessage
+{
     AppDelegate *appDelegate = [AppDelegate appDelegate];
     
     // Jacky.Chen:2016.03.01: 删除过滤掉@“\U0000fffc\U0000fffc”系统语音设别自动生成的文本输入Unicode字符
@@ -1957,12 +2211,14 @@
     NSArray *arrayKeys = [appDelegate.chatManager.emoticonMultilingualStringToESCDict allKeys];
     
     // 发送时将文本中的表情描述转换为表情转义字符串
-    for (int i = 0; i < [arrayKeys count]; i++) {
+    for (int i = 0; i < [arrayKeys count]; i++)
+    {
         NSRange range = NSMakeRange(0, [stringSendText length]);
         
         stringKey = [arrayKeys objectAtIndex:i];
         stringReplacement = [[AppDelegate appDelegate].chatManager.emoticonMultilingualStringToESCDict objectForKey:stringKey];
-        if (stringKey && stringReplacement) {
+        if (stringKey && stringReplacement)
+        {
             // 替换表情描述字符串为表情转义字符串
             [stringSendText replaceOccurrencesOfString:stringKey
                                             withString:stringReplacement
@@ -1971,8 +2227,21 @@
         }
     }
     
+    // 检测是否有@群用户
+    [self derectAtGroupMember: stringSendText];
+    
     TextMessage *textMessage = [TextMessage buildMsg:self.currentSessionObject.sessionID
                                       withMsgContent:stringSendText];
+    // @功能
+    if (self.isAtAll)
+    {
+        textMessage.atUser = @"all";
+    }
+    else if ([self.atUserArray count] > 0)
+    {
+        textMessage.atUser = [self.atUserArray JSONRepresentation];
+    }
+    
     // 发送文字消息
     [RKCloudChatMessageManager sendChatMsg:textMessage];
     
@@ -2754,13 +3023,16 @@
     
     // Jacky.Chen.2016.03.24.增加键盘弹起时若当前tableView显示的最后一条消息不是数组中最后一条则滚动到最底部
     // 最后一条消息的index
-    if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 1 && isRecordTye) {
+    if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 1 && isRecordTye)
+    {
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.visibleSortMessageRecordArray.count - 1 inSection:0];
         // 取出可见的cell数组
         NSArray *visibleCells = [self.messageSessionContentTableView visibleCells];
+        
         // 判断显示的最后一条是否为数组中最后一条
-        if ([[visibleCells lastObject] isEqual:[self.messageSessionContentTableView cellForRowAtIndexPath:indexPath]] == NO ) {
+        if ([[visibleCells lastObject] isEqual:[self.messageSessionContentTableView cellForRowAtIndexPath:indexPath]] == NO )
+        {
             // 不是则滚动到底部
             [self.messageSessionContentTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
         }
@@ -2877,7 +3149,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    // 判断是否滑动到最顶端
+    /*// 判断是否滑动到最顶端
     if(self.messageSessionContentTableView.contentOffset.y < 0 )
     {
         [self loadMessageFromeDBWithDirection:LoadMessageOld];
@@ -2894,7 +3166,8 @@
     // 判断如果用户没有点击消息提醒按钮而是滑动到底部，隐藏消息提醒按钮
     if (distanceFromButtom < height+30) {
         CGRect rx = [ UIScreen mainScreen ].bounds;
-        if (self.nMessagePromptButton.frame.origin.x < rx.size.width) {
+        if (self.nMessagePromptButton.frame.origin.x < rx.size.width)
+        {
             [self hideNewMessagePromptView:nil];
             // 清除提醒新消息个数
             self.addNewMessageCount = 0;
@@ -2903,6 +3176,7 @@
     
     // 判断滑动时播放声音，当声音Cell可见时，继续播放动画
     [self voiceCellPlaying];
+    */
 }
 
 #pragma mark -
@@ -3257,6 +3531,15 @@
                 // 刷新显示大图界面
                 [self updateImagePreviewViewController:messageObject];
                 
+                if ((messageObject.messageType == MESSAGE_TYPE_FILE
+                     || messageObject.messageType == MESSAGE_TYPE_VOICE
+                     || messageObject.messageType == MESSAGE_TYPE_VIDEO)
+                    && messageObject.messageStatus == MESSAGE_STATE_RECEIVE_DOWNED)
+                {
+                    // 发送已读通知
+                    [RKCloudChatMessageManager sendReadedReceipt: messageObject];
+                }
+                
                 break;
             }
         }
@@ -3325,6 +3608,9 @@
 {
     NSLog(@"CHAT-SESSION-DELEGATE: didReceivedMessageArray: arrayBatchChatMessages count = %lu", (unsigned long)[arrayBatchChatMessages count]);
     
+    // 告知其它平台清空新消息提示
+    [RKCloudChatMessageManager clearOtherPlatformNewMMSCounts: self.currentSessionObject.sessionID];
+    
     // 循环遍历出批量消息的数组元素
     for (RKCloudChatBaseMessage *chatMessage in arrayBatchChatMessages)
     {
@@ -3375,14 +3661,15 @@
 #pragma mark RKCloudChatDelegate - RKCloudChatGroup
 // 云视互动即时通信对于群的回调接口
 
-/**
+/*!
  * @brief 代理方法: 单个群信息有变化
  *
  * @param groupId NSString 群ID
+ * @param changedType 修改群信息的类型，具体看ChangedType定义
  *
  * @return
  */
-- (void)didGroupInfoChanged:(NSString *)groupId
+- (void)didGroupInfoChanged:(NSString *)groupId changedType:(ChangedType)changedType
 {
     NSLog(@"CHAT-SESSION-DELEGATE: didGroupInfoChanged: groupId = %@", groupId);
     
@@ -3400,7 +3687,7 @@
         self.title = [NSString stringWithFormat:@"%@(%d)", self.currentSessionObject.sessionShowName, self.currentSessionObject.userCounts];
     }
     
-    [self.sessionInfoViewController didGroupInfoChanged:groupId];
+    [self.sessionInfoViewController didGroupInfoChanged:groupId changedType: changedType];
 }
 
 /**
@@ -3490,6 +3777,7 @@
     {
         // 如果该会话为群聊，则查找该会话中的人数
         self.title = [NSString stringWithFormat:@"%@(%d)", self.currentSessionObject.sessionShowName, self.currentSessionObject.userCounts];
+        [self.messageSessionContentTableView reloadData];
     }
     
     // 会话信息管理页面

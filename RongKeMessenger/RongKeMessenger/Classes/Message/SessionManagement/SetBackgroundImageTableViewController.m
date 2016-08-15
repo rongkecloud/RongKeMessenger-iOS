@@ -44,6 +44,8 @@
     
     // 设置状态栏默认风格
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
+    [self.tableView reloadData];
 }
 
 - (void)dealloc {
@@ -60,7 +62,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if (self.rkChatSessionViewController.currentSessionObject.backgroundImagePath) {
+        return 3;
+    }
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,6 +103,7 @@
         {
             // 取消背景
             cell.textLabel.text = NSLocalizedString(@"TITLE_CANCEL_BACKGROUND", "取消背景");
+            
         }
             break;
         default:
@@ -337,6 +343,7 @@
         
         // 保存更新后的背景图片
         [RKCloudChatMessageManager updateBackgroundImageInChat:self.rkChatSessionViewController.currentSessionObject.sessionID withImagePath:self.rkChatSessionViewController.currentSessionObject.backgroundImagePath];
+        [self.tableView reloadData];
     }
 }
 

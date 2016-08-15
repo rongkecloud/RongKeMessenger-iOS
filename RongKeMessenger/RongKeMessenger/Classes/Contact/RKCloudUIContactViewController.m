@@ -821,29 +821,30 @@
 
 #pragma mark - UITableViewDelegate
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-	// 显示搜索的结果
-	if (isSearchContact || self.friendGroupsArray == nil )
-	{
-		return nil;
-	}
-    
-    UIView *footerView = [[UIView alloc] init];
-    footerView.backgroundColor = [UIColor clearColor];
-    
-    if (section == 0) {
-        UILabel *contactLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, UISCREEN_BOUNDS_SIZE.width - 15, 20)];
-        contactLabel.textAlignment = NSTextAlignmentLeft;
-        contactLabel.font = FONT_TEXT_SIZE_14;
-        contactLabel.textColor = COLOR_SUBHEAD_TEXT;
-        contactLabel.text = NSLocalizedString(@"STR_CONTACT_GROUP", @"好友分组");
-        
-        [footerView addSubview:contactLabel];
-    }
-    
-    return footerView;
-}
+    // 去掉“好友分组”
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//	// 显示搜索的结果
+//	if (isSearchContact || self.friendGroupsArray == nil )
+//	{
+//		return nil;
+//	}
+//    
+//    UIView *footerView = [[UIView alloc] init];
+//    footerView.backgroundColor = [UIColor clearColor];
+//    
+//    if (section == 0) {
+//        UILabel *contactLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, UISCREEN_BOUNDS_SIZE.width - 15, 20)];
+//        contactLabel.textAlignment = NSTextAlignmentLeft;
+//        contactLabel.font = FONT_TEXT_SIZE_14;
+//        contactLabel.textColor = COLOR_SUBHEAD_TEXT;
+//        contactLabel.text = NSLocalizedString(@"STR_CONTACT_GROUP", @"好友分组");
+//        
+//        [footerView addSubview:contactLabel];
+//    }
+//    
+//    return footerView;
+//}
 
 // 行高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -138,11 +138,18 @@
             case MESSAGE_STATE_READED:
             {
                 VideoMessage *videoMessage = (VideoMessage *)self.messageObject;
-                NSURL *videoURL = [NSURL fileURLWithPath:videoMessage.fileLocalPath];
-                MPMoviePlayerViewController *moviePlayerController = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
-                [moviePlayerController.moviePlayer prepareToPlay];
-                moviePlayerController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
-                [self.vwcMessageSession presentMoviePlayerViewControllerAnimated:moviePlayerController];
+                if ([ToolsFunction isFileExistsAtPath: videoMessage.fileLocalPath])
+                {
+                    NSURL *videoURL = [NSURL fileURLWithPath:videoMessage.fileLocalPath];
+                    MPMoviePlayerViewController *moviePlayerController = [[MPMoviePlayerViewController alloc] initWithContentURL:videoURL];
+                    [moviePlayerController.moviePlayer prepareToPlay];
+                    moviePlayerController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+                    [self.vwcMessageSession presentMoviePlayerViewControllerAnimated:moviePlayerController];
+                }
+                else
+                {
+                    [RKCloudChatMessageManager downMediaFile:self.messageObject.messageID];
+                }
                 
                 break;
             }

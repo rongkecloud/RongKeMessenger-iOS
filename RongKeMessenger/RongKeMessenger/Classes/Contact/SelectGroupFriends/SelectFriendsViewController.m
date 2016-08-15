@@ -444,6 +444,14 @@
                           onSuccess:^{
                               // 视图返回到根视图
                               [self.navigationController popToRootViewControllerAnimated:NO];
+                              
+                              AppDelegate *appDelegate = [AppDelegate appDelegate];
+                              appDelegate.mainTabController.selectedIndex = 0;
+                              
+                              RKCloudChatBaseChat *sessionObject = [RKCloudChatMessageManager queryChat: friendTable.friendAccount];
+                              // 新建一个聊天会话,如果会话存在，打开聊天页面
+                              [appDelegate.rkChatSessionListViewController createNewChatView:sessionObject];
+                              
                           }
                            onFailed:^(int errorCode) {
                                
@@ -744,7 +752,7 @@
     // 减去搜索栏的位置的索引
     NSInteger index = section;
     
-    if (section < 1 || index >= [self.allSectionTitlesArray count])
+    if (section < 0 || index >= [self.allSectionTitlesArray count])
     {
         // 1、添加搜索title
         // 2、设备分组title
@@ -837,14 +845,13 @@
                                             // 视图返回到根视图
                                             [self.navigationController popToRootViewControllerAnimated:NO];
                                             
-                                            /*
                                             AppDelegate *appDelegate = [AppDelegate appDelegate];
                                             appDelegate.mainTabController.selectedIndex = 0;
                                             
                                             // 新建一个聊天会话，如果会话存在，打开聊天页面
                                             GroupChat *groupChat = [[GroupChat alloc] initGroupChat:groupID];
                                             [appDelegate.rkChatSessionListViewController createNewChatView:groupChat];
-                                             */
+                                            
                                         }
                                          onFailed:^(int errorCode, NSArray *arrayFailUserName) {
                                              [UIAlertView hideWaitingMaskView];

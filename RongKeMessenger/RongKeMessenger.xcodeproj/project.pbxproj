@@ -22,19 +22,7 @@
 		164757A51CC9FF070075998E /* RKSessionListSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16FC85741CC5C21F00A8895A /* RKSessionListSearchViewController.xib */; };
 		165924491B66116100664833 /* SearchAddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 165924481B66116100664833 /* SearchAddContactViewController.m */; };
 		168110411D001596001CC581 /* rkcloud_chat_sound_custom.caf in Resources */ = {isa = PBXBuildFile; fileRef = 168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */; };
-		16A903121CAD129A001169A3 /* RKResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16A902FF1CAD129A001169A3 /* RKResources.xcassets */; };
 		16A903131CAD129A001169A3 /* message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 16A903011CAD129A001169A3 /* message.caf */; };
-		16A903141CAD129A001169A3 /* RKCustomerChatSessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A903051CAD129A001169A3 /* RKCustomerChatSessionViewController.xib */; };
-		16A903151CAD129A001169A3 /* RKCustomerEvaluateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A903061CAD129A001169A3 /* RKCustomerEvaluateCell.xib */; };
-		16A903161CAD129A001169A3 /* RKCustomerEvaluateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A903071CAD129A001169A3 /* RKCustomerEvaluateView.xib */; };
-		16A903171CAD129A001169A3 /* RKCustomerEvaluateViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A903081CAD129A001169A3 /* RKCustomerEvaluateViewTableViewCell.xib */; };
-		16A903181CAD129A001169A3 /* RKCustomerImagePreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A903091CAD129A001169A3 /* RKCustomerImagePreviewViewController.xib */; };
-		16A9031A1CAD129A001169A3 /* RKCustomerMessageImageTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A9030B1CAD129A001169A3 /* RKCustomerMessageImageTableCell.xib */; };
-		16A9031B1CAD129A001169A3 /* RKCustomerMessageTextTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A9030C1CAD129A001169A3 /* RKCustomerMessageTextTableCell.xib */; };
-		16A9031C1CAD129A001169A3 /* RKCustomerMessageVoiceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A9030D1CAD129A001169A3 /* RKCustomerMessageVoiceTableCell.xib */; };
-		16A9031D1CAD129A001169A3 /* RKCustomerNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A9030E1CAD129A001169A3 /* RKCustomerNoteViewController.xib */; };
-		16A9031E1CAD129A001169A3 /* RKCustomerPromptCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16A9030F1CAD129A001169A3 /* RKCustomerPromptCell.xib */; };
-		16A9031F1CAD129A001169A3 /* libRKCustomerServiceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A903111CAD129A001169A3 /* libRKCustomerServiceSDK.a */; };
 		16B559571CC9BD42005574A8 /* RKSessionListSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16FC85731CC5C21F00A8895A /* RKSessionListSearchViewController.m */; };
 		16C1CA131B5E055100A453B6 /* ContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 16C1CA121B5E055100A453B6 /* ContactManager.m */; };
 		16EF595F1B871B110055AD4C /* RKMessageContainerToolsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16EF595E1B871B110055AD4C /* RKMessageContainerToolsView.m */; };
@@ -69,7 +57,6 @@
 		281A29501C9BEFD500D3FE34 /* MBProgressHUD+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 281A294C1C9BEFD400D3FE34 /* MBProgressHUD+MJ.m */; };
 		281A29511C9BEFD500D3FE34 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 281A294D1C9BEFD400D3FE34 /* MBProgressHUD.bundle */; };
 		281A29521C9BEFD500D3FE34 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 281A294F1C9BEFD500D3FE34 /* MBProgressHUD.m */; };
-		281E3CBC1CBBB0D200AE796C /* libRKCustomerServiceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16A903111CAD129A001169A3 /* libRKCustomerServiceSDK.a */; };
 		2825EE621CBDE3CE00E0B0B1 /* MessageVideoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16F6A6831CB918250042E676 /* MessageVideoCell.xib */; };
 		2825EE631CBDE3E800E0B0B1 /* MessageVideoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16F6A6821CB918250042E676 /* MessageVideoCell.m */; };
 		282739F01CABCAD600C4C1D8 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 281A294D1C9BEFD400D3FE34 /* MBProgressHUD.bundle */; };
@@ -500,6 +487,12 @@
 		28F6753A1B68E82B00DB4C19 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F675321B68E82B00DB4C19 /* unzip.c */; };
 		28F6753B1B68E82B00DB4C19 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 28F675341B68E82B00DB4C19 /* zip.c */; };
 		28F6753C1B68E82B00DB4C19 /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28F675371B68E82B00DB4C19 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		2C35E7D21D51DD5300404706 /* RKResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C35E7D11D51DD5300404706 /* RKResources.xcassets */; };
+		2C35E7D31D51DD5300404706 /* RKResources.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C35E7D11D51DD5300404706 /* RKResources.xcassets */; };
+		2C80C1441D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */; };
+		2C80C1451D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */; };
+		2C80C1461D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */; };
+		2C80C1471D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */; };
 		2C9E04CC1D2FBBD8005AA7AB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */; };
 		2C9E04CE1D2FBC14005AA7AB /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */; };
 		2C9E04D01D2FBC1F005AA7AB /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */; };
@@ -514,6 +507,34 @@
 		2C9E04DD1D2FBCBA005AA7AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D51D2FBC57005AA7AB /* CoreGraphics.framework */; };
 		2C9E04DE1D2FBCC2005AA7AB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04D71D2FBC60005AA7AB /* CoreMedia.framework */; };
 		2C9E04DF1D2FBCCA005AA7AB /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */; };
+		2CAE953C1D4A1D880097286B /* RKCustomerChatSessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE952E1D4A1D870097286B /* RKCustomerChatSessionViewController.xib */; };
+		2CAE953D1D4A1D880097286B /* RKCustomerChatSessionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE952E1D4A1D870097286B /* RKCustomerChatSessionViewController.xib */; };
+		2CAE953E1D4A1D880097286B /* RKCustomerEvaluateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE952F1D4A1D880097286B /* RKCustomerEvaluateCell.xib */; };
+		2CAE953F1D4A1D880097286B /* RKCustomerEvaluateCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE952F1D4A1D880097286B /* RKCustomerEvaluateCell.xib */; };
+		2CAE95401D4A1D880097286B /* RKCustomerEvaluateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95301D4A1D880097286B /* RKCustomerEvaluateView.xib */; };
+		2CAE95411D4A1D880097286B /* RKCustomerEvaluateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95301D4A1D880097286B /* RKCustomerEvaluateView.xib */; };
+		2CAE95421D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95311D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib */; };
+		2CAE95431D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95311D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib */; };
+		2CAE95441D4A1D880097286B /* RKCustomerImagePreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95321D4A1D880097286B /* RKCustomerImagePreviewViewController.xib */; };
+		2CAE95451D4A1D880097286B /* RKCustomerImagePreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95321D4A1D880097286B /* RKCustomerImagePreviewViewController.xib */; };
+		2CAE95461D4A1D880097286B /* RKCustomerMessageFileTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95331D4A1D880097286B /* RKCustomerMessageFileTableCell.xib */; };
+		2CAE95471D4A1D880097286B /* RKCustomerMessageFileTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95331D4A1D880097286B /* RKCustomerMessageFileTableCell.xib */; };
+		2CAE95481D4A1D880097286B /* RKCustomerMessageImageTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95341D4A1D880097286B /* RKCustomerMessageImageTableCell.xib */; };
+		2CAE95491D4A1D880097286B /* RKCustomerMessageImageTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95341D4A1D880097286B /* RKCustomerMessageImageTableCell.xib */; };
+		2CAE954A1D4A1D880097286B /* RKCustomerMessageTextTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95351D4A1D880097286B /* RKCustomerMessageTextTableCell.xib */; };
+		2CAE954B1D4A1D880097286B /* RKCustomerMessageTextTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95351D4A1D880097286B /* RKCustomerMessageTextTableCell.xib */; };
+		2CAE954C1D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95361D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib */; };
+		2CAE954D1D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95361D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib */; };
+		2CAE954E1D4A1D880097286B /* RKCustomerNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95371D4A1D880097286B /* RKCustomerNoteViewController.xib */; };
+		2CAE954F1D4A1D880097286B /* RKCustomerNoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95371D4A1D880097286B /* RKCustomerNoteViewController.xib */; };
+		2CAE95501D4A1D880097286B /* RKCustomerPromptCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95381D4A1D880097286B /* RKCustomerPromptCell.xib */; };
+		2CAE95511D4A1D880097286B /* RKCustomerPromptCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95381D4A1D880097286B /* RKCustomerPromptCell.xib */; };
+		2CAE95521D4A1D880097286B /* RKCustomerRobotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95391D4A1D880097286B /* RKCustomerRobotCell.xib */; };
+		2CAE95531D4A1D880097286B /* RKCustomerRobotCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CAE95391D4A1D880097286B /* RKCustomerRobotCell.xib */; };
+		2CAE95541D4A1D880097286B /* libRKCustomerServiceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAE953B1D4A1D880097286B /* libRKCustomerServiceSDK.a */; };
+		2CAE95551D4A1D880097286B /* libRKCustomerServiceSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CAE953B1D4A1D880097286B /* libRKCustomerServiceSDK.a */; };
+		4FBD4D1F1D542A9000EA1E45 /* rkcloud_chat_sound_custom.caf in Resources */ = {isa = PBXBuildFile; fileRef = 168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */; };
+		4FBD4D201D542AAE00EA1E45 /* message.caf in Resources */ = {isa = PBXBuildFile; fileRef = 16A903011CAD129A001169A3 /* message.caf */; };
 		D53331261C7D54E9005817BB /* DownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = D53331241C7D54E9005817BB /* DownloadIndicator.m */; };
 		D53331271C7D54E9005817BB /* DownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = D53331241C7D54E9005817BB /* DownloadIndicator.m */; };
 		D533312C1C7DAF33005817BB /* NewFeatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = D533312B1C7DAF33005817BB /* NewFeatureView.m */; };
@@ -578,20 +599,7 @@
 		165924471B66116100664833 /* SearchAddContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchAddContactViewController.h; sourceTree = "<group>"; };
 		165924481B66116100664833 /* SearchAddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchAddContactViewController.m; sourceTree = "<group>"; };
 		168110401D001596001CC581 /* rkcloud_chat_sound_custom.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rkcloud_chat_sound_custom.caf; sourceTree = "<group>"; };
-		16A902FF1CAD129A001169A3 /* RKResources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RKResources.xcassets; sourceTree = "<group>"; };
 		16A903011CAD129A001169A3 /* message.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = message.caf; sourceTree = "<group>"; };
-		16A903051CAD129A001169A3 /* RKCustomerChatSessionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerChatSessionViewController.xib; sourceTree = "<group>"; };
-		16A903061CAD129A001169A3 /* RKCustomerEvaluateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerEvaluateCell.xib; sourceTree = "<group>"; };
-		16A903071CAD129A001169A3 /* RKCustomerEvaluateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerEvaluateView.xib; sourceTree = "<group>"; };
-		16A903081CAD129A001169A3 /* RKCustomerEvaluateViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerEvaluateViewTableViewCell.xib; sourceTree = "<group>"; };
-		16A903091CAD129A001169A3 /* RKCustomerImagePreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerImagePreviewViewController.xib; sourceTree = "<group>"; };
-		16A9030B1CAD129A001169A3 /* RKCustomerMessageImageTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageImageTableCell.xib; sourceTree = "<group>"; };
-		16A9030C1CAD129A001169A3 /* RKCustomerMessageTextTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageTextTableCell.xib; sourceTree = "<group>"; };
-		16A9030D1CAD129A001169A3 /* RKCustomerMessageVoiceTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageVoiceTableCell.xib; sourceTree = "<group>"; };
-		16A9030E1CAD129A001169A3 /* RKCustomerNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerNoteViewController.xib; sourceTree = "<group>"; };
-		16A9030F1CAD129A001169A3 /* RKCustomerPromptCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerPromptCell.xib; sourceTree = "<group>"; };
-		16A903101CAD129A001169A3 /* RKCustomerServiceSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCustomerServiceSDK.h; sourceTree = "<group>"; };
-		16A903111CAD129A001169A3 /* libRKCustomerServiceSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRKCustomerServiceSDK.a; sourceTree = "<group>"; };
 		16C1CA111B5E055100A453B6 /* ContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactManager.h; sourceTree = "<group>"; };
 		16C1CA121B5E055100A453B6 /* ContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactManager.m; sourceTree = "<group>"; };
 		16EF595D1B871B110055AD4C /* RKMessageContainerToolsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKMessageContainerToolsView.h; sourceTree = "<group>"; };
@@ -1010,6 +1018,10 @@
 		28F675351B68E82B00DB4C19 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		28F675361B68E82B00DB4C19 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		28F675371B68E82B00DB4C19 /* ZipArchive.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ZipArchive.mm; sourceTree = "<group>"; };
+		2C35E7D11D51DD5300404706 /* RKResources.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RKResources.xcassets; sourceTree = "<group>"; };
+		2C80C1411D3CEE81009D2871 /* SelectGroupMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectGroupMemberViewController.h; sourceTree = "<group>"; };
+		2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectGroupMemberViewController.m; sourceTree = "<group>"; };
+		2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectGroupMemberViewController.xib; sourceTree = "<group>"; };
 		2C9E04CB1D2FBBD8005AA7AB /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		2C9E04CD1D2FBC14005AA7AB /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		2C9E04CF1D2FBC1F005AA7AB /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -1017,6 +1029,20 @@
 		2C9E04D31D2FBC3A005AA7AB /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
 		2C9E04D51D2FBC57005AA7AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2C9E04D71D2FBC60005AA7AB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		2CAE952E1D4A1D870097286B /* RKCustomerChatSessionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerChatSessionViewController.xib; sourceTree = "<group>"; };
+		2CAE952F1D4A1D880097286B /* RKCustomerEvaluateCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerEvaluateCell.xib; sourceTree = "<group>"; };
+		2CAE95301D4A1D880097286B /* RKCustomerEvaluateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerEvaluateView.xib; sourceTree = "<group>"; };
+		2CAE95311D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerEvaluateViewTableViewCell.xib; sourceTree = "<group>"; };
+		2CAE95321D4A1D880097286B /* RKCustomerImagePreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerImagePreviewViewController.xib; sourceTree = "<group>"; };
+		2CAE95331D4A1D880097286B /* RKCustomerMessageFileTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageFileTableCell.xib; sourceTree = "<group>"; };
+		2CAE95341D4A1D880097286B /* RKCustomerMessageImageTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageImageTableCell.xib; sourceTree = "<group>"; };
+		2CAE95351D4A1D880097286B /* RKCustomerMessageTextTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageTextTableCell.xib; sourceTree = "<group>"; };
+		2CAE95361D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerMessageVoiceTableCell.xib; sourceTree = "<group>"; };
+		2CAE95371D4A1D880097286B /* RKCustomerNoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerNoteViewController.xib; sourceTree = "<group>"; };
+		2CAE95381D4A1D880097286B /* RKCustomerPromptCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerPromptCell.xib; sourceTree = "<group>"; };
+		2CAE95391D4A1D880097286B /* RKCustomerRobotCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RKCustomerRobotCell.xib; sourceTree = "<group>"; };
+		2CAE953A1D4A1D880097286B /* RKCustomerServiceSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKCustomerServiceSDK.h; sourceTree = "<group>"; };
+		2CAE953B1D4A1D880097286B /* libRKCustomerServiceSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRKCustomerServiceSDK.a; sourceTree = "<group>"; };
 		D53331241C7D54E9005817BB /* DownloadIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadIndicator.m; sourceTree = "<group>"; };
 		D53331251C7D54E9005817BB /* DownloadIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadIndicator.h; sourceTree = "<group>"; };
 		D533312A1C7DAF33005817BB /* NewFeatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFeatureView.h; sourceTree = "<group>"; };
@@ -1069,6 +1095,7 @@
 			files = (
 				2C9E04D81D2FBC60005AA7AB /* CoreMedia.framework in Frameworks */,
 				2C9E04D61D2FBC57005AA7AB /* CoreGraphics.framework in Frameworks */,
+				2CAE95541D4A1D880097286B /* libRKCustomerServiceSDK.a in Frameworks */,
 				2C9E04D41D2FBC3A005AA7AB /* libc.tbd in Frameworks */,
 				2C9E04D21D2FBC2C005AA7AB /* libstdc++.tbd in Frameworks */,
 				2C9E04D01D2FBC1F005AA7AB /* libicucore.tbd in Frameworks */,
@@ -1080,7 +1107,6 @@
 				28F1E7321B535EE700DE5747 /* CFNetwork.framework in Frameworks */,
 				28F1E7301B535EDF00DE5747 /* MobileCoreServices.framework in Frameworks */,
 				28F1E72E1B535ED200DE5747 /* SystemConfiguration.framework in Frameworks */,
-				16A9031F1CAD129A001169A3 /* libRKCustomerServiceSDK.a in Frameworks */,
 				2857F8261B51279F008A2F3E /* libopencore-amrwb.a in Frameworks */,
 				2857F8251B51279F008A2F3E /* libopencore-amrnb.a in Frameworks */,
 				28D02AAC1B6F3C4500CC4713 /* libRKCloudStream.a in Frameworks */,
@@ -1102,6 +1128,7 @@
 			files = (
 				2C9E04DF1D2FBCCA005AA7AB /* VideoToolbox.framework in Frameworks */,
 				2C9E04DE1D2FBCC2005AA7AB /* CoreMedia.framework in Frameworks */,
+				2CAE95551D4A1D880097286B /* libRKCustomerServiceSDK.a in Frameworks */,
 				2C9E04DD1D2FBCBA005AA7AB /* CoreGraphics.framework in Frameworks */,
 				2C9E04DC1D2FBCAB005AA7AB /* libc.tbd in Frameworks */,
 				2C9E04DB1D2FBCA0005AA7AB /* libstdc++.tbd in Frameworks */,
@@ -1113,7 +1140,6 @@
 				284764881BEAED5B00BD92F0 /* CFNetwork.framework in Frameworks */,
 				284764891BEAED5B00BD92F0 /* MobileCoreServices.framework in Frameworks */,
 				2847648A1BEAED5B00BD92F0 /* SystemConfiguration.framework in Frameworks */,
-				281E3CBC1CBBB0D200AE796C /* libRKCustomerServiceSDK.a in Frameworks */,
 				2847648B1BEAED5B00BD92F0 /* libopencore-amrwb.a in Frameworks */,
 				2847648C1BEAED5B00BD92F0 /* libopencore-amrnb.a in Frameworks */,
 				2847648D1BEAED5B00BD92F0 /* libRKCloudStream.a in Frameworks */,
@@ -1188,8 +1214,8 @@
 		16A902FD1CAD129A001169A3 /* RKCustomerServiceLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				2CAE952B1D4A1D870097286B /* RKCustomerServiceSDK */,
 				16A902FE1CAD129A001169A3 /* RKCloudResources */,
-				16A903021CAD129A001169A3 /* RKCustomerServiceSDK */,
 			);
 			path = RKCustomerServiceLibrary;
 			sourceTree = "<group>";
@@ -1197,7 +1223,7 @@
 		16A902FE1CAD129A001169A3 /* RKCloudResources */ = {
 			isa = PBXGroup;
 			children = (
-				16A902FF1CAD129A001169A3 /* RKResources.xcassets */,
+				2C35E7D11D51DD5300404706 /* RKResources.xcassets */,
 				16A903001CAD129A001169A3 /* Sounds */,
 			);
 			path = RKCloudResources;
@@ -1209,41 +1235,6 @@
 				16A903011CAD129A001169A3 /* message.caf */,
 			);
 			path = Sounds;
-			sourceTree = "<group>";
-		};
-		16A903021CAD129A001169A3 /* RKCustomerServiceSDK */ = {
-			isa = PBXGroup;
-			children = (
-				16A903031CAD129A001169A3 /* include */,
-				16A903111CAD129A001169A3 /* libRKCustomerServiceSDK.a */,
-			);
-			path = RKCustomerServiceSDK;
-			sourceTree = "<group>";
-		};
-		16A903031CAD129A001169A3 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				16A903041CAD129A001169A3 /* RKCustomerServiceSDK */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		16A903041CAD129A001169A3 /* RKCustomerServiceSDK */ = {
-			isa = PBXGroup;
-			children = (
-				16A903051CAD129A001169A3 /* RKCustomerChatSessionViewController.xib */,
-				16A903061CAD129A001169A3 /* RKCustomerEvaluateCell.xib */,
-				16A903071CAD129A001169A3 /* RKCustomerEvaluateView.xib */,
-				16A903081CAD129A001169A3 /* RKCustomerEvaluateViewTableViewCell.xib */,
-				16A903091CAD129A001169A3 /* RKCustomerImagePreviewViewController.xib */,
-				16A9030B1CAD129A001169A3 /* RKCustomerMessageImageTableCell.xib */,
-				16A9030C1CAD129A001169A3 /* RKCustomerMessageTextTableCell.xib */,
-				16A9030D1CAD129A001169A3 /* RKCustomerMessageVoiceTableCell.xib */,
-				16A9030E1CAD129A001169A3 /* RKCustomerNoteViewController.xib */,
-				16A9030F1CAD129A001169A3 /* RKCustomerPromptCell.xib */,
-				16A903101CAD129A001169A3 /* RKCustomerServiceSDK.h */,
-			);
-			path = RKCustomerServiceSDK;
 			sourceTree = "<group>";
 		};
 		16C1CA101B5E053700A453B6 /* ContactManager */ = {
@@ -1846,6 +1837,9 @@
 				2857F8801B5127AC008A2F3E /* RKChatSessionInfoViewController.xib */,
 				2857F8811B5127AC008A2F3E /* SetBackgroundImageTableViewController.h */,
 				2857F8821B5127AC008A2F3E /* SetBackgroundImageTableViewController.m */,
+				2C80C1411D3CEE81009D2871 /* SelectGroupMemberViewController.h */,
+				2C80C1421D3CEE81009D2871 /* SelectGroupMemberViewController.m */,
+				2C80C1431D3CEE81009D2871 /* SelectGroupMemberViewController.xib */,
 			);
 			path = SessionManagement;
 			sourceTree = "<group>";
@@ -2521,6 +2515,43 @@
 			path = ZipArchive;
 			sourceTree = "<group>";
 		};
+		2CAE952B1D4A1D870097286B /* RKCustomerServiceSDK */ = {
+			isa = PBXGroup;
+			children = (
+				2CAE952C1D4A1D870097286B /* include */,
+				2CAE953B1D4A1D880097286B /* libRKCustomerServiceSDK.a */,
+			);
+			path = RKCustomerServiceSDK;
+			sourceTree = "<group>";
+		};
+		2CAE952C1D4A1D870097286B /* include */ = {
+			isa = PBXGroup;
+			children = (
+				2CAE952D1D4A1D870097286B /* RKCustomerServiceSDK */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		2CAE952D1D4A1D870097286B /* RKCustomerServiceSDK */ = {
+			isa = PBXGroup;
+			children = (
+				2CAE952E1D4A1D870097286B /* RKCustomerChatSessionViewController.xib */,
+				2CAE952F1D4A1D880097286B /* RKCustomerEvaluateCell.xib */,
+				2CAE95301D4A1D880097286B /* RKCustomerEvaluateView.xib */,
+				2CAE95311D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib */,
+				2CAE95321D4A1D880097286B /* RKCustomerImagePreviewViewController.xib */,
+				2CAE95331D4A1D880097286B /* RKCustomerMessageFileTableCell.xib */,
+				2CAE95341D4A1D880097286B /* RKCustomerMessageImageTableCell.xib */,
+				2CAE95351D4A1D880097286B /* RKCustomerMessageTextTableCell.xib */,
+				2CAE95361D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib */,
+				2CAE95371D4A1D880097286B /* RKCustomerNoteViewController.xib */,
+				2CAE95381D4A1D880097286B /* RKCustomerPromptCell.xib */,
+				2CAE95391D4A1D880097286B /* RKCustomerRobotCell.xib */,
+				2CAE953A1D4A1D880097286B /* RKCustomerServiceSDK.h */,
+			);
+			path = RKCustomerServiceSDK;
+			sourceTree = "<group>";
+		};
 		D53331281C7DAE92005817BB /* NewFeature */ = {
 			isa = PBXGroup;
 			children = (
@@ -2698,50 +2729,53 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C35E7D21D51DD5300404706 /* RKResources.xcassets in Resources */,
 				28F0330C1B945A5F00BBA628 /* MessageLocalRecordTableCell.xib in Resources */,
 				288D813D1B73604A00B2DE72 /* mms_face_02.png in Resources */,
-				16A9031E1CAD129A001169A3 /* RKCustomerPromptCell.xib in Resources */,
 				288D81401B73604A00B2DE72 /* mms_face_05.png in Resources */,
 				288D814D1B73604A00B2DE72 /* mms_face_18.png in Resources */,
+				2C80C1461D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */,
 				161EC8651CBF92B600A8682A /* RKMessageSearchViewController.xib in Resources */,
 				288D81521B73604A00B2DE72 /* mms_face_23.png in Resources */,
+				2CAE95521D4A1D880097286B /* RKCustomerRobotCell.xib in Resources */,
+				2CAE954E1D4A1D880097286B /* RKCustomerNoteViewController.xib in Resources */,
 				288D814A1B73604A00B2DE72 /* mms_face_15.png in Resources */,
 				FDE4F63A1B6A31E80035DA82 /* AboutSoftWareViewController.xib in Resources */,
 				2857F8E61B5127AC008A2F3E /* RKChatSessionViewController.xib in Resources */,
+				2CAE95441D4A1D880097286B /* RKCustomerImagePreviewViewController.xib in Resources */,
 				16A903131CAD129A001169A3 /* message.caf in Resources */,
-				16A903121CAD129A001169A3 /* RKResources.xcassets in Resources */,
 				288D81461B73604A00B2DE72 /* mms_face_11.png in Resources */,
 				288D81451B73604A00B2DE72 /* mms_face_10.png in Resources */,
+				2CAE954A1D4A1D880097286B /* RKCustomerMessageTextTableCell.xib in Resources */,
 				288D814B1B73604A00B2DE72 /* mms_face_16.png in Resources */,
 				2878B6DB1B86CEDE001AC58B /* hangup.caf in Resources */,
 				2878B6D51B86BEF0001AC58B /* dialing.wav in Resources */,
 				FDE2C66D1B7448380005020A /* CompletePersonalAddressViewController.xib in Resources */,
 				16FC85761CC5C21F00A8895A /* RKSessionListSearchViewController.xib in Resources */,
 				288D81431B73604A00B2DE72 /* mms_face_08.png in Resources */,
+				2CAE95421D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib in Resources */,
+				2CAE953C1D4A1D880097286B /* RKCustomerChatSessionViewController.xib in Resources */,
 				2878B6D31B86BEF0001AC58B /* 1.caf in Resources */,
+				2CAE95501D4A1D880097286B /* RKCustomerPromptCell.xib in Resources */,
 				288D81441B73604A00B2DE72 /* mms_face_09.png in Resources */,
-				16A9031A1CAD129A001169A3 /* RKCustomerMessageImageTableCell.xib in Resources */,
 				28C963E71B8368A900A66BBA /* CutOutPicturesViewController.xib in Resources */,
 				2857F9151B5127AC008A2F3E /* RegisterViewController.xib in Resources */,
+				2CAE954C1D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib in Resources */,
 				FDE9EB561B7B28A70036DCDF /* MeetingRoomViewController.xib in Resources */,
 				FDE4F6291B6A1D900035DA82 /* ChangePasswordViewController.xib in Resources */,
-				16A9031D1CAD129A001169A3 /* RKCustomerNoteViewController.xib in Resources */,
 				288D813B1B73604A00B2DE72 /* Emoticon.plist in Resources */,
+				2CAE95461D4A1D880097286B /* RKCustomerMessageFileTableCell.xib in Resources */,
 				2857F9D41B51295C008A2F3E /* QBImagePicker.storyboard in Resources */,
 				2878B6D61B86BEF0001AC58B /* dtmf.wav in Resources */,
 				FDE2C6721B7463A10005020A /* CompleteOtherInfoViewController.xib in Resources */,
 				284764ED1BEAEFD100BD92F0 /* RongKeMessengerLan-Info.plist in Resources */,
 				288D81501B73604A00B2DE72 /* mms_face_21.png in Resources */,
 				288D81511B73604A00B2DE72 /* mms_face_22.png in Resources */,
-				16A9031B1CAD129A001169A3 /* RKCustomerMessageTextTableCell.xib in Resources */,
 				288D813E1B73604A00B2DE72 /* mms_face_03.png in Resources */,
 				288D814E1B73604A00B2DE72 /* mms_face_19.png in Resources */,
 				288D81411B73604A00B2DE72 /* mms_face_06.png in Resources */,
 				2809CA0A1B4E4FDD0072BE39 /* Images.xcassets in Resources */,
-				16A903171CAD129A001169A3 /* RKCustomerEvaluateViewTableViewCell.xib in Resources */,
-				16A9031C1CAD129A001169A3 /* RKCustomerMessageVoiceTableCell.xib in Resources */,
 				288D81481B73604A00B2DE72 /* mms_face_13.png in Resources */,
-				16A903161CAD129A001169A3 /* RKCustomerEvaluateView.xib in Resources */,
 				2878B6D81B86BEF0001AC58B /* music.mp3 in Resources */,
 				FDE4F6171B6A0F5F0035DA82 /* FeedBackViewController.xib in Resources */,
 				2857F8FD1B5127AC008A2F3E /* ImagePreviewViewController.xib in Resources */,
@@ -2752,11 +2786,10 @@
 				281A29511C9BEFD500D3FE34 /* MBProgressHUD.bundle in Resources */,
 				288D813F1B73604A00B2DE72 /* mms_face_04.png in Resources */,
 				288D81471B73604A00B2DE72 /* mms_face_12.png in Resources */,
-				16A903151CAD129A001169A3 /* RKCustomerEvaluateCell.xib in Resources */,
 				2857F8F21B5127AC008A2F3E /* MessageTextTableCell.xib in Resources */,
 				288D814F1B73604A00B2DE72 /* mms_face_20.png in Resources */,
 				FDE9EB5A1B7B28A70036DCDF /* HeaderCollectionReusableView.xib in Resources */,
-				16A903181CAD129A001169A3 /* RKCustomerImagePreviewViewController.xib in Resources */,
+				2CAE95401D4A1D880097286B /* RKCustomerEvaluateView.xib in Resources */,
 				289B17781B7B209C00CCD487 /* RKCloudUICallViewController.xib in Resources */,
 				288D814C1B73604A00B2DE72 /* mms_face_17.png in Resources */,
 				16F6A6851CB918250042E676 /* MessageVideoCell.xib in Resources */,
@@ -2767,15 +2800,16 @@
 				2857F9001B5127AC008A2F3E /* RKChatSessionListViewController.xib in Resources */,
 				FDE4F6121B6A00370035DA82 /* RKCloudSettingViewController.xib in Resources */,
 				FDE4F61C1B6A17750035DA82 /* RKCloudSettingMsgViewController.xib in Resources */,
-				16A903141CAD129A001169A3 /* RKCustomerChatSessionViewController.xib in Resources */,
 				168110411D001596001CC581 /* rkcloud_chat_sound_custom.caf in Resources */,
 				288D81421B73604A00B2DE72 /* mms_face_07.png in Resources */,
 				2857F9041B5127AC008A2F3E /* RKChatSessionInfoViewController.xib in Resources */,
 				FDE9EB581B7B28A70036DCDF /* MemberDetailCollectionViewCell.xib in Resources */,
+				2CAE953E1D4A1D880097286B /* RKCustomerEvaluateCell.xib in Resources */,
 				288D81491B73604A00B2DE72 /* mms_face_14.png in Resources */,
 				2857F8F41B5127AC008A2F3E /* MessageVoiceTableCell.xib in Resources */,
 				2857F8EE1B5127AC008A2F3E /* MessageImageTableCell.xib in Resources */,
 				2857F8E31B5127AC008A2F3E /* LoginViewController.xib in Resources */,
+				2CAE95481D4A1D880097286B /* RKCustomerMessageImageTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2790,8 +2824,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FBD4D201D542AAE00EA1E45 /* message.caf in Resources */,
+				4FBD4D1F1D542A9000EA1E45 /* rkcloud_chat_sound_custom.caf in Resources */,
 				164757A51CC9FF070075998E /* RKSessionListSearchViewController.xib in Resources */,
 				2825EE621CBDE3CE00E0B0B1 /* MessageVideoCell.xib in Resources */,
+				2CAE95531D4A1D880097286B /* RKCustomerRobotCell.xib in Resources */,
+				2CAE95511D4A1D880097286B /* RKCustomerPromptCell.xib in Resources */,
 				282739F01CABCAD600C4C1D8 /* MBProgressHUD.bundle in Resources */,
 				282739F11CABCAD600C4C1D8 /* MJRefresh.bundle in Resources */,
 				284764911BEAED5B00BD92F0 /* MessageLocalRecordTableCell.xib in Resources */,
@@ -2809,10 +2847,12 @@
 				284764A11BEAED5B00BD92F0 /* dialing.wav in Resources */,
 				284764A21BEAED5B00BD92F0 /* CompletePersonalAddressViewController.xib in Resources */,
 				284764A41BEAED5B00BD92F0 /* mms_face_08.png in Resources */,
+				2CAE95491D4A1D880097286B /* RKCustomerMessageImageTableCell.xib in Resources */,
 				284764A51BEAED5B00BD92F0 /* 1.caf in Resources */,
 				284764A61BEAED5B00BD92F0 /* mms_face_09.png in Resources */,
 				284764A71BEAED5B00BD92F0 /* CutOutPicturesViewController.xib in Resources */,
 				284764A91BEAED5B00BD92F0 /* RegisterViewController.xib in Resources */,
+				2CAE954F1D4A1D880097286B /* RKCustomerNoteViewController.xib in Resources */,
 				284764AB1BEAED5B00BD92F0 /* MeetingRoomViewController.xib in Resources */,
 				284764AC1BEAED5B00BD92F0 /* ChangePasswordViewController.xib in Resources */,
 				284764AD1BEAED5B00BD92F0 /* Emoticon.plist in Resources */,
@@ -2821,11 +2861,16 @@
 				161EC8661CBF92B600A8682A /* RKMessageSearchViewController.xib in Resources */,
 				284764B21BEAED5B00BD92F0 /* CompleteOtherInfoViewController.xib in Resources */,
 				284764B31BEAED5B00BD92F0 /* mms_face_21.png in Resources */,
+				2CAE954B1D4A1D880097286B /* RKCustomerMessageTextTableCell.xib in Resources */,
 				284764B51BEAED5B00BD92F0 /* mms_face_22.png in Resources */,
 				284764B61BEAED5B00BD92F0 /* mms_face_03.png in Resources */,
 				284764B81BEAED5B00BD92F0 /* mms_face_19.png in Resources */,
 				284764BC1BEAED5B00BD92F0 /* mms_face_06.png in Resources */,
+				2CAE95431D4A1D880097286B /* RKCustomerEvaluateViewTableViewCell.xib in Resources */,
+				2CAE954D1D4A1D880097286B /* RKCustomerMessageVoiceTableCell.xib in Resources */,
+				2C35E7D31D51DD5300404706 /* RKResources.xcassets in Resources */,
 				284764BD1BEAED5B00BD92F0 /* Images.xcassets in Resources */,
+				2CAE95411D4A1D880097286B /* RKCustomerEvaluateView.xib in Resources */,
 				284764BE1BEAED5B00BD92F0 /* mms_face_13.png in Resources */,
 				284764BF1BEAED5B00BD92F0 /* music.mp3 in Resources */,
 				284764C01BEAED5B00BD92F0 /* FeedBackViewController.xib in Resources */,
@@ -2836,17 +2881,22 @@
 				284764C71BEAED5B00BD92F0 /* ringback.wav in Resources */,
 				284764C81BEAED5B00BD92F0 /* mms_face_04.png in Resources */,
 				284764CA1BEAED5B00BD92F0 /* mms_face_12.png in Resources */,
+				2CAE953F1D4A1D880097286B /* RKCustomerEvaluateCell.xib in Resources */,
 				284764CB1BEAED5B00BD92F0 /* MessageTextTableCell.xib in Resources */,
 				284764CC1BEAED5B00BD92F0 /* mms_face_20.png in Resources */,
 				284764CF1BEAED5B00BD92F0 /* HeaderCollectionReusableView.xib in Resources */,
+				2CAE95451D4A1D880097286B /* RKCustomerImagePreviewViewController.xib in Resources */,
 				284764D01BEAED5B00BD92F0 /* RKCloudUICallViewController.xib in Resources */,
 				284764D11BEAED5B00BD92F0 /* mms_face_17.png in Resources */,
 				284764D21BEAED5B00BD92F0 /* Localizable.strings in Resources */,
 				284764D51BEAED5B00BD92F0 /* MessageFileTableCell.xib in Resources */,
 				284764D71BEAED5B00BD92F0 /* mms_face_24.png in Resources */,
+				2CAE95471D4A1D880097286B /* RKCustomerMessageFileTableCell.xib in Resources */,
 				284764D81BEAED5B00BD92F0 /* RKChatSessionListViewController.xib in Resources */,
 				284764DA1BEAED5B00BD92F0 /* RKCloudSettingViewController.xib in Resources */,
+				2C80C1471D3CEE81009D2871 /* SelectGroupMemberViewController.xib in Resources */,
 				284764DB1BEAED5B00BD92F0 /* RKCloudSettingMsgViewController.xib in Resources */,
+				2CAE953D1D4A1D880097286B /* RKCustomerChatSessionViewController.xib in Resources */,
 				284764DC1BEAED5B00BD92F0 /* mms_face_07.png in Resources */,
 				284764DD1BEAED5B00BD92F0 /* RKChatSessionInfoViewController.xib in Resources */,
 				284764E01BEAED5B00BD92F0 /* MemberDetailCollectionViewCell.xib in Resources */,
@@ -3001,6 +3051,7 @@
 				2809C9FF1B4E4FDD0072BE39 /* main.m in Sources */,
 				2857F9B81B51295C008A2F3E /* ASIDataCompressor.m in Sources */,
 				2857F9DF1B51295C008A2F3E /* split.c in Sources */,
+				2C80C1441D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */,
 				2857F9D31B51295C008A2F3E /* QBCheckmarkView.m in Sources */,
 				2857F9111B5127AC008A2F3E /* RegularCheckTools.m in Sources */,
 				FDE9EB551B7B28A70036DCDF /* MeetingRoomViewController.m in Sources */,
@@ -3194,6 +3245,7 @@
 				284764571BEAED5B00BD92F0 /* AppDelegate.m in Sources */,
 				284764581BEAED5B00BD92F0 /* UserProfilesInfo.m in Sources */,
 				284764591BEAED5B00BD92F0 /* ContactHorizontalList.m in Sources */,
+				2C80C1451D3CEE81009D2871 /* SelectGroupMemberViewController.m in Sources */,
 				2847645A1BEAED5B00BD92F0 /* NSNumber-SQLitePersistence.m in Sources */,
 				2847645B1BEAED5B00BD92F0 /* SQLiteInstanceManager.m in Sources */,
 				2847645C1BEAED5B00BD92F0 /* NSObject-ClassName.m in Sources */,
@@ -3302,7 +3354,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "402281c8-5b1a-4dd5-b0ff-169b0a6a3335";
+				PROVISIONING_PROFILE = "b53a9cb5-1e68-4271-88b8-9000b87a75af";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3529,7 +3581,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rongkecloud.messenger.lan;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b76a90ff-c992-4be5-a8ee-06649c83aa13";
+				PROVISIONING_PROFILE = "3f92995a-971c-44a2-b919-e58170370702";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -3566,7 +3618,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					DEBUG_LOG,
 					DEBUG_WRITE_LOG,
-					LAN_SERVER,
 				);
 				INFOPLIST_FILE = "RongKeMessenger/RongKeMessengerLan-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

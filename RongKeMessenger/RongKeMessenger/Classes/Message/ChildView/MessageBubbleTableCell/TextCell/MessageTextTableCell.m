@@ -264,8 +264,6 @@
 
 - (void)initCellContent:(RKCloudChatBaseMessage *)messageObject isEditing:(BOOL)isEditing
 {
-#if 1
-    
     // 针对ios7使用UITextView的属性化来显示文本消息
     if ([ToolsFunction iSiOS7Earlier] == NO)
     {
@@ -289,43 +287,6 @@
         self.textMessageContentView.textContent = messageObject.textContent;
     }
     
-#else
-    /*
-    // 文本消息的内容
-    NSMutableString *stringMsgText = messageObject.textContent;
-	// 从资源plist中加载表情符号字典
-	NSDictionary *emoticonDict = [ToolsFunction loadPropertyList:EMOTICON_PLIST_NAME];
-	NSString * stringKey = nil;
-	NSString * stringReplacement = nil;
-	NSRange range = NSMakeRange(0, [stringMsgText length]);
-	NSArray *arrayKeys = [emoticonDict allKeys];
-	
-	// 发送时将文本中的表情描述转换为表情转义字符串
-	for (int i = 0; i < [arrayKeys count]; i++) {
-		range = NSMakeRange(0, [stringMsgText length]);
-		// 表情转移字符
-		stringKey = [arrayKeys objectAtIndex:i];
-		// 表情符号对应的图标名称
-		stringReplacement = [NSString stringWithFormat:@"<img src='%@.png' width=18 height=18>",
-							 [emoticonDict objectForKey:stringKey]];
-		// 将文本字符串中的表情转义字符替换为图标标签
-		if (stringKey && stringReplacement) {
-			[stringMsgText replaceOccurrencesOfString:stringKey
-										   withString:stringReplacement
-											  options:NSCaseInsensitiveSearch
-												range:range];
-		}
-	}
-	
-	//NSLog(@"stringMsgText 2 = %@", stringMsgText);
-	// 使用WebView加载和显示文本和图标
-	[self.textWebView loadHTMLString:stringMsgText baseURL:[[NSBundle mainBundle] resourceURL]];
-    
-    textMessageString = stringMsgText;
-	[stringMsgText release];
-     */
-#endif
-    
 	// 父类初始化
 	[super initCellContent:messageObject isEditing:isEditing];
 
@@ -340,7 +301,7 @@
 		case MESSAGE_STATE_RECEIVE_RECEIVED: // 已接收
 		{
             // 当接收到的时候更新消息状态为“已读”状态
-            [RKCloudChatMessageManager updateMsgStatusHasReaded:messageObject.messageID];
+            [RKCloudChatMessageManager sendReadedReceipt: messageObject];
 		}
 			break;
 			
@@ -514,92 +475,5 @@
 {
     [self longPress:gestureRecognizer];
 }
-
-
-/****************** 以下代码没有使用，为测试代码，目的为获取字符串中的Url链接，尝试打开。********************/
-/*
-#pragma mark -
-#pragma mark Test Method
-
-- (BOOL)hasURLString:(NSString *)textContent
-{
-    if (textContent == nil) {
-        return NO;
-    }
-	//判断字符串中是否有标准的URL连接地址
-	//NSLog(@"MMS: has URL string?");
-	NSString * textString = [[NSString alloc] initWithString:textContent];
-	NSError *error;
-	BOOL hasURL = NO;
-	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[a-zA-z]+://[^\\s]*" options:0 error:&error];
-	if (regex != nil) {
-		NSArray *arry = [regex matchesInString:textString  options:0 range:NSMakeRange(0, [textString length])];
-		
-		if ([arry count] > 0) 
-		{
-            if (self.urlsArray == nil) {
-                NSMutableArray *urlTableArray = [[NSMutableArray alloc] init];
-                self.urlsArray = urlTableArray;
-                [urlTableArray release];
-            }
-			for (int i = 0; i < [arry count]; i++) 
-			{
-				NSTextCheckingResult *firstMatch = [arry objectAtIndex:i];
-				if (firstMatch) {
-					NSString *resultURL = [textString substringWithRange:[firstMatch rangeAtIndex:0]];
-					//[temp addAttribute:(NSString*)kCTForegroundColorAttributeName value:(id)[[UIColor blueColor] CGColor] range:[firstMatch rangeAtIndex:0]];
-					//输出结果
-					if (resultURL != nil) {
-						[self.urlsArray addObject:resultURL];
-					}
-				}
-			}
-			hasURL = YES;
-		}
-		else {
-			NSLog(@"MMS: No URLString");
-		} 
-	}
-	[textString release];
-	return hasURL;
-}
-
-- (void)showActionSheetwithURLs
-{
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"打开链接"
-															 delegate:self
-													cancelButtonTitle:NSLocalizedString(@"STR_CANCEL", nil)
-											   destructiveButtonTitle:nil//NSLocalizedString(@"TITLE_ACTIONSHEET_CLEARALL", nil)
-													otherButtonTitles:@"打开",
-								  nil];
-	[actionSheet setActionSheetStyle: UIActionSheetStyleBlackTranslucent];
-	[actionSheet showInView: [[(MessageSessionViewController *)self.parent view] superview]];
-	[actionSheet release];
-}
-
-
-#pragma mark -
-#pragma mark UIActionSheet Delegate Method
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        
-        //        NSURL*url=[NSURL URLWithString:@"prefs:root=General&path=Network/VPN"];
-        //        [[UIApplication sharedApplication] openURL:url];
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=Safari"]];
-        
-        //        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[self.urlsArray objectAtIndex:buttonIndex]]];
-        
-        //        NSURL *url = [NSURL URLWithString:[self.urlsArray objectAtIndex:buttonIndex]];
-        //        NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
-        //        UIWebView *webview = [[UIWebView alloc] init];
-        //        [webview loadRequest:requestObj];
-        //        [webview release];
-    }
-}
-*/
-/****************** 以上代码没有使用，为测试代码，目的为获取字符串中的Url链接，尝试打开。********************/
 
 @end

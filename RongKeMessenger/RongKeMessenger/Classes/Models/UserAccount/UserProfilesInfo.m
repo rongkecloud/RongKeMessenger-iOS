@@ -37,19 +37,17 @@
     /************* userAccount是当前登录的帐号，直接保存到系统的standardUserDefaults **********/
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-#ifdef LAN_SERVER  // WAN_TEST_SERVER
-    // Mobile API Server
+#ifdef LAN_SERVER
     self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
 #else
-    
 #ifdef WAN_TEST_SERVER
     self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
 #else
+    // Mobile API Server
     if ([defaults objectForKey:USER_DEFAULTS_KEY_MOBILE_API_SERVER]) {
         self.mobileAPIServer = [defaults objectForKey:USER_DEFAULTS_KEY_MOBILE_API_SERVER];
     }
-    else
-    {
+    else {
         self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
         [defaults setValue:self.mobileAPIServer forKey:USER_DEFAULTS_KEY_MOBILE_API_SERVER];
         // save changes to disk
@@ -57,6 +55,7 @@
     }
 #endif
 #endif
+    
     NSLog(@"USE-PROFILES: mobileAPIServer = %@", self.mobileAPIServer);
     
     // User Account
@@ -194,11 +193,9 @@
         }
         NSLog(@"USE-PROFILES: userAddress = %@", self.userAddress);
         
-#ifdef LAN_SERVER  // WAN_TEST_SERVER
-        // Mobile API Server
+#ifdef LAN_SERVER
         self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
 #else
-        
 #ifdef WAN_TEST_SERVER
         self.mobileAPIServer = DEFAULT_HTTP_API_SERVER_ADDRESS;
 #else
@@ -644,10 +641,10 @@
     [appDelegate.databaseManager closeDataBase];
     
     // 退出云视互动服务
-    [RKCloudBase unInit];
-    [RKCloudChat unInit];
     [RKCloudMeeting unInit];
     [RKCloudAV unInit];
+    [RKCloudChat unInit];
+    [RKCloudBase unInit];
     
     // 取消注册Push Notification通知
     [[UIApplication sharedApplication] unregisterForRemoteNotifications];

@@ -105,6 +105,43 @@
             isThumbnailImage:(BOOL)isThumbnail;
 
 #pragma mark -
+#pragma mark 发送消息回执相关接口
+
+/**
+ * @brief 发送消息已送达的回执(API请求) 异步请求
+ *
+ * @param messageObject 消息对象RKCloudChatBaseMessage子类指针
+ *
+ */
++ (void)sendArrivedReceipt:(RKCloudChatBaseMessage *)messageObject;
+
+/**
+ * @brief 发送消息已阅读的回执(API请求) 异步请求
+ *
+ * @param messageObject 消息对象RKCloudChatBaseMessage子类指针
+ *
+ */
++ (void)sendReadedReceipt:(RKCloudChatBaseMessage *)messageObject;
+
+/**
+ * @brief 发送消息自定义的回执(API请求) 异步请求
+ *
+ * @param messageObject 消息对象RKCloudChatBaseMessage子类指针
+ * @param receiptValue 消息自定义回执value
+ *
+ */
++ (void)sendCustomReceipt:(RKCloudChatBaseMessage *)messageObject receiptValue:(NSString *)receiptValue;
+
+/**
+ * @brief 针对同一个账号在不同平台登录，发送清空指定会话新消息数量(API请求) 异步请求
+ *
+ * @param chatId 会话的id
+ *
+ */
++ (void)clearOtherPlatformNewMMSCounts:(NSString *)chatId;
+
+
+#pragma mark -
 #pragma mark RKCloudChat Group Apply/Quit/Invite/KickOut/ModifyInfo Function
 
 /**
@@ -150,8 +187,8 @@
  *
  * @param arrayUserName 联系人的userName数组，不包含自己的userName
  * @param groupID       群组ID
- * @param onSuccess     接口调用成功
- * @param onFailed      接口调用失败，返回错误信息
+ * @param onSuccess     接口调用成功(主线程)
+ * @param onFailed      接口调用失败，返回错误信息(主线程)
  *
  * @return 返回操作成功或者失败错误码
  */
@@ -192,7 +229,7 @@
                      onFailed:(void (^)(int errorCode))onFailed;
 
 /**
- * @brief 修改群名称备注信息，只在客户端显示，不保存到服务器端
+ * @brief 修改群名称备注信息，只在客户端显示，不保存到服务器端(3.0作废)
  *
  * @param remarkName    是否开启邀请权限
  * @param groupID       群组ID
@@ -207,8 +244,8 @@
  *
  * @param groupName     群聊的名称
  * @param groupID       群组ID
- * @param onSuccess     接口调用成功
- * @param onFailed      接口调用失败，返回错误信息
+ * @param onSuccess     接口调用成功(主线程)
+ * @param onFailed      接口调用失败，返回错误信息(主线程)
  *
  * @return 返回操作成功或者失败错误码
  */
@@ -223,8 +260,8 @@
  *
  * @param description    群聊的描述信息
  * @param groupID       群组ID
- * @param onSuccess     接口调用成功
- * @param onFailed      接口调用失败，返回错误信息
+ * @param onSuccess     接口调用成功(主线程)
+ * @param onFailed      接口调用失败，返回错误信息(主线程)
  *
  * @return 返回操作成功或者失败错误码
  */
@@ -232,6 +269,39 @@
                forGroupID:(NSString *)groupID
                 onSuccess:(void (^)())onSuccess
                  onFailed:(void (^)(int errorCode))onFailed;
+
+/**
+ * @brief 群主转让群给群里的成员(API异步请求)
+ * @attention 只有群主才能转让群，并且只能转让给该群里的成员
+ *
+ * @param groupID       群组ID
+ * @param account       群成员的账号
+ * @param onSuccess     接口调用成功(主线程)
+ * @param onFailed      接口调用失败，返回错误信息(主线程)
+ *
+ * @return 返回操作成功或者失败错误码
+ */
++ (void)transferGroup:(NSString *)groupId
+            toAccount:(NSString *)account
+            onSuccess:(void (^)())onSuccess
+             onFailed:(void (^)(int errorCode))onFailed;
+
+/**
+ * @brief 屏蔽群消息提醒(API异步请求)
+ * @attention 该接口是屏蔽群消息的提醒，静默接收群消息
+ *
+ * @param groupID       群组ID
+ * @param isMask        是否屏蔽群消息提醒
+ * @param onSuccess     接口调用成功(主线程)
+ * @param onFailed      接口调用失败，返回错误信息(主线程)
+ *
+ * @return 返回操作成功或者失败错误码
+ */
++ (void)maskGroupMsgRemind:(NSString *)groupId
+                    isMask:(BOOL)isMask
+                 onSuccess:(void (^)())onSuccess
+                  onFailed:(void (^)(int errorCode))onFailed;
+
 
 #pragma mark -
 #pragma mark RKCloudChat My All Group Function
@@ -395,7 +465,7 @@
                          withLastMessage:(RKCloudChatBaseMessage *)chatMessage;
 
 /**
- * @brief 设置会话是否置顶
+ * @brief 设置会话是否置顶(本地存储)
  *
  * @param isTop      是否置顶 YES=置顶，NO=不置顶
  * @param sessionID  会话ID
@@ -405,7 +475,8 @@
 + (long)setChatIsTop:(BOOL)isTop forSessionID:(NSString *)sessionID;
 
 /**
- * @brief 设置会话是否提醒
+ * @brief 设置会话是否提醒  （3.0作废）
+ * 替换函数：maskGroupMsgRemind:isMask:onSuccess:onFailed
  *
  * @param sessionID  会话ID
  * @param isRemind   是否提醒 YES=提醒，NO=不提醒
@@ -437,6 +508,24 @@
 #pragma mark RKCloudChat Message Get/Query/UpdateStatus Function
 
 /**
+ * @brief 获取会话的消息
+ * @attention 该方法在子线程里执行，并且callback也是在子线程调用，刷新UI的话需要回到主线程操作(3.0获取消息的接口)
+ *
+ * @param chatId 获取消息的会话id
+ * @param chatType 会话的类型：1：单聊；2：群聊
+ * @param msgId 获取当前消息id之前的消息，传nil获取该会话最新的消息
+ * @param msgCounts 获取消息的个数，实际获取的消息数量小于等于该数值
+ * @param callBack 查询成功后的block回调，messageObjectArray中的消息按照时间正序排列（从小到大）
+ *
+ * @return 无
+ */
++ (void)queryChatMsgs:(NSString *)chatId
+             chatType:(int)chatType
+                msgId:(NSString *)msgId
+            msgCounts:(int)msgCounts
+             callBack:(void(^)(NSArray <RKCloudChatBaseMessage *> *messageObjectArray))callBack;
+
+/**
  * @brief 获取会话中指定类型的所有消息，并且按照消息在终端的入库时间升序排列
  *
  * @param messageType 消息对象子类型（枚举值：MessageType）
@@ -448,7 +537,7 @@
                                                 forSession:(NSString *)sessionID;
 
 /**
- * @brief 根据当前消息时间获取其之前的消息对象列表，倒序排序
+ * @brief 根据当前消息时间获取其之前的消息对象列表，倒序排序(3.0以后作废)
  *
  * @param sessionID       会话ID
  * @param lastVisableDate 最后一条数据的创建时间，秒级UNIX时间戳

@@ -421,7 +421,8 @@
             
             [rkRequest.params setValue:self.appDelegate.userProfilesInfo.userAccount forKey:@"account"];
             [rkRequest.params setValue:userPassword forKey:@"pwd"];
-            
+            [rkRequest.params setValue:@"ios" forKey:@"os"];
+
             rkRequest.apiUrl = [NSString stringWithFormat:HTTP_API_LOGIN, self.appDelegate.userProfilesInfo.mobileAPIServer];
         
             // rkcloud base result
@@ -576,10 +577,6 @@
     
     // Goto Main Tabbar View Controller
     [self.appDelegate createMainTabbarController];
-    
-    // Jacky.Chen:2016.02.24,登录成功后添加是否展示引导页
-    // 显示引导页
-    [ToolsFunction showNewFeatureView];
     
     // 登入云视互动帐号
     [self.appDelegate.userProfilesInfo loginRKCloudAccount];

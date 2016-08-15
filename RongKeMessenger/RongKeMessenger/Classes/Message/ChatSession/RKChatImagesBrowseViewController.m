@@ -158,6 +158,11 @@
             case MESSAGE_STATE_SEND_ARRIVED:
             case MESSAGE_STATE_READED:
             {
+                BOOL isThumbnail = NO;
+                if ([ToolsFunction isFileExistsAtPath: ((ImageMessage *)messageObject).fileLocalPath] == NO)
+                {
+                    isThumbnail = YES;
+                }
                 controller = [self imagePreviewViewController:messageObject isThumbnail:NO];
                 break;
             }
@@ -224,6 +229,20 @@
     vwcImageDisplay.parent = self;
     vwcImageDisplay.isThumbnail = isThumbnail;
     
+    if (self.imageMessageArray && [self.imageMessageArray count] > self.currentIndex)
+    {
+        RKCloudChatBaseMessage *visibleMessage = [self.imageMessageArray objectAtIndex: self.currentIndex];
+        if (isThumbnail == NO
+            && displayImage
+            && [visibleMessage.messageID isEqualToString: messageObject.messageID]
+            && messageObject.messageStatus == MESSAGE_STATE_RECEIVE_DOWNED)
+        {
+            // 发送已读通知
+            [RKCloudChatMessageManager sendReadedReceipt: messageObject];
+        }
+    }
+    
+    
     return vwcImageDisplay;
 }
 
@@ -284,6 +303,17 @@
                 
                 // 启用“保存”按钮
                 vwcImageDisplay.saveToAlbumButton.enabled = YES;
+                
+                if (self.imageMessageArray && [self.imageMessageArray count] > self.currentIndex)
+                {
+                    RKCloudChatBaseMessage *visibleMessage = [self.imageMessageArray objectAtIndex: self.currentIndex];
+                    if ([visibleMessage.messageID isEqualToString: messageObject.messageID]
+                        && messageObject.messageStatus == MESSAGE_STATE_RECEIVE_DOWNED)
+                    {
+                        // 发送已读通知
+                        [RKCloudChatMessageManager sendReadedReceipt: messageObject];
+                    }
+                }
             }
 
         }

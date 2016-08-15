@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "SelectFriendsViewController.h"
 #import "RKMessageSearchViewController.h"
+#import "RKCloudBase.h"
 
 @interface RKChatSessionListViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -62,11 +63,13 @@
     
     // 初始化界面
     // 左边按钮
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_EDIT", "编辑")
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(touchEditButton)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+    // 需求无此按键，故注释
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_EDIT", "编辑")
+//                                                                   style:UIBarButtonItemStylePlain
+//                                                                  target:self
+//                                                                  action:@selector(touchEditButton)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    
     self.navigationItem.rightBarButtonItem  = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_CREAT_CHAT", "发起群聊") style:UIBarButtonItemStylePlain target:self action:@selector(touchCreateChatButton)];
     
     // 添加修改好友备注名 修改群聊名称 通知
@@ -140,7 +143,8 @@
     }
     
     RKCloudChatBaseChat *chatObject = [self.allSessionArray objectAtIndex:indexPath.row];
-    if (chatObject) {
+    if (chatObject)
+    {
         // 配置会话列表Cell的相关会话的信息
         [cell configSessionListByChatSessionObject:chatObject  withListType:SessionListShowTypeNomal withMarkColorStr:nil];
     }
@@ -259,25 +263,26 @@
 #pragma mark -
 #pragma mark Touch Button Actions
 
-// 调用UITableView的编辑功能
-- (void)touchEditButton
-{
-    self.isSlideDelete = NO;
-    
-    [self.sessionListTableView setEditing:!self.sessionListTableView.editing animated:YES];
-	//self.sessionListTableView.editing = !self.sessionListTableView.editing;
-	if (self.sessionListTableView.editing)
-	{
-		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_FINISH", "完成");
-		self.navigationItem.rightBarButtonItem.enabled = NO;
-	}
-	else
-	{
-		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_EDIT", "编辑");
-		self.navigationItem.rightBarButtonItem.enabled = YES;
-	}
-    
-}
+    // 需求无编辑按键，故注释此按键调用的方法
+    // 调用UITableView的编辑功能
+//- (void)touchEditButton
+//{
+//    self.isSlideDelete = NO;
+//    
+//    [self.sessionListTableView setEditing:!self.sessionListTableView.editing animated:YES];
+//	//self.sessionListTableView.editing = !self.sessionListTableView.editing;
+//	if (self.sessionListTableView.editing)
+//	{
+//		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_FINISH", "完成");
+//		self.navigationItem.rightBarButtonItem.enabled = NO;
+//	}
+//	else
+//	{
+//		self.navigationItem.leftBarButtonItem.title = NSLocalizedString(@"STR_EDIT", "编辑");
+//		self.navigationItem.rightBarButtonItem.enabled = YES;
+//	}
+//    
+//}
 
 // 打开选择好友页面
 - (void)touchCreateChatButton
@@ -473,7 +478,7 @@
 {
     if ([RKCloudChatConfigManager getNotificationEnable]) {
         // 状态栏上显示提示消息
-        if (chatObj.isRemindStatus)
+        if (chatObj.isRemindStatus && [msgObj.senderName isEqualToString: [RKCloudBase getUserName]] == NO)
         {
             NSString *promptString = nil;
             if ([RKCloudChatConfigManager getMsgRemindSum]) //  显示详情
@@ -690,20 +695,32 @@
         BOOL isExist = NO;
         RKCloudChatBaseChat *sessionObject = nil;
         
-        for (int i = 0; i < [self.allSessionArray count]; i++) {
+        for (int i = 0; i < [self.allSessionArray count]; i++)
+        {
             sessionObject = (RKCloudChatBaseChat *)[self.allSessionArray objectAtIndex:i];
-            if ([chatSession.sessionID isEqualToString:sessionObject.sessionID]) {
+            if ([chatSession.sessionID isEqualToString:sessionObject.sessionID])
+            {
                 isExist = YES;
                 break;
             }
         }
         
         // 重新获取会话记录
-        if (isExist) {
-            [self.allSessionArray removeObject:sessionObject];
-            [self.allSessionArray insertObject:chatSession atIndex:0];
+        if (isExist)
+        {
+            if ([sessionObject.lastMessageObject.sessionID isEqualToString: chatSession.lastMessageObject.sessionID] == NO)
+            {
+                [self.allSessionArray removeObject:sessionObject];
+                [self.allSessionArray insertObject:chatSession atIndex:0];
+            }
+            else
+            {
+                // 替换原来的对象
+                [self.allSessionArray replaceObjectAtIndex:[self.allSessionArray indexOfObject: sessionObject] withObject:chatSession];
+            }
         }
-        else {
+        else
+        {
             [self.allSessionArray insertObject:chatSession atIndex:0];
         }
         
@@ -729,11 +746,46 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         // 选择会话tabbar
-        AppDelegate *appDelegate = [AppDelegate appDelegate];
-        appDelegate.mainTabController.selectedIndex = 0;
+        BOOL isExist = NO;
+        RKCloudChatBaseChat *sessionObject = nil;
+        
+        for (int i = 0; i < [self.allSessionArray count]; i++)
+        {
+            sessionObject = (RKCloudChatBaseChat *)[self.allSessionArray objectAtIndex:i];
+            if ([chatSession.sessionID isEqualToString:sessionObject.sessionID])
+            {
+                isExist = YES;
+                break;
+            }
+        }
+        
+        // 重新获取会话记录
+        if (isExist)
+        {
+            if ([sessionObject.lastMessageObject.sessionID isEqualToString: chatSession.lastMessageObject.sessionID] == NO)
+            {
+                [self.allSessionArray removeObject:sessionObject];
+                [self.allSessionArray insertObject:chatSession atIndex:0];
+            }
+            else
+            {
+                // 替换原来的对象
+                [self.allSessionArray replaceObjectAtIndex:[self.allSessionArray indexOfObject: sessionObject] withObject:chatSession];
+            }
+        }
+        else
+        {
+            [self.allSessionArray insertObject:chatSession atIndex:0];
+        }
+        
+        // 刷新tableview
+        if (self.sessionListTableView)
+        {
+            [self.sessionListTableView reloadData];
+        }
         
         // 跳转到RKChatSessionViewController页面，创建聊天会话
-        [self createNewChatView:chatSession];
+        // [self createNewChatView:chatSession];
     });
 }
 
@@ -762,33 +814,6 @@
 }
 
 /**
- * @brief 代理方法: 收到单条消息之后的回调
- *
- * @param msgObj   RKCloudChatBaseMessage对象 收到的消息
- * @param chatObj  RKCloudChatBaseChat对象 消息所属的会话信息
- *
- * @return
- */
-- (void)didReceivedMsg:(RKCloudChatBaseMessage *)msgObj withForSession:(RKCloudChatBaseChat *)chatObj
-{
-    NSLog(@"CHAT-LIST-DELEGATE: didReceivedMsg: messageID = %@, sessionID = %@", msgObj.messageID, chatObj.sessionID);
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (self.messageSessionViewController &&
-            [self.messageSessionViewController.currentSessionObject.sessionID isEqualToString:chatObj.sessionID])
-        {
-            [self.messageSessionViewController didReceivedMsg:msgObj withForSession:chatObj];
-        }
-        else if (msgObj.msgDirection == MESSAGE_RECEIVE &&
-                 msgObj.messageStatus == MESSAGE_STATE_RECEIVE_RECEIVED) {
-            // 处理是否显示新消息提醒
-            [self dealPromptViewForNewMessage:msgObj withForSession:chatObj];
-        }
-    });
-}
-
-/**
  * @brief 代理方法: 收到多条消息之后的回调
  * @attention 收到的消息按照不同的会话进行划分，并且每个会话中的消息按照产生的时间升序排列
  * @param dictChatToMessages 字典类型，key为RKCloudChatBaseChat对象，值为RKCloudChatBaseMessage对象数组
@@ -799,33 +824,46 @@
 {
     NSLog(@"CHAT-LIST-DELEGATE: didReceivedMsgs: arrayChatMessages count = %lu", (unsigned long)[arrayChatMessages count]);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (arrayChatMessages == nil || [arrayChatMessages count] == 0) {
-            return;
-        }
-        
-        NSMutableArray *arrayBatchMessageOjbect = [NSMutableArray array];
-        
-        for (RKCloudChatBaseMessage *messageObject in arrayChatMessages)
+    if (arrayChatMessages == nil || [arrayChatMessages count] == 0) {
+        return;
+    }
+    
+    NSMutableArray *arrayBatchMessageObject = [NSMutableArray array];
+    
+    for (RKCloudChatBaseMessage *messageObject in arrayChatMessages)
+    {
+        // 获取单个会话的基本信息，不包含会话的最后一条消息对象
+        RKCloudChatBaseChat *baseChatObject = [RKCloudChatMessageManager queryChat:messageObject.sessionID];
+
+        if (self.messageSessionViewController && [messageObject.sessionID isEqualToString:self.messageSessionViewController.currentSessionObject.sessionID])
         {
-            if (self.messageSessionViewController && [messageObject.sessionID isEqualToString:self.messageSessionViewController.currentSessionObject.sessionID])
-            {
-                [arrayBatchMessageOjbect addObject:messageObject];
-            }
-            
-            // 获取单个会话的基本信息，不包含会话的最后一条消息对象
-            RKCloudChatBaseChat *baseChatObject = [RKCloudChatMessageManager queryChat:messageObject.sessionID];
-            
+            [arrayBatchMessageObject addObject:messageObject];
+        }
+        else
+        {
             // 处理是否显示新消息提醒
             [self dealPromptViewForNewMessage:messageObject withForSession:baseChatObject];
         }
         
-        if ([arrayBatchMessageOjbect count] > 0)
+        // 只有单聊才发送消息回执
+        if ([messageObject.senderName isEqualToString: [RKCloudBase getUserName]] == NO
+            && baseChatObject.sessionType == SESSION_SINGLE_TYPE
+            && (messageObject.messageType == MESSAGE_TYPE_TEXT
+                || messageObject.messageType == MESSAGE_TYPE_IMAGE
+                || messageObject.messageType == MESSAGE_TYPE_VOICE
+                || messageObject.messageType == MESSAGE_TYPE_FILE
+                || messageObject.messageType == MESSAGE_TYPE_VIDEO))
         {
-            [self.messageSessionViewController didReceivedMessageArray:arrayBatchMessageOjbect];
+            // 发送已接收的回执
+            [RKCloudChatMessageManager sendArrivedReceipt: messageObject];
         }
-    });
+    }
+    
+    if ([arrayBatchMessageObject count] > 0)
+    {
+        [self.messageSessionViewController didReceivedMessageArray:arrayBatchMessageObject];
+    }
+    
 }
 
 /**
@@ -855,25 +893,23 @@
 #pragma mark RKCloudChatDelegate - RKCloudChatGroup
 // 云视互动即时通信对于群的回调接口
 
-/**
+/*!
  * @brief 代理方法: 单个群信息有变化
  *
  * @param groupId NSString 群ID
+ * @param changedType 修改群信息的类型，具体看ChangedType定义
  *
  * @return
  */
-- (void)didGroupInfoChanged:(NSString *)groupId
+- (void)didGroupInfoChanged:(NSString *)groupId changedType:(ChangedType)changedType
 {
     NSLog(@"CHAT-LIST-DELEGATE: didGroupInfoChanged: groupId = %@", groupId);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        if (self.messageSessionViewController == nil || [self.messageSessionViewController.currentSessionObject.sessionID isEqualToString:groupId] == NO) {
-            return;
-        }
-        
-        [self.messageSessionViewController didGroupInfoChanged:groupId];
-    });
+    if (self.messageSessionViewController == nil || [self.messageSessionViewController.currentSessionObject.sessionID isEqualToString:groupId] == NO) {
+        return;
+    }
+    
+    [self.messageSessionViewController didGroupInfoChanged:groupId changedType:changedType];
 }
 
 /**

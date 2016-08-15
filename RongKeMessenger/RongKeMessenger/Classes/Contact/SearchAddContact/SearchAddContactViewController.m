@@ -185,6 +185,24 @@
     return HEIGHT_CONTACT_LIST_CELL;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.5f;
+}
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (self.searchContactArray == nil || [self.searchContactArray count] == 0) {
+        return nil;
+    }
+    
+    UIView * view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UISCREEN_BOUNDS_SIZE.width, 0.5)];
+    UILabel * lineLabel =[[UILabel alloc]initWithFrame:CGRectMake(15, 0, UISCREEN_BOUNDS_SIZE.width-15, 0.5)];
+    lineLabel.backgroundColor = [UIColor colorWithRed:193.0/255.0 green:192.0/255.0 blue:197.0/255.0 alpha:1.0];
+    [view addSubview:lineLabel];
+    return view;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -192,6 +210,10 @@
     
     if (tableView == self.searchDisplayController.searchResultsTableView)
     {
+        if (self.searchContactArray == nil || [self.searchContactArray count] == 0)
+        {
+            return;
+        }
         FriendsNotifyTable *friendsNotifyTable = [self.searchContactArray objectAtIndex:indexPath.row];
         
         NSString *paramUserId = friendsNotifyTable.friendAccount;

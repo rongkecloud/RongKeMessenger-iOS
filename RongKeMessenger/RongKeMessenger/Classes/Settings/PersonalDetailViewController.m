@@ -199,19 +199,21 @@
             
             self.permissionAddSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 70, 27)];
             self.permissionAddSwitch.tag = PERSONALINFO_SWITCH_PERMISSION_PROMPT_TAG;
-            self.permissionAddSwitch.on = YES;
             
+            //switch 的开关不能直接赋值，否则会导致按钮重叠
+            [self.permissionAddSwitch setOn:YES animated:YES];
+
             if ([self.appDelegate.userProfilesInfo.friendPermission isEqualToString:SETTING_PERSONAL_PERMISSION_ENABLE])
             {
-                self.permissionAddSwitch.on = YES;
+                [self.permissionAddSwitch setOn:YES animated:YES];
             }else{
-                self.permissionAddSwitch.on = NO;
+                [self.permissionAddSwitch setOn:NO animated:YES];
             }
             
             [self.permissionAddSwitch addTarget:self action:@selector(touchChangeSwitch:) forControlEvents:UIControlEventValueChanged];
             
             // 手动添加的控件 防止多次添加UI重影
-            UIView *subView = [cell viewWithTag:PERSONALINFO_SWITCH_PERMISSION_PROMPT_TAG];
+            UIView *subView = [cellAdd viewWithTag:PERSONALINFO_SWITCH_PERMISSION_PROMPT_TAG];
             if (!subView) {
                 [cellAdd addSubview:self.permissionAddSwitch];
             }

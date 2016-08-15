@@ -112,7 +112,7 @@
  *
  *  @param requestStrArray 所有通过好友数组
  */
-- (void)friendAcceptAddReuest:(NSString *)friendAccount andRequestStrArray:(NSArray *)requestStrArray;
+- (void)friendAcceptAddReuest:(NSDictionary *)customMessageDic andRequestStrArray:(NSArray *)requestStrArray;
 
 /**
  *  好友请求添加好友

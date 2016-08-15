@@ -25,7 +25,7 @@
 
 #define IMAGE_SCALE_SHORTEST_LENGTH_720      720 // 普通图片缩放时最短边的长度
 
-#define MMSWINDOW_TAG 1101	// 状态栏新消息提醒中使用的window tag
+#define MMS_PROMPT_WINDOW_TAG 1101	// 状态栏新消息提醒中使用的window tag
 // 程序状态栏字体颜色
 #define COLOR_STATUSBAR_TEXT_RED		26/255.0f
 #define COLOR_STATUSBAR_TEXT_GREEN	 100.0/255.0f
@@ -760,7 +760,7 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
         UIWindow *windowStatusBar = [[UIWindow alloc] initWithFrame:frame];
         [windowStatusBar setBackgroundColor:[UIColor clearColor]];
         [windowStatusBar setWindowLevel:UIWindowLevelStatusBar];
-        windowStatusBar.tag = MMSWINDOW_TAG;
+        windowStatusBar.tag = MMS_PROMPT_WINDOW_TAG;
         statusBarWindow = windowStatusBar;
     }
     
@@ -780,15 +780,19 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     //设置lebel背景色
     [labelAppName setBackgroundColor:[UIColor clearColor]];
     //设置label文字
-    [labelAppName setText:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
+    NSString * str = [NSString stringWithFormat:@"%@：", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"]];
+    [labelAppName setText:str];
     //设置label字体大小
     [labelAppName setFont:[UIFont systemFontOfSize:13]];
     //设置label文字颜色
     labelAppName.textColor = COLOR_WITH_RGB(26, 100, 0);
+    //根据label文字内容改变label的宽度
+    CGSize textSize = [self getSizeFromString:labelAppName.text withFont:labelAppName.font];
+    labelAppName.frame = CGRectMake(5, 0, textSize.width, 20);
     [imageView addSubview:labelAppName];
     
     //创建label
-    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 0, UISCREEN_BOUNDS_SIZE.width-55, 20)];
+    UILabel *messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(labelAppName.bounds)+5, 0, UISCREEN_BOUNDS_SIZE.width-(CGRectGetMaxX(labelAppName.bounds)+5), 20)];
     //设置lebel背景色
     [messageLabel setBackgroundColor:[UIColor clearColor]];
     //设置label文字

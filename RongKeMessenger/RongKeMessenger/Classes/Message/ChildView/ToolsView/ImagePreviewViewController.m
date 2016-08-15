@@ -463,7 +463,10 @@
 - (void)image:(UIImage *)saveImage didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
     if (error)
-    {
+    {        
+        [UIAlertView showAutoHidePromptView:NSLocalizedString(@"SERVICE_PROMPT_SAVE_FAILED","保存失败")
+                                 background:nil
+                                   showTime:2];
         NSLog(@"DEBUG:PersonalBusinessCardsViewController->iamge:didFinishSavingWithError:contextInfo:->保存失败");
     }
 	else

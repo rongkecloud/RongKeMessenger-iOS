@@ -117,6 +117,23 @@
                 [[AppDelegate appDelegate].contactManager getContactInfoByUserAccount:self.friendsNotifyTable.friendAccount];
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_UPDATE_FRIEND_LIST object:nil];
+                
+                // 新建一个聊天会话,如果会话存在，打开聊天页面
+                [SingleChat buildSingleChat:self.friendsNotifyTable.friendAccount
+                                  onSuccess:^{
+                                      LocalMessage *callLocalMessage = nil;
+                                      
+                                      // 向对方发送验证通过的消息
+                                      callLocalMessage = [LocalMessage buildReceivedMsg:self.friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:self.friendsNotifyTable.friendAccount];
+                                      
+                                      // 保存扩展信息
+                                      [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
+                                      
+                                  }
+                                   onFailed:^(int errorCode) {
+                                   }];
+                
+                
             } else {
                 
                 // 弹出申请AlertView

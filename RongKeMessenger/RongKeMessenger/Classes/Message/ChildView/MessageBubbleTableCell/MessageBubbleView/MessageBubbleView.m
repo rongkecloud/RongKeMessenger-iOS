@@ -345,11 +345,11 @@
     // 发送消息在右侧
     if (self.isRightBubble)
 	{
-        /*
+        
         NSString *stateString = nil;
         
         // 群聊不显示状态
-        if (!self.isMultiplayerSession)
+        if (self.isMultiplayerSession == NO && self.mmsObject.isHistoryMMS == NO)
         {
             UIColor *textColor = MESSAGE_ARRIVED_COLOR;
             [textColor set];
@@ -381,9 +381,11 @@
             CGSize stateSize = [ToolsFunction getSizeFromString:stateString withFont:[UIFont systemFontOfSize:14]];
             float stateStringOriginX = self.bubbleRect.origin.x - CELL_DISTANCE_BETWEEN_SEND_AND_LEFT_OF_BUBBLE - stateSize.width;
             float stateStringOriginY = CGRectGetMaxY(self.bubbleRect) - CELL_DISTANCE_BETWEEN_SEND_AND_BOTTOM_OF_BUBBLE - stateSize.height;
-            [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withFont:[UIFont systemFontOfSize:14]];
+            if (self.mmsObject.messageType != MESSAGE_TYPE_LOCAL)
+            {
+                [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withFont:[UIFont systemFontOfSize:14]];
+            }
         }
-         */
         
         [[UIColor grayColor] set];
         
@@ -397,17 +399,21 @@
 #endif
 		}
     }
-	else {
+	else
+    {
         // 接收到的消息在左侧
         UIImage *unReadImage = nil;
         
         // 绘制未读标记
-        if (mmsType != MESSAGE_TYPE_TEXT &&
-            (mmsStatus == MESSAGE_STATE_RECEIVE_RECEIVED || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED))
+        if (mmsType != MESSAGE_TYPE_TEXT
+            && self.mmsObject.messageType != MESSAGE_TYPE_LOCAL
+            &&(mmsStatus == MESSAGE_STATE_RECEIVE_RECEIVED
+               || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED
+               || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNED))
 		{
             unReadImage = [UIImage imageNamed:@"unread_warning_icon"];
             float unReadImageOriginX = CGRectGetMaxX(self.bubbleRect) + CELL_DISTANCE_BETWEEN_READ_FLAG_AND_RIGHT_OF_RECEIVE_BUBBLE;
-            float unReadImageOriginY = CGRectGetMaxY(self.bubbleRect) - unReadImage.size.height/2 - CELL_DISTANCE_BETWEEN_READ_FLAG_AND_BOTTOM_OF_RECEIVE_BUBBLE;
+            float unReadImageOriginY = CGRectGetMaxY(self.bubbleRect) - CGRectGetHeight(self.bubbleRect)/2 - unReadImage.size.height/2;
             [unReadImage drawInRect:CGRectMake(unReadImageOriginX,
                                                unReadImageOriginY,
                                                unReadImage.size.width,
@@ -417,7 +423,7 @@
         [[UIColor grayColor] set];
         
         // 格式化时间字符串
-        NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
+        /*NSDateFormatter *timeFormatter = [[NSDateFormatter alloc] init];
         [timeFormatter setDateFormat:@"HH:mm"];
         NSString *sendTimeString = [[NSString alloc] initWithFormat:@"%@", [timeFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:self.mmsObject.sendTime]]];
         
@@ -427,7 +433,7 @@
         float stringSendDateOriginY = CGRectGetMaxY(self.bubbleRect) - dateSize.height - CELL_DISTANCE_BETWEEN_TIME_AND_BOTTOM_OF_RECEIVE_BUBBLE;
         
         [sendTimeString drawAtPoint:CGPointMake(stringSendDateOriginX, stringSendDateOriginY) withFont:[UIFont systemFontOfSize:12]];
-        
+        */
 #ifdef RECEIVE_DATE_DRAW
 		// 接收时间绘制
 		[receiveTimeString drawAtPoint:CGPointMake(CGRectGetMaxX(self.bubbleRect), self.bubbleRect.origin.y) withFont:[UIFont systemFontOfSize:10]];
@@ -437,7 +443,8 @@
     // 绘制时间
     [[UIColor blackColor] set];
     
-    if (self.mmsObject.messageType == MESSAGE_TYPE_VIDEO) {
+    if (self.mmsObject.messageType == MESSAGE_TYPE_VIDEO)
+    {
         VideoMessage *videoMessage = (VideoMessage *)self.mmsObject;
         // 绘制时长
         NSString *videoDuration = [NSString stringWithFormat:@"%.2f",(float)((float)videoMessage.mediaDuration/100.00)];

@@ -276,15 +276,21 @@
         [self.callViewController onStateCallBack:state withReason:stateReason];
     }
     
+    BOOL isSaveMessage = YES;
+    
     // 通话如果挂断则保存通话记录到消息会话中
     if (state == AV_CALL_STATE_HANGUP)
     {
         BOOL isMissCall = NO;
         // 获取当前通话的信息对象RKCloudAVCallInfo
         RKCloudAVCallInfo *avCallInfo = [RKCloudAV getAVCallInfo];
-        NSAssert(avCallInfo != nil, @"ERROR: avCallInfo == nil");
+        // NSAssert(avCallInfo != nil, @"ERROR: avCallInfo == nil");
+        if (avCallInfo == nil) {
+            return;
+        }
         
-        switch (stateReason) {
+        switch (stateReason)
+        {
             case AV_NO_REASON:
             {
                 // 格式化通话时长显示格式
@@ -323,13 +329,15 @@
             case AV_CALLEE_NO_ANSWER: // 被叫未接听，主要给主叫呼叫超时使用
             case AV_CALLEE_ANSWER_TIMEOUT: // 被叫未接听，主要给被叫应答超时使用
             {
-                if (self.callViewController.isIncomingCall) {
+                if (self.callViewController == nil || self.callViewController.isIncomingCall)
+                {
                     // "未接来电"
                     self.strCallRecordMsgContent = NSLocalizedString(@"RKCLOUD_AV_MSG_CALL_MISSED", "未接来电");
                     
                     isMissCall = YES;
                 }
-                else {
+                else
+                {
                     // "无人应答"
                     self.strCallRecordMsgContent = NSLocalizedString(@"RKCLOUD_AV_MSG_CALLER_CALLEE_NO_ANSWER", "无人应答");
                 }
@@ -353,13 +361,18 @@
                 // "呼叫失败"
                 self.strCallRecordMsgContent = NSLocalizedString(@"RKCLOUD_AV_MSG_CALLER_CALL_FAILED", "呼叫失败");
                 break;
-                
+            case AV_CALLEE_OTHER_PLATFORM_ANSWER:
+                isSaveMessage = NO;
+                break;
             default:
                 break;
         }
         
-        // 插入消息记录中保存通话记录
-        [self saveCallRecordToChatLocalMessage:avCallInfo.peerAccount withIsCaller:avCallInfo.isCaller withIsVideoCall:avCallInfo.isStartVideoCall withIsMissedCall:isMissCall withCallTime:[ToolsFunction getCurrentSystemDateSecond]];
+        if (isSaveMessage)
+        {
+            // 插入消息记录中保存通话记录
+            [self saveCallRecordToChatLocalMessage:avCallInfo.peerAccount withIsCaller:avCallInfo.isCaller withIsVideoCall:avCallInfo.isStartVideoCall withIsMissedCall:isMissCall withCallTime:[ToolsFunction getCurrentSystemDateSecond]];
+        }
     }
 }
 

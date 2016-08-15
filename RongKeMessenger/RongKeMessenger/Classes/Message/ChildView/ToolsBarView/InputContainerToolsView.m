@@ -222,6 +222,10 @@
 {
     // 删除字符
     if ([atext isEqualToString:@""]){
+        if ([self.delegate respondsToSelector:@selector(growingTextView:shouldChangeTextInRange:replacementText:)])
+        {
+            return [self.delegate growingTextView:growingTextView shouldChangeTextInRange:range replacementText:atext];
+        }
         return YES;
     }
     

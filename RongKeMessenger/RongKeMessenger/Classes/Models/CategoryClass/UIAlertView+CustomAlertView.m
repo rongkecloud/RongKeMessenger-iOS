@@ -147,7 +147,8 @@
     setChatTitleAlert.tag = ALERT_CREATE_NEW_GROUP_TAG;
     
     UITextField * titleField = [setChatTitleAlert textFieldAtIndex:0];
-    titleField.placeholder = NSLocalizedString(@"STR_TEMP_GROUP_NAME", "临时群");
+    titleField.text = NSLocalizedString(@"STR_TEMP_GROUP_NAME", "临时群");
+    
     //设置文本框代理
     titleField.delegate = delegate;
     titleField.tag = CHAT_TITLE_TEXTFIELD;
@@ -219,7 +220,7 @@
     [alertOvalView addSubview:activityIndicatorView];
     [alertMaskView addSubview:alertOvalView];
     
-    UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
+    UIWindow *window = [[UIApplication sharedApplication] delegate].window;
     [window addSubview:alertMaskView];
     
     NSLog(@"TOOLS: Show Waiting Mask View...");
@@ -229,8 +230,9 @@
 + (void)hideWaitingMaskView
 {
     // 先从主窗口上获取alertView的指针
-    UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
-    if (window) {
+    UIWindow *window = [[UIApplication sharedApplication] delegate].window;
+    if (window)
+    {
         UIView *alertView = [window viewWithTag:ALERT_PROMPT_WAITING_TAG];
         if (alertView)
         {
@@ -240,7 +242,6 @@
         }
     }
 }
-
 
 #pragma mark - Show Auto Hide Prompt View
 

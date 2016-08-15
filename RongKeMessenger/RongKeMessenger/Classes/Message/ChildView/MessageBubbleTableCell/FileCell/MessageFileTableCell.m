@@ -131,7 +131,7 @@
         // 设置文件名称label的frame(2016.02.29:Jacky.Chen,add)
         self.fileNameLabel.frame = CGRectMake(CGRectGetMinX(self.messageBubbleView.bubbleRect) + CELL_MESSAGE_FILEICON_LEFT + CELL_MESSAGE_FILE_ICON_WIDTH + CELL_MESSAGE_FILEICON_AND_TEXT_DISTANCE, CGRectGetMinY(self.messageBubbleView.bubbleRect) + 10, fileNameLabeSize.width, fileNameLabeSize.height);
     }
-    
+    [self.fileNameLabel layoutIfNeeded];
     [self.fileImageView setFrame:fileIconFrame];
 	[self.messageBubbleView setNeedsDisplay];
 }
@@ -215,7 +215,15 @@
                 break;
                 
             case FILE_TAG_OPEN: // 文件打开事件
+            {
+                if ([ToolsFunction isFileExistsAtPath: self.filesPath] == NO)
+                {
+                    [self downloadFileMessage];
+                    self.fileImageView.hidden = YES;
+                    return;
+                }
                 [self touchOpenFileButton];
+            }
                 break;
                 
             default:

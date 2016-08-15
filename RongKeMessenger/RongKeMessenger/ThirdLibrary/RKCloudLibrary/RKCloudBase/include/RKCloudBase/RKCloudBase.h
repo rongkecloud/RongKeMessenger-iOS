@@ -84,6 +84,10 @@ extern NSString *kRKCloudPushMessageAudioVideoNotification; /**< 通知音视频
  *  @brief 通知多人语音模块处理消息
  */
 extern NSString *kRKCloudPushMessageMeetingNotification; /**< 通知多人语音模块处理消息    */
+/*!
+ *  @brief 程序进入前台的通知
+ */
+extern NSString *kRKCloudPushMessageEnterForegroundNotification; /**< 程序进入前台的通知    */
 
 
 #pragma mark -
@@ -252,6 +256,19 @@ FOUNDATION_EXPORT void RKCloudDebugLog(NSString *format, ...);
  */
 + (int)getVideoMaxDuration;
 
+/*!
+ * @brief 获取撤销消息的超时时间，单位：秒
+ *
+ * @return long 撤销消息的超时时间或错误码
+ */
++ (int)getRevokeMessageTimeout;
+
+/*!
+ * @brief 获取是否支持获取历史消息
+ *
+ * @return bool 支持为YES，否则为NO
+ */
++ (BOOL)isSupportHistoryMessage;
 
 #pragma mark -
 #pragma mark RKCloudBase Register Interface

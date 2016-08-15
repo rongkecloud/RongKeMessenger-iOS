@@ -214,6 +214,8 @@
             self.feedBackTextView.text = [toBeString substringToIndex:FRIEND_SOURCE_DESCRIPTION_OR_ADVANTAGE_LENGTH];
         }
     }
+    // 这行代码是为了防止粘贴超长内容时，能粘贴上但什么都不显示的问题。
+    [self.feedBackTextView scrollRangeToVisible:NSMakeRange(0, 0)];
 }
 
 
