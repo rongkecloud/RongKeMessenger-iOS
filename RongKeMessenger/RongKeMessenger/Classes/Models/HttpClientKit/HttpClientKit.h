@@ -17,7 +17,7 @@
 #define RKCLOUD_HTTP_POST					@"POST"
 #define RKCLOUD_HTTP_BODY_SEPARATOR         @"----------7db220630e70"
 
-#define RKCLOUD_API_SERVER_PATH		        @"/rkdemo/" // HTTP Server Path
+#define RKCLOUD_API_SERVER_PATH		        @"/rkdemo3/" // HTTP Server Path
 
 // Try connect count
 #define RKCLOUD_TRYCOUNT_1	  1

@@ -55,6 +55,9 @@ typedef NS_ENUM(NSUInteger, MessageType) {
 @property (nonatomic, copy) NSString *textContent; // 消息文本内容
 @property (nonatomic, copy) NSString *extension; // 消息的扩展内容
 @property (nonatomic, copy) NSString *msgSummary; // 消息摘要内容，空值则不显示消息摘要内容，非空值则为要显示的消息摘要内容
+@property (nonatomic, copy) NSString *msgCustomStatus; // 消息摘要内容，空值则不显示消息摘要内容，非空值则为要显示的消息摘要内容
+@property (nonatomic, copy) NSString *customReceipt; // 消息自定义回执
+@property (nonatomic, copy) NSString *atUser;        // 群组消息的@功能，all是@所有人，否则atUser是json数组
 
 @property (nonatomic) MessageDirection msgDirection; // 消息的发送接收方向
 @property (nonatomic) MessageStatus messageStatus; // 消息的状态
@@ -63,4 +66,6 @@ typedef NS_ENUM(NSUInteger, MessageType) {
 @property (nonatomic) long indexStorage; // 消息在客户端存储的自增索引值
 @property (nonatomic) long createTime; // 消息在客户端的创建时间，为秒级时间戳
 @property (nonatomic) long sendTime; // 消息的发送时间（发送方的本地时间）为级时间戳（发送的消息时为实际发送的时间，收到的消息时为服务器端传递的时间）
+@property (nonatomic) BOOL isHistoryMMS;  // 是否是历史记录
+
 @end

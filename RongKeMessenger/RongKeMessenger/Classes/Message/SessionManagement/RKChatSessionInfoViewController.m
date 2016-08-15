@@ -928,7 +928,6 @@
     } onFailed:^(int errorCode) {
         
     }];
-    // [RKCloudChatMessageManager setRemindStatusInChat:self.rkChatSessionViewController.currentSessionObject.sessionID withRemindStatu:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
 }
 
 // 设置是否置顶聊天

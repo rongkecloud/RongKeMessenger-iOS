@@ -56,7 +56,8 @@ typedef enum : NSInteger {
     CHAT_MMS_NONSUPPORT = 2004, /**< 不支持发送的消息类型    */
     CHAT_MMS_CANNOT_SEND_OWN = 2005, /**< 禁止发消息给自己    */
     CHAT_MMS_CANNOT_INVITE_OWN = 2006, /**< 禁止邀请自己到群中    */
-    
+    CHAT_MMS_REVOKE_TIMEOUT = 2007, /**< 撤销消息超时    */
+
     CHAT_GROUP_NOT_EXIST = 2021, /**< 群号码或会话不存在    */
     CHAT_GROUP_USER_NOT_EXIST = 2022, /**< 非群用户    */
     CHAT_GROUP_COUNT_EXCEED_LIMIT = 2023, /**< 群个数已达上限    */
@@ -75,7 +76,7 @@ typedef enum : NSInteger {
 
 /*!
  *  @protocol
- *  @abstract 云视互动Chat SDK代理类。
+ *  @abstract 云视互动Chat SDK代理类，代理函数都是在主线程被调用。
  */
 @protocol RKCloudChatDelegate <NSObject>
 
@@ -95,7 +96,8 @@ typedef enum : NSInteger {
 - (void)didMsgHasChanged:(RKCloudChatBaseMessage *)messageObject;
 
 /*!
- * @brief 代理方法: 收到单条消息之后的回调
+ * @brief 代理方法: 收到单条消息之后的回调 （3.0废弃）
+ * 替换的函数为：didReceivedMsgs
  *
  * @param messageObject   RKCloudChatBaseMessage对象 收到的消息
  * @param sessionObject  RKCloudChatBaseChat对象 消息所属的会话信息
@@ -106,7 +108,7 @@ typedef enum : NSInteger {
         withForSession:(RKCloudChatBaseChat *)sessionObject;
 
 /*!
- * @brief 代理方法: 收到多条消息之后的回调
+ * @brief 代理方法: 收到消息之后的回调
  * @attention 收到的消息按照不同的会话进行划分，并且每个会话中的消息按照产生的时间升序排列
  * @param arrayChatMessages 数组类型，值为RKCloudChatBaseMessage对象数组
  *
@@ -129,13 +131,24 @@ typedef enum : NSInteger {
 // 云视互动即时通信对于群的回调接口
 
 /*!
- * @brief 代理方法: 单个群信息有变化
+ * @brief 代理方法: 单个群信息有变化  3.0废弃
+ * 替换的函数为：didGroupInfoChanged: changedType
  *
  * @param groupId NSString 群ID
  *
  * @return
  */
 - (void)didGroupInfoChanged:(NSString *)groupId;
+
+/*!
+ * @brief 代理方法: 单个群信息有变化
+ *
+ * @param groupId NSString 群ID
+ * @param changedType 修改群信息的类型，具体看ChangedType定义
+ *
+ * @return
+ */
+- (void)didGroupInfoChanged:(NSString *)groupId changedType:(ChangedType)changedType;
 
 /*!
  * @brief 代理方法: 移除群

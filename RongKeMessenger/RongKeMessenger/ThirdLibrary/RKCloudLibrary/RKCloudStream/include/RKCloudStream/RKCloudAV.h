@@ -83,7 +83,8 @@ typedef enum : NSInteger {
     AV_CALLEE_ANSWER_TIMEOUT = 3007, /**< 被叫未接听应答超时，或者被叫接听后接听超时   */
     AV_CALLER_CANCEL = 3008, /**< 主叫取消通话    */
     AV_CALL_OTHER_FAIL = 3009, /**< 其它原因导致呼叫失败    */
-    
+    AV_CALLEE_OTHER_PLATFORM_ANSWER = 3010, /**< 同一个账号在其它平台接听电话    */
+
     AV_CALLING_NOT_EXIST = 3020, /**< 不存在当前正进行的通话  */
     AV_MICROPHONE_NOT_OPEN = 3021, /**< 麦克风权限未开启错误码  */
     AV_CAMERA_NOT_OPEN = 3022, /**< 摄像头权限未开启错误码  */
