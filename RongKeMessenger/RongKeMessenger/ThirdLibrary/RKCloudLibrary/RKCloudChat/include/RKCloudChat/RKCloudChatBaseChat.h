@@ -21,6 +21,16 @@ typedef NS_ENUM(NSUInteger, LeaveType) {
     LEAVE_DISSOLVE_TYPE = 3,   // 3：解散群
 };
 
+// 群信息修改的类型（1：修改群名称；2：修改群描述；3：转让群；4：群人数改变；5：修改群的邀请权限；6：获取群信息）
+typedef NS_ENUM(NSUInteger, ChangedType) {
+    CHANGE_TYPE_GROUP_NAME = 1,           // 1：修改群名称
+    CHANGE_TYPE_GROUP_DESCRIPTION = 2,    // 2：修改群描述
+    CHANGE_TYPE_GROUP_TRANSFER = 3,       // 3：转让群
+    CHANGE_TYPE_GROUP_POPULATION = 4,     // 4：群人数改变
+    CHANGE_TYPE_GROUP_JOIN_AUTHORITY = 5, // 5：修改群的邀请权限
+    CHANGE_TYPE_GROUP_INFO = 6            // 6：获取群信息
+};
+
 @class RKCloudChatBaseMessage;
 
 @interface RKCloudChatBaseChat : NSObject
