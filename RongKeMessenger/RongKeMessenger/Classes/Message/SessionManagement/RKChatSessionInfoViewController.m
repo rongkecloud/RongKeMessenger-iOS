@@ -1004,7 +1004,6 @@
     titleField.keyboardType = UIKeyboardTypeDefault;
     titleField.text = ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupDescription;
     titleField.placeholder = NSLocalizedString(@"TITLE_PLEASE_INPUT_GROUP_DESCRIPTION", "请输入群描述");
-    [titleField becomeFirstResponder];
     
     [setChatTitleAlert show];
     
