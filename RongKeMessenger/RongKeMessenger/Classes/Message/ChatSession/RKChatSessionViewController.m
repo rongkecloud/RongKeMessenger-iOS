@@ -1538,13 +1538,15 @@
 {
     // 将表情符号插入到相应的textView输入框的光标处
     NSMutableString *stringText = [NSMutableString stringWithString:self.messageContainerToolsView.inputContainerToolsView.growingTextView.text];
-    [stringText insertString:textString atIndex:currentTextViewLocation];
+    
+    NSString * str = [NSString stringWithFormat:@"%@ ", textString];
+    [stringText insertString:str atIndex:currentTextViewLocation];
     
     // 显示到textView输入框中
     self.messageContainerToolsView.inputContainerToolsView.growingTextView.text = stringText;
     
     // 移动当前光标位置
-    currentTextViewLocation += [textString length];
+    currentTextViewLocation += [str length];
     
     // 设置光标到输入表情的后面
     self.messageContainerToolsView.inputContainerToolsView.growingTextView.selectedRange = NSMakeRange(currentTextViewLocation, 0);
