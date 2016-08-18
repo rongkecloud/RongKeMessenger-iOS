@@ -20,6 +20,7 @@
 
 #define OPRATION_BUTTON_BACKGROUND_VIEW_HEIGHT  85
 #define OPERATION_BUTTON_SPACING_BOTTOM    10
+#define LOCAL_VIEW_SPACE 8.0
 
 @interface RKCloudUICallViewController () <CallOperationButtonAndTitleViewDelegate>
 {
@@ -48,6 +49,10 @@
 @property (strong, nonatomic) CallOperationButtonAndTitleView *switchAudioButtonView;   // 转换成语音通话
 
 @property (nonatomic, strong) AVAudioPlayer *avAudioPlayer; // 播放音频对象
+
+@property (nonatomic, assign) BOOL isLocalViewSmall;
+@property (nonatomic, assign) BOOL isAbleToSwitchLocalAndRemote;
+@property (nonatomic, assign) BOOL isAllControlHidden;
 
 @end
 
@@ -80,7 +85,16 @@
     if (self.isAutoAnswer == YES) {
         NSLog(@"CALL: isAutoAnswer == YES");
         [self touchAnswerButton];
-    }
+    }    // 添加手势
+    UITapGestureRecognizer * tapLocalViewGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchLocalVideoView)];
+    [self.localVideoView addGestureRecognizer:tapLocalViewGesture];
+    
+    UIPanGestureRecognizer * panLocalViewGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragLocalView:)];
+    [self.localVideoView addGestureRecognizer:panLocalViewGesture];
+    
+    UITapGestureRecognizer * tapRemoteViewGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchRemoteVideoView)];
+    [self.remoteVideoView addGestureRecognizer:tapRemoteViewGesture];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -162,7 +176,10 @@
     isSpeakerEnable = NO;
     isBluetoothConnected = NO;
     isHangupPop = NO;
-    
+    self.isLocalViewSmall = YES;
+    self.isAbleToSwitchLocalAndRemote = YES;
+    self.isAllControlHidden = NO;
+
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     // Use this code instead to allow the app sound to continue to play when the screen is locked.
     //[[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
@@ -657,6 +674,72 @@
     }
 }
 
+- (void)touchLocalVideoView
+{
+    if (self.isAbleToSwitchLocalAndRemote)
+    {
+        self.isAbleToSwitchLocalAndRemote = NO;
+        [self performSelector:@selector(enableSwitchLocalAndRemote) withObject:nil afterDelay:0.5];
+        
+        if (self.isLocalViewSmall)
+        {
+            [RKCloudAV setVideoDisplay:self.localVideoView withLocalVideo:self.remoteVideoView];
+        }
+        else
+        {
+            [RKCloudAV setVideoDisplay:self.remoteVideoView withLocalVideo:self.localVideoView];
+        }
+        self.isLocalViewSmall = !self.isLocalViewSmall;
+    }
+}
+
+- (void)enableSwitchLocalAndRemote {
+    self.isAbleToSwitchLocalAndRemote = YES;
+}
+
+- (void)dragLocalView:(UIPanGestureRecognizer *)panLocalViewGesture
+{
+    CGPoint point = [panLocalViewGesture translationInView:self.view];
+    CGFloat x = point.x + self.localVideoView.center.x;
+    CGFloat y = point.y + self.localVideoView.center.y;
+    
+    if (x < LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2)
+    {
+        x = LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2;
+    }
+    else if (x > (UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2)))
+    {
+        x = UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2);
+    }
+    
+    if (y < self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height)
+    {
+        y = self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height;
+    }
+    else if (y > (UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2)))
+    {
+        y = UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2);
+    }
+    
+    self.localVideoView.center = CGPointMake(x, y);
+    [panLocalViewGesture setTranslation:CGPointMake(0, 0) inView:self.view];
+}
+
+- (void)touchRemoteVideoView {
+    [self setAllControlHidden:self.isAllControlHidden];
+}
+
+-(void)setAllControlHidden:(BOOL)isAllControlHidden
+{
+    self.isAllControlHidden = !self.isAllControlHidden;
+    for (UIView * obj in self.view.subviews)
+    {
+        if (obj != self.localVideoView && obj != self.remoteVideoView && obj != self.backgroundImgView && obj != self.headerImageView && obj != self.accountLabel)
+        {
+            [obj setHidden:self.isAllControlHidden];
+        }
+    }
+}
 
 #pragma mark - RKCloudAVDelegate - RKCloudAVStateCallBack
 
