@@ -877,14 +877,14 @@
 {
     NSLog(@"CHAT-LIST-DELEGATE: didUnReadMessageTotal: totalCount = %d", totalCount);
     
-    int count = 0;
-    for (RKCloudChatBaseChat *sessionObject in self.allSessionArray) {
-        if (sessionObject.unReadMsgCnt > 0) {
-            count += sessionObject.unReadMsgCnt;
-        }
-    }
-    
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        int count = 0;
+        for (RKCloudChatBaseChat *sessionObject in self.allSessionArray) {
+            if (sessionObject.unReadMsgCnt > 0) {
+                count += sessionObject.unReadMsgCnt;
+            }
+        }
         // 更新tabBar的badgeValue
         if (count > 0 ){
             self.tabBarItem.badgeValue = [NSString stringWithFormat:@"%d", count];

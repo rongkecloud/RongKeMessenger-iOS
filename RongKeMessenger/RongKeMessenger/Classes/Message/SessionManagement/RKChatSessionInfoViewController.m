@@ -291,6 +291,8 @@
     [cell.textLabel setFont:[UIFont systemFontOfSize:16]];
     
     cell.textLabel.text = nil;
+    cell.detailTextLabel.text = nil;
+    
     UIView *subView = [cell viewWithTag:100];
     if (subView)
     {
