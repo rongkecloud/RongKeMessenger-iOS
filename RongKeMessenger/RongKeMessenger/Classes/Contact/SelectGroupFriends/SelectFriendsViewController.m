@@ -828,6 +828,11 @@
             if ([stringTrim length] > 0) {
                 // 点击“确定”按钮
                 groupName = titleField.text;
+                
+                if ([groupName length] > 30)
+                {
+                    groupName = [groupName substringToIndex: 30];
+                }
             }
             
             // 去除文本框
