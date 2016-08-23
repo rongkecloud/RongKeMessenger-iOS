@@ -98,7 +98,7 @@
 @property (nonatomic, retain) RKCloudChatBaseMessage *selectedMessageObject; // 当前选择的消息对象
 @property (nonatomic, retain) UIDocumentInteractionController * docInteractionController; // 文档的容器类对象
 
-@property (nonatomic, weak) RKChatSessionInfoViewController *sessionInfoViewController; // 会话信息管理页面
+@property (nonatomic, strong) RKChatSessionInfoViewController *sessionInfoViewController; // 会话信息管理页面
 @property (nonatomic, strong) UIView *meetingPromptView; // 多人会议与会中提示view
 @property (nonatomic, strong) RKMessageContainerToolsView *messageContainerToolsView; // 消息会话底部工具栏
 // Jacky.Chen:2016.02.24,添加三个属性用于录音时上滑操作
