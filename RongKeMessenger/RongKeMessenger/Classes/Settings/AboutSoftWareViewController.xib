@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,8 +7,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutSoftWareViewController">
             <connections>
+                <outlet property="detailTextView" destination="4cH-kd-FKX" id="ACw-TV-esb"/>
+                <outlet property="detailTextViewWidth" destination="Pvt-wh-Aj0" id="VwE-fA-mlL"/>
                 <outlet property="labelVersion" destination="8Td-YD-MNr" id="QRG-0C-cTF"/>
                 <outlet property="logoImageView" destination="PdC-Ac-O5S" id="YAz-Al-oGB"/>
+                <outlet property="rightsLabel" destination="itZ-d5-sOy" id="bOh-Ka-bPF"/>
+                <outlet property="scrollView" destination="3xl-q9-MPx" id="039-Ad-lWB"/>
+                <outlet property="spaceBetweenConnectAndCompany" destination="qNQ-cg-r4M" id="ygH-CZ-uMG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,96 +25,83 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xl-q9-MPx">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3zA-h4-bm4">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
-                            <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="PdC-Ac-O5S">
-                                    <rect key="frame" x="255" y="25" width="90" height="90"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="90" id="30d-UJ-kfr"/>
-                                        <constraint firstAttribute="width" constant="90" id="dOm-My-2Ml"/>
-                                    </constraints>
-                                </imageView>
-                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="融科通(V1.0.5)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Td-YD-MNr">
-                                    <rect key="frame" x="150" y="127" width="300" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="6Pz-sH-VIi"/>
-                                        <constraint firstAttribute="width" constant="300" id="MWU-Nj-ej7"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cH-kd-FKX">
-                                    <rect key="frame" x="8" y="156" width="584" height="153"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="153" id="miG-LZ-1az"/>
-                                    </constraints>
-                                    <string key="text">       融科通是基于云视互动打造的前、后完全开源的APP，除完善的APP框架和后台设计外，还涵盖了注册、登录、通讯录管理、单聊、群聊、音视频通话、多人语音聊天室等即时通讯互动功能，陆续融科通还会逐步推出朋友圈、附近的人、多媒体客服等高级功能，旨在帮助广大开发者能够基于融科通开源代码上最低成本快速实现自身的产品。</string>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xl3-RN-Mj3">
-                                    <rect key="frame" x="8" y="316" width="584" height="83"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="83" id="Muz-1J-a1X"/>
-                                    </constraints>
-                                    <string key="text">       技术客服QQ群：389706118                               商务联系：service@rongkecloud.com 
-       技术支持：support@rongkecloud.com                                  官网：www.rongkecloud.com</string>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
-                                </textView>
-                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="©2014-2016 云视互动 All Rights Reserver." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itZ-d5-sOy">
-                                    <rect key="frame" x="8" y="503" width="584" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="dUi-ru-qIj"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="西安融科通信技术有限公司" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdb-gq-T0W">
-                                    <rect key="frame" x="8" y="476" width="584" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="25" id="Ici-Hz-XaS"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" red="0.94117647058823528" green="0.94509803921568625" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="PdC-Ac-O5S">
+                            <rect key="frame" x="255" y="25" width="90" height="90"/>
                             <constraints>
-                                <constraint firstItem="itZ-d5-sOy" firstAttribute="top" secondItem="fdb-gq-T0W" secondAttribute="bottom" constant="2" id="0A1-I0-df1"/>
-                                <constraint firstItem="PdC-Ac-O5S" firstAttribute="centerX" secondItem="3zA-h4-bm4" secondAttribute="centerX" id="0MB-p5-7J8"/>
-                                <constraint firstItem="8Td-YD-MNr" firstAttribute="centerX" secondItem="3zA-h4-bm4" secondAttribute="centerX" id="2Pg-r3-hXY"/>
-                                <constraint firstAttribute="bottom" secondItem="itZ-d5-sOy" secondAttribute="bottom" constant="8" id="4ld-NG-94W"/>
-                                <constraint firstAttribute="trailing" secondItem="4cH-kd-FKX" secondAttribute="trailing" constant="8" id="4rf-Ka-moo"/>
-                                <constraint firstAttribute="trailing" secondItem="xl3-RN-Mj3" secondAttribute="trailing" constant="8" id="9Pu-NZ-UYG"/>
-                                <constraint firstItem="PdC-Ac-O5S" firstAttribute="top" secondItem="3zA-h4-bm4" secondAttribute="top" constant="25" id="G18-j4-e1n"/>
-                                <constraint firstAttribute="trailing" secondItem="itZ-d5-sOy" secondAttribute="trailing" constant="8" id="Omf-6e-49j"/>
-                                <constraint firstItem="xl3-RN-Mj3" firstAttribute="leading" secondItem="3zA-h4-bm4" secondAttribute="leading" constant="8" id="VAn-6U-eUf"/>
-                                <constraint firstItem="fdb-gq-T0W" firstAttribute="leading" secondItem="3zA-h4-bm4" secondAttribute="leading" constant="8" id="WKO-1f-qX8"/>
-                                <constraint firstItem="4cH-kd-FKX" firstAttribute="top" secondItem="8Td-YD-MNr" secondAttribute="bottom" constant="8" id="ba2-05-ld3"/>
-                                <constraint firstItem="4cH-kd-FKX" firstAttribute="leading" secondItem="3zA-h4-bm4" secondAttribute="leading" constant="8" id="eVO-qp-bK7"/>
-                                <constraint firstItem="itZ-d5-sOy" firstAttribute="leading" secondItem="3zA-h4-bm4" secondAttribute="leading" constant="8" id="f4Q-YU-ns6"/>
-                                <constraint firstItem="xl3-RN-Mj3" firstAttribute="top" secondItem="4cH-kd-FKX" secondAttribute="bottom" constant="7" id="gn8-bM-w1S"/>
-                                <constraint firstItem="fdb-gq-T0W" firstAttribute="top" relation="greaterThanOrEqual" secondItem="xl3-RN-Mj3" secondAttribute="bottom" constant="20" id="l6S-fZ-bRE"/>
-                                <constraint firstItem="8Td-YD-MNr" firstAttribute="top" secondItem="PdC-Ac-O5S" secondAttribute="bottom" constant="12" id="qcL-ZI-9gF"/>
-                                <constraint firstAttribute="trailing" secondItem="fdb-gq-T0W" secondAttribute="trailing" constant="8" id="qkM-MS-0pP"/>
+                                <constraint firstAttribute="height" constant="90" id="30d-UJ-kfr"/>
+                                <constraint firstAttribute="width" constant="90" id="dOm-My-2Ml"/>
                             </constraints>
-                        </view>
+                        </imageView>
+                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="融科通(V1.0.5)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Td-YD-MNr">
+                            <rect key="frame" x="150" y="127" width="300" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="6Pz-sH-VIi"/>
+                                <constraint firstAttribute="width" constant="300" id="MWU-Nj-ej7"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4cH-kd-FKX">
+                            <rect key="frame" x="8" y="156" width="584" height="153"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="584" id="Pvt-wh-Aj0"/>
+                                <constraint firstAttribute="height" constant="153" id="miG-LZ-1az"/>
+                            </constraints>
+                            <string key="text">       融科通是基于互动开发云打造的前、后完全开源的APP，除完善的APP框架和后台设计外，还涵盖了注册、登录、通讯录管理、单聊、群聊、音视频通话、多人语音聊天室等即时通讯互动功能，陆续融科通还会逐步推出朋友圈、附近的人、多媒体客服等高级功能，旨在帮助广大开发者能够基于融科通开源代码上最低成本快速实现自身的产品。</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xl3-RN-Mj3">
+                            <rect key="frame" x="8" y="316" width="584" height="83"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="83" id="Muz-1J-a1X"/>
+                            </constraints>
+                            <string key="text">       技术客服QQ群：389706118                               商务联系：service@rongkecloud.com 
+       技术支持：support@rongkecloud.com                                  官网：www.rongkecloud.com</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES"/>
+                        </textView>
+                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="©2014-2016 云视互动 All Rights Reserver." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="itZ-d5-sOy">
+                            <rect key="frame" x="8" y="434" width="584" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="dUi-ru-qIj"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="西安融科通信技术有限公司" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fdb-gq-T0W">
+                            <rect key="frame" x="8" y="407" width="584" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="Ici-Hz-XaS"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="3zA-h4-bm4" secondAttribute="bottom" id="ApB-zg-S5n"/>
-                        <constraint firstItem="3zA-h4-bm4" firstAttribute="leading" secondItem="3xl-q9-MPx" secondAttribute="leading" id="fIY-jh-fM9"/>
-                        <constraint firstItem="3zA-h4-bm4" firstAttribute="width" secondItem="3xl-q9-MPx" secondAttribute="width" id="gpa-xy-Wja"/>
-                        <constraint firstAttribute="height" secondItem="3zA-h4-bm4" secondAttribute="height" id="hDI-Hw-TMK"/>
-                        <constraint firstItem="3zA-h4-bm4" firstAttribute="top" secondItem="3xl-q9-MPx" secondAttribute="top" id="p4o-xm-9Ng"/>
-                        <constraint firstAttribute="trailing" secondItem="3zA-h4-bm4" secondAttribute="trailing" id="yem-cI-NDF"/>
+                        <constraint firstItem="4cH-kd-FKX" firstAttribute="leading" secondItem="3xl-q9-MPx" secondAttribute="leading" constant="8" id="0xN-zV-4nL"/>
+                        <constraint firstAttribute="bottom" secondItem="itZ-d5-sOy" secondAttribute="bottom" constant="8" id="7pr-rN-j58"/>
+                        <constraint firstItem="fdb-gq-T0W" firstAttribute="leading" secondItem="3xl-q9-MPx" secondAttribute="leading" constant="8" id="8v6-hg-mQ9"/>
+                        <constraint firstItem="4cH-kd-FKX" firstAttribute="top" secondItem="8Td-YD-MNr" secondAttribute="bottom" constant="8" id="GSP-Hz-E5x"/>
+                        <constraint firstAttribute="trailing" secondItem="4cH-kd-FKX" secondAttribute="trailing" constant="8" id="I0w-5I-Pfs"/>
+                        <constraint firstItem="itZ-d5-sOy" firstAttribute="leading" secondItem="3xl-q9-MPx" secondAttribute="leading" constant="8" id="Jxg-x1-rYc"/>
+                        <constraint firstAttribute="trailing" secondItem="xl3-RN-Mj3" secondAttribute="trailing" constant="8" id="KsJ-Sp-XHk"/>
+                        <constraint firstItem="PdC-Ac-O5S" firstAttribute="top" secondItem="3xl-q9-MPx" secondAttribute="top" constant="25" id="Prp-qC-M1x"/>
+                        <constraint firstItem="PdC-Ac-O5S" firstAttribute="centerX" secondItem="3xl-q9-MPx" secondAttribute="centerX" id="VRC-kW-2eb"/>
+                        <constraint firstItem="xl3-RN-Mj3" firstAttribute="top" secondItem="4cH-kd-FKX" secondAttribute="bottom" constant="7" id="WIm-2e-T7o"/>
+                        <constraint firstItem="8Td-YD-MNr" firstAttribute="top" secondItem="PdC-Ac-O5S" secondAttribute="bottom" constant="12" id="d1W-kZ-dQQ"/>
+                        <constraint firstItem="8Td-YD-MNr" firstAttribute="centerX" secondItem="PdC-Ac-O5S" secondAttribute="centerX" id="hqs-wE-q6m"/>
+                        <constraint firstAttribute="trailing" secondItem="itZ-d5-sOy" secondAttribute="trailing" constant="8" id="nge-dJ-4V7"/>
+                        <constraint firstItem="fdb-gq-T0W" firstAttribute="top" secondItem="xl3-RN-Mj3" secondAttribute="bottom" constant="8" id="qNQ-cg-r4M"/>
+                        <constraint firstAttribute="trailing" secondItem="fdb-gq-T0W" secondAttribute="trailing" constant="8" id="qha-DG-Nkt"/>
+                        <constraint firstItem="itZ-d5-sOy" firstAttribute="top" secondItem="fdb-gq-T0W" secondAttribute="bottom" constant="2" id="xUC-da-LAP"/>
+                        <constraint firstItem="xl3-RN-Mj3" firstAttribute="leading" secondItem="3xl-q9-MPx" secondAttribute="leading" constant="8" id="ykM-iW-tix"/>
                     </constraints>
                 </scrollView>
             </subviews>

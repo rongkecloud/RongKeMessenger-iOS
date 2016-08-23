@@ -11,8 +11,17 @@
 
 @interface AboutSoftWareViewController ()
 
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, weak) IBOutlet UIImageView *logoImageView;
 @property (nonatomic, weak) IBOutlet UILabel *labelVersion; // 版本号显示
+@property (weak, nonatomic) IBOutlet UITextView *detailTextView;
+@property (weak, nonatomic) IBOutlet UILabel *rightsLabel;
+
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *spaceBetweenConnectAndCompany;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *detailTextViewWidth;
+
 @end
 
 @implementation AboutSoftWareViewController
@@ -28,6 +37,19 @@
     [self.view setBackgroundColor:COLOR_VIEW_BACKGROUND];
     
     self.labelVersion.text = [NSString stringWithFormat:@"%@(V%@)", APP_DISPLAY_NAME, APP_WHOLE_VERSION];
+    
+    self.detailTextViewWidth.constant = UISCREEN_BOUNDS_SIZE.width - 2 * 8;
+}
+
+-(void)viewDidLayoutSubviews
+{
+    NSLog(@"%f, %f ,%f",CGRectGetMaxY(self.rightsLabel.frame), self.scrollView.frame.size.height, self.scrollView.contentSize.height);
+    if (self.scrollView.frame.size.height - CGRectGetMaxY(self.rightsLabel.frame) > 8)
+    {
+        self.spaceBetweenConnectAndCompany.constant += self.scrollView.frame.size.height - CGRectGetMaxY(self.rightsLabel.frame) - 8;
+    }
+    NSLog(@"%f, %f ,%f",CGRectGetMaxY(self.rightsLabel.frame), self.scrollView.frame.size.height, self.scrollView.contentSize.height);
+
 }
 
 - (void)didReceiveMemoryWarning {
