@@ -17,7 +17,6 @@
 #import "HttpAPIMacroDefinition.h"
 #import "UIAlertView+CustomAlertView.h"
 #import "HttpClientKit.h"
-#import "UIControlTagMacroDefinition.h"
 #import "RKNavigationController.h"
 #import "UIBorderButton.h"
 #import "JSON.h"

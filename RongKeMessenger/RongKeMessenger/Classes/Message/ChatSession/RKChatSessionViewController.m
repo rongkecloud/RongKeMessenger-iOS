@@ -112,6 +112,8 @@
 
 @property (nonatomic, assign) CGPoint lastTouchPoint; // Jacky.Chen.03.10.记录录音时手指最后的触摸点
 
+@property (nonatomic, strong) NSString * summaryStr; // 摘要字符串
+
 // 增加@功能
 @property (nonatomic, strong) NSMutableArray *atUserArray;  // @指定的用户
 @property (nonatomic) BOOL isAtAll;      // 是否@all
@@ -524,6 +526,7 @@
     self.isAtAll = NO;
     self.atUserArray = [NSMutableArray array];
     isFirstLoadMMS = YES;
+    self.summaryStr = nil;
 }
 
 // 初始化bar上的button
@@ -544,8 +547,15 @@
                                                                     style:UIBarButtonItemStyleBordered
                                                                    target:self
                                                                    action:@selector(touchSessioninfoButton)];
+    
+    UIBarButtonItem * summaryButton = [[UIBarButtonItem alloc]initWithTitle:@"摘要"
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self
+                                                                     action:@selector(touchSummaryButton)];
+    
+    //    self.navigationItem.rightBarButtonItems = @[rightButton, summaryButton];
     self.navigationItem.rightBarButtonItem = rightButton;
-
+    
     // 定制返回按钮
     UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_BACK", @"返回")  style:UIBarButtonItemStylePlain  target:self  action:nil];
     self.navigationItem.backBarButtonItem = backButton;
@@ -1333,6 +1343,31 @@
 	[self.navigationController pushViewController:vwcSessionInfo animated:YES];
 }
 
+- (void)touchSummaryButton
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"摘要"
+                                                       message:nil
+                                                      delegate:self
+                                             cancelButtonTitle:NSLocalizedString(@"STR_CANCEL", @"取消")
+                                             otherButtonTitles:NSLocalizedString(@"STR_OK", @"确定"), nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alertView.tag = ALERTVIEW_MODIFY_SUMMARY_TAG;
+    
+    UITextField * titleField = [alertView textFieldAtIndex:0];
+    //设置字体大小
+    [titleField setFont:[UIFont systemFontOfSize:16]];
+    //设置右边消除键出现模式
+    [titleField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    //设置文字垂直居中
+    titleField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    //设置键盘背景色透明
+    titleField.keyboardAppearance = UIKeyboardAppearanceAlert;
+    titleField.keyboardType = UIKeyboardTypeDefault;
+    titleField.placeholder = @"请输入消息的摘要";
+    
+    [alertView show];
+}
+
 // 显示表情页面
 - (void)touchDownEmotionButton{
 #ifdef DEBUG
@@ -1749,7 +1784,26 @@
             [self.navigationController popToRootViewControllerAnimated:YES];
         }
             break;
-
+        case ALERTVIEW_MODIFY_SUMMARY_TAG:
+        {
+            if (buttonIndex == 1) {
+                
+                id titleField = [alertView textFieldAtIndex:0];
+                NSString *inputContent = nil;
+                // 获取输入的名称
+                if (titleField && [titleField isKindOfClass:[UITextField class]])
+                {
+                    inputContent = ((UITextField *)titleField).text;
+                }
+                // 判断是否为空
+                if (inputContent == nil || [inputContent length] <= 0){
+                    return;
+                }
+                self.summaryStr = inputContent;
+                [UIAlertView showAutoHidePromptView:@"摘要设置成功" background:nil showTime:1];
+            }
+        }
+            break;
         default:
             break;
     }
@@ -2244,6 +2298,11 @@
         textMessage.atUser = [self.atUserArray JSONRepresentation];
     }
     
+    // 增加消息摘要
+    if (self.summaryStr && [self.summaryStr length] > 0) {
+        textMessage.msgSummary = self.summaryStr;
+        self.summaryStr = nil;
+    }
     // 发送文字消息
     [RKCloudChatMessageManager sendChatMsg:textMessage];
     
@@ -2385,6 +2444,12 @@
         return;
     }
     
+    // 增加消息摘要
+    if (self.summaryStr && [self.summaryStr length] > 0) {
+        videoMessage.msgSummary = self.summaryStr;
+        self.summaryStr = nil;
+    }
+
     [RKCloudChatMessageManager sendChatMsg:videoMessage];
     
     self.currentSessionObject.lastMessageObject = videoMessage;
@@ -2408,7 +2473,11 @@
     
     ImageMessage *imageMessage = [ImageMessage buildMsg:self.currentSessionObject.sessionID
                                           withImageData:selectImage];
-    
+    // 增加消息摘要
+    if (self.summaryStr && [self.summaryStr length] > 0) {
+        imageMessage.msgSummary = self.summaryStr;
+        self.summaryStr = nil;
+    }
     // 发送图片
     [RKCloudChatMessageManager sendChatMsg:imageMessage];
     
@@ -2819,6 +2888,12 @@
     
     // 对声音文件进行封装发送
     AudioMessage *audioMessage = [AudioMessage buildMsg:self.currentSessionObject.sessionID withLocalPath:self.audioToolsKit.recordVoiceFilePath withDuration:recorderDuration];
+    
+    // 增加消息摘要
+    if (self.summaryStr && [self.summaryStr length] > 0) {
+        audioMessage.msgSummary = self.summaryStr;
+        self.summaryStr = nil;
+    }
     // 发送语音消息
     [RKCloudChatMessageManager sendChatMsg:audioMessage];
     
