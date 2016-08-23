@@ -84,6 +84,7 @@
 #define ALERTVIEW_FRIEND_DETAIL_DELETE_TAG                        5001 // 好友详情 删除好友
 #define ALERTVIEW_MODIFY_FRIEND_REMARK                            5002 // 修改备注
 #define ALERTVIEW_SESSIONINFO_DELETE_CONTACT_TAG                  5003 // 会话信息界面 删除成员
+#define ALERTVIEW_MODIFY_SUMMARY_TAG                              5004 // 会话界面 修改摘要
 
 #define MEETING_HEADER_LABEL_TAG                                  5010  // 多人语音headerLabel Tag
 #define MEETING_HEADER_COUNT_LABEL_TAG                            5011  // 多人语音headerLabel Tag
