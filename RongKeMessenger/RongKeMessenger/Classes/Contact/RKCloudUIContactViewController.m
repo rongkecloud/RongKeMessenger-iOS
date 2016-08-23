@@ -94,20 +94,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // 注册TextField通知，解决非本页面的UITextField输入文字时响应通知的问题
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
    
     // 设置状态栏默认风格
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     // 注册TextField通知，解决非本页面的UITextField输入文字时响应通知的问题
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
-    
-    //NSLog(@"DEBUG: viewWillAppear self become first responder = %d", [self isFirstResponder]);
-}
-
--(UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -115,6 +106,11 @@
     [super viewWillDisappear:animated];
     // 移除TextField的通知
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)dealloc
@@ -169,7 +165,8 @@
         if (self.friendListDic == nil) {
             self.friendListDic = [NSMutableDictionary dictionary];
         }
-        for (int i = 0; i<self.friendGroupsArray.count; i++) {
+        for (int i = 0; i<self.friendGroupsArray.count; i++)
+        {
             FriendGroupsTable *contactGroupTable = [self.friendGroupsArray objectAtIndex:i];
             
             // 获取GroupId对应的ContactTable
