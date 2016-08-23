@@ -226,6 +226,17 @@
 
 #endif  // WAN_TEST_SERVER
     
+#else
+    
+#ifndef WAN_TEST_SERVER // 使用公网服务器
+    // 开发版本证书名称
+    strAPNsCerName = @"pro_RongKeMessenger";
+#else
+    // 开发版本证书名称
+    strAPNsCerName = @"pro_RongKeMessengerLan";
+    
+#endif  // WAN_TEST_SERVER
+    
 #endif  // DEBUG
     
 #else // 使用内网服务器
