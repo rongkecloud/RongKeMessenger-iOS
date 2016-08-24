@@ -317,7 +317,21 @@
                                 nameSender = [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:messageObject.senderName];
                             }
                             
-                            [strDescription appendFormat:@"%@: ", nameSender];
+                            if ([messageObject isKindOfClass: [TipMessage class]] == NO)
+                            {
+                                BOOL isAddName = YES;
+                                if ([messageObject isKindOfClass: [LocalMessage class]])
+                                {
+                                    LocalMessage *localMessage = (LocalMessage *)messageObject;
+                                    if ([localMessage.mimeType isEqualToString: kMessageMimeTypeTip])
+                                    {
+                                        isAddName = NO;
+                                    }
+                                }
+                                if (isAddName) {
+                                    [strDescription appendFormat:@"%@: ", nameSender];
+                                }
+                            }
                         }
                         
                         
