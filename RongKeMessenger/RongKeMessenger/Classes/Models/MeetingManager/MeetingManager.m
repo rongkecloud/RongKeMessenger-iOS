@@ -113,9 +113,8 @@
                        [self pushMeetingRoomViewControllerInViewController:viewController];
                        
                        // 发起多人语音
-                       LocalMessage *callLocalMessage = [LocalMessage buildTipMsg:self.currentSessionObject.sessionID withMsgContent:nil forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
-                       callLocalMessage.textContent = @"PROMPT_CREATE_MEETING_MYSELF";
-                       [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_GROUP_TYPE];                                              
+                       LocalMessage *callLocalMessage = [LocalMessage buildTipMsg:self.currentSessionObject.sessionID withMsgContent:NSLocalizedString(@"PROMPT_CREATE_MEETING_MYSELF", "我发起了多人语音") forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
+                       [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_GROUP_TYPE];
                    });
                }
                 onFailed:^(int errorCode) {
