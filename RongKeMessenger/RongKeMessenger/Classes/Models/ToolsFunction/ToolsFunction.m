@@ -718,6 +718,32 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     return bDisableApnsNotifications;
 }
 
+// 是否开启了系统的 APNS 通知 （和上面的方法不同的是，本方法只在 UIRemoteNotificationTypeNone 时返回关闭了）
++ (BOOL)isApnsNotificationsEnabled
+{
+    BOOL isApnsNotificationsEnabled = YES;
+    UIApplication *application = [UIApplication sharedApplication];
+
+    // 兼容 iOS 8 系统注册 APNS 通知 API
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        UIUserNotificationSettings * notificationSettings = [application currentUserNotificationSettings];
+        if (!notificationSettings.types || notificationSettings.types == UIRemoteNotificationTypeNone)
+        {
+            isApnsNotificationsEnabled = NO;
+        }
+    }
+    else
+    {
+        UIRemoteNotificationType notifyType = [application enabledRemoteNotificationTypes];
+        if (!notifyType || notifyType == UIRemoteNotificationTypeNone)
+        {
+            isApnsNotificationsEnabled = NO;
+        }
+    }
+    return isApnsNotificationsEnabled;
+}
+
 // 使用原生的电话切换到GSM呼叫
 + (void)callToGSM:(NSString *)phoneNumber
 {

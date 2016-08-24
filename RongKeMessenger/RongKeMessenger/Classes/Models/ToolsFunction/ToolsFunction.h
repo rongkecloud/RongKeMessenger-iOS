@@ -109,6 +109,8 @@ enum _outputs_device_mode {
 + (void)registerAPNSNotifications;
 // 是否关闭了系统的APNS通知（YES-关闭了，NO-没有关闭）
 + (BOOL)isDisableApnsNotifications;
+// 是否开启了系统的 APNS 通知 （和上面的方法不同的是，本方法只在 UIRemoteNotificationTypeNone 时返回关闭了）
++ (BOOL)isApnsNotificationsEnabled;
 
 // 使用原生的电话切换到GSM呼叫
 + (void)callToGSM:(NSString *)phoneNumber;

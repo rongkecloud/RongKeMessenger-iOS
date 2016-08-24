@@ -9,6 +9,7 @@
 #import "RKCloudSettingMsgNoticeViewController.h"
 #import "AppDelegate.h"
 #import "ToolsFunction.h"
+#import "RKCloudChatConfigManager.h"
 
 #define UISWITCH_ENABLE_TAG     701
 #define UISWITCH_NOTICE_TAG     702
@@ -40,7 +41,7 @@
 {
     [super viewDidLoad];
     self.tableView.backgroundColor = COLOR_VIEW_BACKGROUND;
-    self.isEnable = ![ToolsFunction isDisableApnsNotifications];
+    self.isEnable = [ToolsFunction isApnsNotificationsEnabled];
     self.isSystemNotifyRing = ![RKCloudChatConfigManager getNotifyRingUri].lastPathComponent;
 }
 
