@@ -572,9 +572,9 @@
         case 4:
         {
             // Jacky.Chen:02.24 ADD
-            UILabel *titleLabel = nil;
-            if ([cell viewWithTag:1000]== nil) {
-                
+            UILabel *titleLabel = [cell viewWithTag:1000];
+            if (titleLabel == nil)
+            {
                 // 添加标题label
                 titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, HEIGHT_MORE_LIST_CELL)];
                 
@@ -585,17 +585,14 @@
                 titleLabel.font = [UIFont systemFontOfSize:16];
                 titleLabel.textColor = COLOR_WARNING_TEXT;
                 [cell addSubview:titleLabel];
-
             }
             
             // 判断群聊和是否为群建立者
             if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]]) {
                 titleLabel.text = @"解散群";
-                
             }
             else {
                 titleLabel.text = @"退出群";
-
             }
 
         }
