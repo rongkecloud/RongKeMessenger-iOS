@@ -317,7 +317,9 @@
                                 nameSender = [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:messageObject.senderName];
                             }
                             
-                            [strDescription appendFormat:@"%@: ", nameSender];
+                            if (![messageObject isKindOfClass: [TipMessage class]]) {
+                                [strDescription appendFormat:@"%@: ", nameSender];
+                            }
                         }
                         
                         
