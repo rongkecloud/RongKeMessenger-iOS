@@ -61,16 +61,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger rowNum = 0;
-    if (self.isEnable == YES)
-    {
-        rowNum = 4;
-        if ([RKCloudChatConfigManager getNoticeBySound]) {
-            rowNum = 5;
-        }
-        
-    } else {
-        rowNum = 1;
+    NSInteger rowNum = 4;
+
+    if ([RKCloudChatConfigManager getNoticeBySound]) {
+        rowNum = 5;
     }
     return rowNum;
 }
@@ -124,17 +118,14 @@
             // 设置通知显示消息详情
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_SHOW_DETAIL", "通知显示消息详情");
             
-            if (self.isEnable == YES)
+            self.showDetailSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+            self.showDetailSwitch.tag = UISWITCH_NOTICE_TAG;
+            [self.showDetailSwitch setOn:[RKCloudChatConfigManager getMsgRemindSum]];
+            [self.showDetailSwitch addTarget:self action:@selector(setNotifyShowDetailSwitch:) forControlEvents:UIControlEventValueChanged];
+            
+            if (![cell viewWithTag:UISWITCH_NOTICE_TAG])
             {
-                self.showDetailSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
-                self.showDetailSwitch.tag = UISWITCH_NOTICE_TAG;
-                [self.showDetailSwitch setOn:[RKCloudChatConfigManager getMsgRemindSum]];
-                [self.showDetailSwitch addTarget:self action:@selector(setNotifyShowDetailSwitch:) forControlEvents:UIControlEventValueChanged];
-                
-                if (![cell viewWithTag:UISWITCH_NOTICE_TAG])
-                {
-                    [cell addSubview:self.showDetailSwitch];
-                }
+                [cell addSubview:self.showDetailSwitch];
             }
         }
             break;
@@ -143,17 +134,14 @@
             // 设置新消息是否声音提醒
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_BY_SOUND", "声音提醒");
             
-            if (self.isEnable == YES)
+            self.soundSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+            self.soundSwitch.tag = UISWITCH_NOTICE_TAG;
+            [self.soundSwitch setOn:[RKCloudChatConfigManager getNoticeBySound]];
+            [self.soundSwitch addTarget:self action:@selector(setNoticeBySound:) forControlEvents:UIControlEventValueChanged];
+            
+            if (![cell viewWithTag:UISWITCH_NOTICE_TAG])
             {
-                self.soundSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
-                self.soundSwitch.tag = UISWITCH_NOTICE_TAG;
-                [self.soundSwitch setOn:[RKCloudChatConfigManager getNoticeBySound]];
-                [self.soundSwitch addTarget:self action:@selector(setNoticeBySound:) forControlEvents:UIControlEventValueChanged];
-                
-                if (![cell viewWithTag:UISWITCH_NOTICE_TAG])
-                {
-                    [cell addSubview:self.soundSwitch];
-                }
+                [cell addSubview:self.soundSwitch];
             }
         }
             break;
@@ -162,17 +150,14 @@
             // 设置新消息是否振动提醒
             cell.textLabel.text = NSLocalizedString(@"PROMPT_GET_NOTICE_BY_VIBRATE", "振动提醒");
             
-            if (self.isEnable == YES)
+            self.vibrateSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
+            self.vibrateSwitch.tag = UISWITCH_VIBRATE_TAG;
+            [self.vibrateSwitch setOn:[RKCloudChatConfigManager getNoticedByVibrate]];
+            [self.vibrateSwitch addTarget:self action:@selector(setNoticedByVibrate:) forControlEvents:UIControlEventValueChanged];
+            
+            if (![cell viewWithTag:UISWITCH_VIBRATE_TAG])
             {
-                self.vibrateSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(floatX, 8.5, 76, 27)];
-                self.vibrateSwitch.tag = UISWITCH_VIBRATE_TAG;
-                [self.vibrateSwitch setOn:[RKCloudChatConfigManager getNoticedByVibrate]];
-                [self.vibrateSwitch addTarget:self action:@selector(setNoticedByVibrate:) forControlEvents:UIControlEventValueChanged];
-                
-                if (![cell viewWithTag:UISWITCH_VIBRATE_TAG])
-                {
-                    [cell addSubview:self.vibrateSwitch];
-                }
+                [cell addSubview:self.vibrateSwitch];
             }
         }
             break;
