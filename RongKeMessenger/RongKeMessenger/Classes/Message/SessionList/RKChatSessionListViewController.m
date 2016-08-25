@@ -719,7 +719,7 @@
                 [self.allSessionArray replaceObjectAtIndex:[self.allSessionArray indexOfObject: sessionObject] withObject:chatSession];
             }
         }
-        else
+        else if (chatSession.lastMessageObject)
         {
             [self.allSessionArray insertObject:chatSession atIndex:0];
         }
