@@ -27,7 +27,6 @@
 @property (nonatomic, strong) NSMutableArray *allSessionArray; // 保存所有会话的会话对象chatSession
 @property (nonatomic, strong) AVAudioPlayer *avAudioPlayer; // 播放消息铃声
 
-@property (nonatomic, weak) RKChatSessionViewController *messageSessionViewController; // 打开的消息列表
 
 @property (nonatomic, assign) BOOL isSlideDelete; // 是否是快速删除会话，默认为NO
 @end
@@ -82,13 +81,6 @@
     [self setAutomaticallyAdjustsScrollViewInsets:YES];
     [self setExtendedLayoutIncludesOpaqueBars:YES];
     
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    self.messageSessionViewController = nil;
 }
 
 - (void)dealloc

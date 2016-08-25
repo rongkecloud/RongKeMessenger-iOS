@@ -11,7 +11,10 @@
 #import "RKCloudBase.h"
 #import "RKCloudChat.h"
 
+@class RKChatSessionViewController;
+
 @interface RKChatSessionListViewController : UIViewController <UINavigationControllerDelegate,UITextFieldDelegate, UISearchBarDelegate,UISearchDisplayDelegate, RKCloudChatDelegate>
+@property (nonatomic, strong) RKChatSessionViewController *messageSessionViewController; // 打开的消息列表
 
 @property (nonatomic, strong) NSMutableDictionary *progressDic; // 保存上传、下载进度值
 

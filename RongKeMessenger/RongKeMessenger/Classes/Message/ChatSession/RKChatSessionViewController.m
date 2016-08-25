@@ -1340,13 +1340,17 @@
     NSLog(@"UA: RKChatSessionViewController - touchBackButton");
     
 	// 回到消息会话后，更新会话对象，如果会话中没有一条消息则删除此会话对象。
-	if (self.parentChatSessionListViewController && [self.parentChatSessionListViewController isKindOfClass:[RKChatSessionListViewController class]])
+	if (self.navigationController.viewControllers == nil
+        && self.parentChatSessionListViewController
+        && [self.parentChatSessionListViewController isKindOfClass:[RKChatSessionListViewController class]])
 	{
         // 聊天结束清理缓存数据
         [RKCloudChatMessageManager cleanupChatCacheData:self.currentSessionObject.sessionID];
         
         // 加载所有的会话列表
         [(RKChatSessionListViewController *)self.parentChatSessionListViewController loadAllChatSessionList];
+        
+        ((RKChatSessionListViewController *)self.parentChatSessionListViewController).messageSessionViewController = nil;
 	}
 	
 }
