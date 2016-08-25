@@ -406,7 +406,7 @@
         
         // 绘制未读标记
         if (mmsType != MESSAGE_TYPE_TEXT
-            && self.mmsObject.messageType != MESSAGE_TYPE_LOCAL
+            && (self.mmsObject.messageType != MESSAGE_TYPE_LOCAL || [self.mmsObject.extension isEqualToString:NSLocalizedString(@"RKCLOUD_MEETING_MSG_AUDIO_CALL", "多人语音")])
             &&(mmsStatus == MESSAGE_STATE_RECEIVE_RECEIVED
                || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNFAILED
                || mmsStatus == MESSAGE_STATE_RECEIVE_DOWNED))
