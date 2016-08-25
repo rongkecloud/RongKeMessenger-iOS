@@ -219,21 +219,25 @@
         {
             // 自动滚动到tabView的最后一行(表格所含内容的最底部)
             NSUInteger sectionCount = [self.messageSessionContentTableView numberOfSections];
-            if (sectionCount) {
+            if (sectionCount)
+            {
                 
                 NSUInteger rowCount = 0;
                 
                 UITableViewScrollPosition  ScrollPosition =  UITableViewScrollPositionBottom;
                 
-                switch (self.sessionShowType) {
-                    case SessionListShowTypeNomal: {
+                switch (self.sessionShowType)
+                {
+                    case SessionListShowTypeNomal:
+                    {
                         {
                             rowCount = [self.messageSessionContentTableView numberOfRowsInSection:0] - 1;
                         }
                         break;
                     }
                     case SessionListShowTypeSearchListMain:
-                    case SessionListShowTypeSearchListCategory: {
+                    case SessionListShowTypeSearchListCategory:
+                    {
                         {
                             rowCount = [self getCurrentSessionObjectIndexInArray];
                             ScrollPosition =  UITableViewScrollPositionTop;
@@ -244,13 +248,19 @@
                         break;
                     }
                 }
-                 ;
-                if (rowCount) {
+                if (rowCount)
+                {
+                    @try {
+                        NSUInteger ii[2] = {0, rowCount};
+                        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
+                        [self.messageSessionContentTableView scrollToRowAtIndexPath:indexPath
+                                                                   atScrollPosition:ScrollPosition animated:NO];
+                    } @catch (NSException *exception) {
+                        NSLog(@"NSException: RKChatSessionViewController viewWillAppear exception = %@", exception);
+                    } @finally {
+                        
+                    }
                     
-                    NSUInteger ii[2] = {0, rowCount};
-                    NSIndexPath* indexPath = [NSIndexPath indexPathWithIndexes:ii length:2];
-                    [self.messageSessionContentTableView scrollToRowAtIndexPath:indexPath
-                                                               atScrollPosition:ScrollPosition animated:NO];
                 }
             }
         }
@@ -710,14 +720,20 @@
                                                 
                                                 if (self.visibleSortMessageRecordArray && self.visibleSortMessageRecordArray.count > 0)
                                                 {
-                                                    if (isFirstLoadMMS == NO)
-                                                    {
-                                                        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                                    @try {
+                                                        if (isFirstLoadMMS == NO)
+                                                        {
+                                                            [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                                                        }
+                                                        else
+                                                        {
+                                                            [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.visibleSortMessageRecordArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+                                                        }
+                                                    } @catch (NSException *exception) {
+                                                        NSLog(@"NSException: RKChatSessionViewController initChatSessionRefreshingControl exception = %@", exception);
+                                                    } @finally {
                                                     }
-                                                    else
-                                                    {
-                                                        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.visibleSortMessageRecordArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-                                                    }
+                                                    
                                                 }
                                                 
                                                 isFirstLoadMMS = NO;
@@ -1007,7 +1023,14 @@
     if (loadDirection == LoadMessageOld)
     {
         // (Jacky.Chen:2016.02.16:优化原有滚动方法）滚动至加载前表格位置(无动画)
-        [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        @try {
+            [self.messageSessionContentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+        } @catch (NSException *exception) {
+            NSLog(@"NSException: RKChatSessionViewController loadHistoryMessageRecord exception = %@", exception);
+
+        } @finally {
+            
+        }
     }
 }
 
@@ -3110,8 +3133,15 @@
         // 判断显示的最后一条是否为数组中最后一条
         if ([[visibleCells lastObject] isEqual:[self.messageSessionContentTableView cellForRowAtIndexPath:indexPath]] == NO )
         {
-            // 不是则滚动到底部
-            [self.messageSessionContentTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+            @try {
+                // 不是则滚动到底部
+                [self.messageSessionContentTableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+
+            } @catch (NSException *exception) {
+                NSLog(@"NSException: RKChatSessionViewController showToolsControlView exception = %@", exception);
+            } @finally {
+                
+            }
         }
     }
 
