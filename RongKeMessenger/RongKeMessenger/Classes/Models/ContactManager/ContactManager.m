@@ -880,6 +880,8 @@
                       onSuccess:^{
                           // 对方发送验证通过的消息
                           LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:friendsNotifyTable.friendAccount withMsgContent:NSLocalizedString(@"RKCLOUD_SINGLE_CHAT_MSG_CALL", nil) forSenderName:friendsNotifyTable.friendAccount];
+                          callLocalMessage.sendTime = (long)[[customMessageDic objectForKey:@"time"] longLongValue];
+                          
                           [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_SINGLE_TYPE];
                       }
                        onFailed:^(int errorCode) {
