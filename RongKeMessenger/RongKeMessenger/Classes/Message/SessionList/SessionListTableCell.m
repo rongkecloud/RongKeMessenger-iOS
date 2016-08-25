@@ -105,6 +105,15 @@
     
     [self configSessionCellNameAndAvatarWithSessionObject:sessionObject withListType:sessionListType withMarkColorStr:markColorStr];
     
+    if (messageObject == nil) {
+        self.dateLabel.text = nil;
+        self.timeLabel.text = nil;
+        self.missReadLabel.text = nil;
+        self.descriptionLabel.text = nil;
+        self.missReadImageView.image = nil;
+        return;
+    }
+
     // 配置会话列表上的未读数量
     [self configSessionCellUnreadCountWithSessionObject:sessionObject];
     

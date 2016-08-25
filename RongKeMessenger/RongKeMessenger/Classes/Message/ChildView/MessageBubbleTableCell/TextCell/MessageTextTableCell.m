@@ -271,6 +271,7 @@
         self.textMessageContentView.hidden = YES;
         self.textMessageContentTextView.textDelegate = self;
         self.textMessageContentTextView.textContent = messageObject.textContent;
+        self.textMessageContentTextView.dataDetectorTypes = UIDataDetectorTypeLink|UIDataDetectorTypePhoneNumber;
         
         // 为UITextView的attributedText赋值
         [self.textMessageContentTextView displayTextMessage];

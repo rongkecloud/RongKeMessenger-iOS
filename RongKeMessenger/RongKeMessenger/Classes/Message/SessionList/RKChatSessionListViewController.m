@@ -708,7 +708,7 @@
         // 重新获取会话记录
         if (isExist)
         {
-            if ([sessionObject.lastMessageObject.sessionID isEqualToString: chatSession.lastMessageObject.sessionID] == NO)
+            if (chatSession.lastMessageObject != nil && [sessionObject.lastMessageObject.sessionID isEqualToString: chatSession.lastMessageObject.sessionID] == NO)
             {
                 [self.allSessionArray removeObject:sessionObject];
                 [self.allSessionArray insertObject:chatSession atIndex:0];
