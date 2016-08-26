@@ -54,6 +54,8 @@
 @property (nonatomic, assign) BOOL isAbleToSwitchLocalAndRemote;
 @property (nonatomic, assign) BOOL isAllControlHidden;
 
+@property (nonatomic, assign) BOOL isCallStateAnswer;
+
 @end
 
 @implementation RKCloudUICallViewController
@@ -179,6 +181,7 @@
     self.isLocalViewSmall = YES;
     self.isAbleToSwitchLocalAndRemote = YES;
     self.isAllControlHidden = NO;
+    self.isCallStateAnswer = NO;
 
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     // Use this code instead to allow the app sound to continue to play when the screen is locked.
@@ -726,17 +729,27 @@
 }
 
 - (void)touchRemoteVideoView {
-    [self setAllControlHidden:self.isAllControlHidden];
+    [self setAllControlHiddenOrNot];
 }
 
--(void)setAllControlHidden:(BOOL)isAllControlHidden
+-(void)setAllControlHiddenOrNot
 {
-    self.isAllControlHidden = !self.isAllControlHidden;
-    for (UIView * obj in self.view.subviews)
+    if (self.isCallStateAnswer == NO)
     {
-        if (obj != self.localVideoView && obj != self.remoteVideoView && obj != self.backgroundImgView && obj != self.headerImageView && obj != self.accountLabel)
+        return;
+    }
+    
+    self.isAllControlHidden = !self.isAllControlHidden;
+    for (UIView * view in self.view.subviews)
+    {
+        if (view == self.hangupButtonView
+            || view == self.muteButtonView
+            || view == self.handsFreeButtonView
+            || view == self.switchCameraButtonView
+            || view == self.switchAudioButtonView
+            || view == self.callStateLabel)
         {
-            [obj setHidden:self.isAllControlHidden];
+            [view setHidden:self.isAllControlHidden];
         }
     }
 }
@@ -755,6 +768,8 @@
     {
         case AV_CALL_STATE_ANSWER: // 通话已接通
         {
+            self.isCallStateAnswer = YES;
+
             self.callSecond = [ToolsFunction getCurrentSystemDateSecond];
             // 开始计时
             [self startDetectTalkingTime];
