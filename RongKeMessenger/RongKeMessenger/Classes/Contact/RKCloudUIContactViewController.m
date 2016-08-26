@@ -577,6 +577,12 @@
 // 设置好友cell
 - (void)configContactCell:(RKCloudUIContactTableCell *)contactCell withIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section - SECTION_DEFULT_NUMBER >= [self.friendGroupsArray count])
+    {
+        NSLog(@"WARNING:RKCloudUIContactViewController-configContactCell: indexPath.section:%d, SECTION_DEFULT_NUMBER:%d, self.friendGroupsArray.count:%d", indexPath.section, SECTION_DEFULT_NUMBER, [self.friendGroupsArray count]);
+
+        return;
+    }
     FriendGroupsTable *friendGroupsTable = [self.friendGroupsArray objectAtIndex:(indexPath.section - SECTION_DEFULT_NUMBER)];
     
     if ([[self.friendListDic allKeys] containsObject:friendGroupsTable.contactGroupsId]) {
