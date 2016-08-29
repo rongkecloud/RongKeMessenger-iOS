@@ -1343,6 +1343,10 @@
 // 点击用户image头像，应该显示用户详细信息，此处只弹出用户名称信息
 - (void)touchAvatarActionForUserAccount:(NSString *)paramUserId
 {
+    if (self.sessionContactListView.isDelete == YES) {
+//        [self deleteContactFromSession:paramUserId];
+        return;
+    }
     FriendDetailViewController *vwcFriendDetail = [[FriendDetailViewController alloc] initWithNibName:nil bundle:nil];
     
     // 判断点击头像的类型  个人
