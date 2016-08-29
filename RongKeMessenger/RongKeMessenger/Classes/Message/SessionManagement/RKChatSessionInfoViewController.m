@@ -29,7 +29,7 @@
 #define SESSIONINFO_SWITCH_SINGLECHAT_MESSAGE_PROMPT_TAG    604
 #define SESSIONINFO_SWITCH_INVITE_PROMPT_TAG    605
 
-@interface RKChatSessionInfoViewController () <UITableViewDelegate, UITableViewDataSource,  UIAlertViewDelegate, RKCloudChatDelegate,ChatSelectFriendsViewControllerDelegate, SelectGroupMemberDelegate,UITextFieldDelegate>
+@interface RKChatSessionInfoViewController () <UITableViewDelegate, UITableViewDataSource,  UIAlertViewDelegate, RKCloudChatDelegate,ChatSelectFriendsViewControllerDelegate, SelectGroupMemberDelegate,UITextFieldDelegate,CustomAvatarImageViewDelegate>
 {
     CGFloat sessionContactListViewHeight;
 }
@@ -1341,7 +1341,7 @@
 #pragma mark CustomAvatarImageViewDelegate
 
 // 点击用户image头像，应该显示用户详细信息，此处只弹出用户名称信息
-- (void)touchAvatarMethod:(NSString *)paramUserId
+- (void)touchAvatarActionForUserAccount:(NSString *)paramUserId
 {
     FriendDetailViewController *vwcFriendDetail = [[FriendDetailViewController alloc] initWithNibName:nil bundle:nil];
     

@@ -557,7 +557,7 @@
             // 新建一个聊天会话,如果会话存在，打开聊天页面
           [SingleChat buildSingleChat:self.friendInfoTable.account
                               onSuccess:^{
-                                  [self.navigationController popViewControllerAnimated: NO];
+                                  [self.navigationController popToRootViewControllerAnimated: NO];
                                   
                                   AppDelegate *appDelegate = [AppDelegate appDelegate];
                                   appDelegate.mainTabController.selectedIndex = 0;
