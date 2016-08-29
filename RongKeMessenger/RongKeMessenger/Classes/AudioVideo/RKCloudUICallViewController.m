@@ -682,7 +682,6 @@
     if (self.isAbleToSwitchLocalAndRemote)
     {
         self.isAbleToSwitchLocalAndRemote = NO;
-        [self performSelector:@selector(enableSwitchLocalAndRemote) withObject:nil afterDelay:0.5];
         
         if (self.isLocalViewSmall)
         {
@@ -693,6 +692,8 @@
             [RKCloudAV setVideoDisplay:self.remoteVideoView withLocalVideo:self.localVideoView];
         }
         self.isLocalViewSmall = !self.isLocalViewSmall;
+        
+        [self performSelector:@selector(enableSwitchLocalAndRemote) withObject:nil afterDelay:0.5];
     }
 }
 
