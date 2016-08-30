@@ -1415,7 +1415,7 @@
         }
 
         // 发送转让群成功本地消息
-        LocalMessage *localMessage = [LocalMessage buildTipMsg:self.rkChatSessionViewController.currentSessionObject.sessionID withMsgContent:[NSString stringWithFormat:@"群已转让给 %@", friendTable.friendAccount] forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
+        LocalMessage *localMessage = [LocalMessage buildTipMsg:self.rkChatSessionViewController.currentSessionObject.sessionID withMsgContent:[NSString stringWithFormat:@"群主已转让给 %@", friendTable.friendAccount] forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
         [RKCloudChatMessageManager addLocalMsg:localMessage withSessionType:SESSION_GROUP_TYPE];
 
         
