@@ -184,8 +184,30 @@
         
         HeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:cellIndeHeader forIndexPath:indexPath];
         
+        // 设置时间 label
         self.callDurationLabel = (UILabel *)[headerView viewWithTag:MEETING_HEADER_LABEL_TAG];
+        if (self.callDurationLabel == nil)
+        {
+            self.callDurationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 3, UISCREEN_BOUNDS_SIZE.width, 21)];
+            self.callDurationLabel.textColor = [UIColor whiteColor];
+            self.callDurationLabel.font = [UIFont systemFontOfSize:14];
+            self.callDurationLabel.textAlignment = NSTextAlignmentCenter;
+            self.callDurationLabel.tag = MEETING_HEADER_LABEL_TAG;
+            [headerView addSubview:self.callDurationLabel];
+        }
+        
+        // 设置人数 label
         self.memberCountLabel = (UILabel *)[headerView viewWithTag:MEETING_HEADER_COUNT_LABEL_TAG];
+        if (self.memberCountLabel == nil)
+        {
+            self.memberCountLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.callDurationLabel.frame.origin.x, CGRectGetMaxY(self.callDurationLabel.frame)+2, self.callDurationLabel.frame.size.width, self.callDurationLabel.frame.size.height)];
+            self.memberCountLabel.textColor = [UIColor whiteColor];
+            self.memberCountLabel.textAlignment = NSTextAlignmentCenter;
+            self.memberCountLabel.font = [UIFont systemFontOfSize:14];
+            self.memberCountLabel.tag = MEETING_HEADER_COUNT_LABEL_TAG;
+            [headerView addSubview:self.memberCountLabel];
+        }
+        
         if ([self.meetingMembersDic count] >= 2)
         {
             self.memberCountLabel.text = [NSString stringWithFormat:@"(%lu人)", (unsigned long)[self.meetingMembersDic count]];
