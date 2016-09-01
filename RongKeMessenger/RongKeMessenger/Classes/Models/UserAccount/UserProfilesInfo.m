@@ -564,8 +564,9 @@
                 [appDelegate.rkChatSessionListViewController loadAllChatSessionList];
                 
                 // 设置消息提示声音
-                NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"rkcloud_chat_sound_custom" ofType:@"caf"];
-                [RKCloudChatConfigManager setNotifyRingUri:soundPath];
+                
+//                NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"rkcloud_chat_sound_custom" ofType:@"caf"];
+//                [RKCloudChatConfigManager setNotifyRingUri:soundPath];
                 
                 // 初始化RKCloudMeeting服务
                 [RKCloudMeeting init:appDelegate.meetingManager];
