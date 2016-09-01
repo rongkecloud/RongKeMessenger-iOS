@@ -56,6 +56,11 @@
 
 @property (nonatomic, assign) BOOL isCallStateAnswer;
 
+@property (nonatomic, assign) CGFloat localViewCenterMinX;
+@property (nonatomic, assign) CGFloat localViewCenterMaxX;
+@property (nonatomic, assign) CGFloat localViewCenterMinY;
+@property (nonatomic, assign) CGFloat localViewCenterMaxY;
+
 @end
 
 @implementation RKCloudUICallViewController
@@ -87,7 +92,9 @@
     if (self.isAutoAnswer == YES) {
         NSLog(@"CALL: isAutoAnswer == YES");
         [self touchAnswerButton];
-    }    // 添加手势
+    }
+    
+    // 添加手势
     UITapGestureRecognizer * tapLocalViewGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchLocalVideoView)];
     [self.localVideoView addGestureRecognizer:tapLocalViewGesture];
     
@@ -193,6 +200,12 @@
     // 默认蔽本地视频View
     self.localVideoView.hidden = YES;
     self.view.backgroundColor = [UIColor blackColor];
+    
+    // 计算 localView 可拖拽位置的中心的范围
+    self.localViewCenterMinX = LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2;
+    self.localViewCenterMaxX = UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2);
+    self.localViewCenterMinY = self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height;
+    self.localViewCenterMaxY = UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2);
 }
 
 // 初始化对方头像与名称
@@ -707,26 +720,28 @@
     CGFloat x = point.x + self.localVideoView.center.x;
     CGFloat y = point.y + self.localVideoView.center.y;
     
-    if (x < LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2)
+    if (x < self.localViewCenterMinX)
     {
-        x = LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2;
+        x = self.localViewCenterMinX;
     }
-    else if (x > (UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2)))
+    else if (x > self.localViewCenterMaxX)
     {
-        x = UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2);
+        x = self.localViewCenterMaxX;
     }
     
-    if (y < self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height)
+    if (y < self.localViewCenterMinY)
     {
-        y = self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height;
+        y = self.localViewCenterMinY;
     }
-    else if (y > (UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2)))
+    else if (y > self.localViewCenterMaxY)
     {
-        y = UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2);
+        y = self.localViewCenterMaxY;
     }
     
     self.localVideoView.center = CGPointMake(x, y);
     [panLocalViewGesture setTranslation:CGPointMake(0, 0) inView:self.view];
+    
+    NSLog(@"localVideoView.frame: x: %f, y: %f, maxX:%f, maxY:%f", self.localVideoView.frame.origin.x, self.localVideoView.frame.origin.y, CGRectGetMaxX(self.localVideoView.frame), CGRectGetMaxY(self.localVideoView.frame));
 }
 
 - (void)touchRemoteVideoView {
