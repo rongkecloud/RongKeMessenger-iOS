@@ -50,16 +50,20 @@
 
 @property (nonatomic, strong) AVAudioPlayer *avAudioPlayer; // 播放音频对象
 
-@property (nonatomic, assign) BOOL isLocalViewSmall;
-@property (nonatomic, assign) BOOL isAbleToSwitchLocalAndRemote;
-@property (nonatomic, assign) BOOL isAllControlHidden;
+@property (nonatomic, assign) BOOL isLocalViewSmall; // 本地窗口是否是小窗口
+@property (nonatomic, assign) BOOL isAbleToSwitchLocalAndRemote; // 是否可以切换大小窗口
+@property (nonatomic, assign) BOOL isAllControlHidden; // 可隐藏的控件是否隐藏
 
-@property (nonatomic, assign) BOOL isCallStateAnswer;
+@property (nonatomic, assign) BOOL isCallStateAnswer; // 通话是否已经接通
 
+ // localView 中心的可移动范围
 @property (nonatomic, assign) CGFloat localViewCenterMinX;
 @property (nonatomic, assign) CGFloat localViewCenterMaxX;
 @property (nonatomic, assign) CGFloat localViewCenterMinY;
 @property (nonatomic, assign) CGFloat localViewCenterMaxY;
+
+@property (nonatomic, strong) NSArray * controlsCouldHideArray; // 需要隐藏的控件的数组
+
 
 @end
 
@@ -103,7 +107,6 @@
     
     UITapGestureRecognizer * tapRemoteViewGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(touchRemoteVideoView)];
     [self.remoteVideoView addGestureRecognizer:tapRemoteViewGesture];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -206,6 +209,14 @@
     self.localViewCenterMaxX = UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2);
     self.localViewCenterMinY = self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height;
     self.localViewCenterMaxY = UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2);
+    
+    // 添加可隐藏的控件
+    self.controlsCouldHideArray = @[self.hangupButtonView,
+                                 self.muteButtonView,
+                                 self.handsFreeButtonView,
+                                 self.switchCameraButtonView,
+                                 self.switchAudioButtonView,
+                                 self.callStateLabel];
 }
 
 // 初始化对方头像与名称
@@ -744,11 +755,12 @@
     NSLog(@"localVideoView.frame: x: %f, y: %f, maxX:%f, maxY:%f", self.localVideoView.frame.origin.x, self.localVideoView.frame.origin.y, CGRectGetMaxX(self.localVideoView.frame), CGRectGetMaxY(self.localVideoView.frame));
 }
 
-- (void)touchRemoteVideoView {
+- (void)touchRemoteVideoView
+{
     [self setAllControlHiddenOrNot];
 }
 
--(void)setAllControlHiddenOrNot
+- (void)setAllControlHiddenOrNot
 {
     if (self.isCallStateAnswer == NO)
     {
@@ -756,17 +768,10 @@
     }
     
     self.isAllControlHidden = !self.isAllControlHidden;
-    for (UIView * view in self.view.subviews)
+    
+    for (UIView * view in self.controlsCouldHideArray)
     {
-        if (view == self.hangupButtonView
-            || view == self.muteButtonView
-            || view == self.handsFreeButtonView
-            || view == self.switchCameraButtonView
-            || view == self.switchAudioButtonView
-            || view == self.callStateLabel)
-        {
-            [view setHidden:self.isAllControlHidden];
-        }
+        [view setHidden:self.isAllControlHidden];
     }
 }
 
