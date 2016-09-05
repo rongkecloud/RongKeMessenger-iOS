@@ -209,14 +209,6 @@
     self.localViewCenterMaxX = UISCREEN_BOUNDS_SIZE.width - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.width/2);
     self.localViewCenterMinY = self.localVideoView.frame.size.height/2 + [UIApplication sharedApplication].statusBarFrame.size.height;
     self.localViewCenterMaxY = UISCREEN_BOUNDS_SIZE.height - (LOCAL_VIEW_SPACE + self.localVideoView.frame.size.height/2);
-    
-    // 添加可隐藏的控件
-    self.controlsCouldHideArray = @[self.hangupButtonView,
-                                 self.muteButtonView,
-                                 self.handsFreeButtonView,
-                                 self.switchCameraButtonView,
-                                 self.switchAudioButtonView,
-                                 self.callStateLabel];
 }
 
 // 初始化对方头像与名称
@@ -767,6 +759,16 @@
         return;
     }
     
+    if (self.controlsCouldHideArray == nil) {
+        // 添加可隐藏的控件，不可在 viewDidLoad 或 viewDidAppear 中进行，否则会导致将 nil 添加进数组而闪退
+        self.controlsCouldHideArray = @[self.hangupButtonView,
+                                        self.muteButtonView,
+                                        self.handsFreeButtonView,
+                                        self.switchCameraButtonView,
+                                        self.switchAudioButtonView,
+                                        self.callStateLabel];
+    }
+
     self.isAllControlHidden = !self.isAllControlHidden;
     
     for (UIView * view in self.controlsCouldHideArray)
