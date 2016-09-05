@@ -744,7 +744,7 @@
     self.localVideoView.center = CGPointMake(x, y);
     [panLocalViewGesture setTranslation:CGPointMake(0, 0) inView:self.view];
     
-    NSLog(@"localVideoView.frame: x: %f, y: %f, maxX:%f, maxY:%f", self.localVideoView.frame.origin.x, self.localVideoView.frame.origin.y, CGRectGetMaxX(self.localVideoView.frame), CGRectGetMaxY(self.localVideoView.frame));
+    NSLog(@"localVideoView.frame: x: %f, y: %f, maxX: %f, maxY: %f, width: %f, height: %f", self.localVideoView.frame.origin.x, self.localVideoView.frame.origin.y, CGRectGetMaxX(self.localVideoView.frame), CGRectGetMaxY(self.localVideoView.frame), self.localVideoView.frame.size.width, self.localVideoView.frame.size.height);
 }
 
 - (void)touchRemoteVideoView
@@ -754,7 +754,14 @@
 
 - (void)setAllControlHiddenOrNot
 {
-    if (self.isCallStateAnswer == NO)
+    if (self.isVideoCall == NO
+        || self.isCallStateAnswer == NO
+        || self.hangupButtonView == nil
+        || self.muteButtonView == nil
+        || self.handsFreeButtonView == nil
+        || self.switchCameraButtonView == nil
+        || self.switchAudioButtonView == nil
+        || self.callStateLabel == nil)
     {
         return;
     }
@@ -791,8 +798,6 @@
     {
         case AV_CALL_STATE_ANSWER: // 通话已接通
         {
-            self.isCallStateAnswer = YES;
-
             self.callSecond = [ToolsFunction getCurrentSystemDateSecond];
             // 开始计时
             [self startDetectTalkingTime];
@@ -853,6 +858,8 @@
                 timeLabelFrame.origin.y =  CGRectGetMaxY(self.accountLabel.frame) + 23;
                 self.callStateLabel.frame = timeLabelFrame;
             }
+            
+            self.isCallStateAnswer = YES;
         }
             break;
             
