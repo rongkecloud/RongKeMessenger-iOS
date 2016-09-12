@@ -343,6 +343,7 @@
     {
         floatXSwitch -= 25;
     }
+    
     switch (indexPath.section)
     {
         case 0:
@@ -364,7 +365,7 @@
                 isOpenInvite = ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).isEnableInvite;
             }
             
-            BOOL isCreate = (self.rkChatSessionViewController.currentSessionObject.sessionType == 1 && [((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]]);
+            BOOL isCreate = (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE && [((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]]);
             
             // 添加联系人到页面
             [self.sessionContactListView addContactAvatarByContactArray:self.currentAllGroupContactArray
@@ -378,177 +379,110 @@
             
         case 1:
         {
-            if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_GROUP_TYPE)
+            // 叶陶铸：2016.09.12：根据是否单聊，是否群主来判断显示哪些 cell
+            
+            /*
+             
+                      单聊   群聊非群主   群聊是群主
+             
+             群的名称            Y          Y
+             群的描述            Y          Y
+             群的转让                       Y
+             置顶聊天   Y        Y          Y
+             消息提醒   Y        Y          Y
+             邀请权限                       Y
+             
+             */
+            
+            NSInteger row = indexPath.row;
+            if (self.rkChatSessionViewController.currentSessionObject.sessionType == SESSION_SINGLE_TYPE)
             {
-                // Jacky.Chen:2012.02.26.设置尾部有开关按钮的cell不可选中
-                if (indexPath.row > 2)
+                row += 3;
+            }
+            else if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]] == NO && row > 1)
+            {
+                row++;
+            }
+
+            switch (row)
+            {
+                case 0:
                 {
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_NAME", "群名称");
+                    cell.detailTextLabel.text = self.rkChatSessionViewController.currentSessionObject.sessionShowName;
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 }
-                switch (indexPath.row)
+                    break;
+                    
+                case 1:
                 {
-                    case 0:  // 群名称
+                    cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_DESCRIPTION", "群描述");
+                    cell.detailTextLabel.text = ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupDescription;
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                    break;
+                    
+                case 2:
+                {
+                    cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_TRANSFER", "群转让");
+                    cell.detailTextLabel.text = @"";
+                    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                }
+                    break;
+                    
+                case 3:
+                {
+                    cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
+                    if (!subView)
                     {
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_NAME", "群名称");
-                        cell.detailTextLabel.text = self.rkChatSessionViewController.currentSessionObject.sessionShowName;
-                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                        UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
+                        switch_top.tag = SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG;
+                        [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
+                        [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
+                        [cell addSubview:switch_top];
                     }
-                        break;
-                    case 1:  // 群描述
+                }
+                    break;
+                    
+                case 4:
+                {
+                    cell.textLabel.text = NSLocalizedString(@"TITLE_MESSAGE_REMIND", "消息提醒");
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG];
+                    if (!subView)
                     {
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_DESCRIPTION", "群描述");
-                        cell.detailTextLabel.text = ((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupDescription;
-                        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                    }
-                        break;
-                    case 2:  // 群转让
-                    {
-                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
-                        {
-                            cell.textLabel.text = NSLocalizedString(@"TITLE_GROUP_TRANSFER", "群转让");
-                            cell.detailTextLabel.text = @"";
-                            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                        }
-                        else
-                        {
-                            // 是否置顶聊天
-                            cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
-                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                            
-                            
-                            UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                            switch_top.tag = SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG;
-                            [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
-                            [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
-                            
-                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
-                            if (!subView) {
-                                [cell addSubview:switch_top];
-                            }
-                        }
-                        
-                    }
-                        break;
-                        
-                    case 3:
-                    {
-                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
-                        {
-                            // 是否置顶聊天
-                            cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
-                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                            
-                            
-                            UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                            switch_top.tag = SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG;
-                            [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
-                            [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
-                            
-                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_TOP_TAG];
-                            if (!subView) {
-                                [cell addSubview:switch_top];
-                            }
-                        }
-                        else
-                        {
-                            // 是否消息提醒
-                            cell.textLabel.text = NSLocalizedString(@"TITLE_MESSAGE_REMIND", "消息提醒");
-                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                            
-                            UISwitch *switchRemind = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                            switchRemind.tag = SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG;
-                            [switchRemind setOn:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
-                            [switchRemind addTarget:self action:@selector(setRemind:) forControlEvents:UIControlEventValueChanged];
-                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG];
-                            if (!subView) {
-                                [cell addSubview:switchRemind];
-                            }
-                        }
-                        
-                        
-                    }
-                        break;
-                    case 4:
-                    {
-                        // 是否消息提醒
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_MESSAGE_REMIND", "消息提醒");
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                        
                         UISwitch *switchRemind = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
                         switchRemind.tag = SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG;
                         [switchRemind setOn:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
                         [switchRemind addTarget:self action:@selector(setRemind:) forControlEvents:UIControlEventValueChanged];
-                        UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_GROUPCHAT_MESSAGE_PROMPT_TAG];
-                        if (!subView) {
-                            [cell addSubview:switchRemind];
-                        }
+                        [cell addSubview:switchRemind];
                     }
-                        break;
-                    case 5:
-                    {
-                        // 判断当前群聊建立者是否是登录者
-                        if ([((GroupChat *)self.rkChatSessionViewController.currentSessionObject).groupCreater isEqualToString:[RKCloudBase getUserName]])
-                        {
-                            
-                            cell.textLabel.text = NSLocalizedString(@"TITLE_INVITE_JURISDICTION", "邀请权限");
-                            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                            
-                            UISwitch *switchState = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                            switchState.tag = SESSIONINFO_SWITCH_INVITE_PROMPT_TAG;
-                            [switchState setOn:((GroupChat *)self.rkChatSessionViewController.currentSessionObject).isEnableInvite];
-                            [switchState addTarget:self action:@selector(setInvate:) forControlEvents:UIControlEventValueChanged];
-                            UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_INVITE_PROMPT_TAG];
-                            if (!subView) {
-                                [cell addSubview:switchState];
-                            }
-                        }
-                    }
-                        break;
-                    default:
-                        break;
                 }
-            }
-            else
-            {
-                // Jacky.Chen:2012.02.26.设置尾部有开关按钮的cell不可选中
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
-                switch (indexPath.row)
+                    break;
+                    
+                case 5:
                 {
-                    case 0:
+                    cell.textLabel.text = NSLocalizedString(@"TITLE_INVITE_JURISDICTION", "邀请权限");
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_INVITE_PROMPT_TAG];
+                    if (!subView)
                     {
-                        // 是否置顶聊天
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_CHAT_ON_TOP", "置顶聊天");
-                        UISwitch *switch_top = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                        switch_top.tag = SESSIONINFO_SWITCH_SINGLECHAT_TOP_TAG;
-                        [switch_top setOn:self.rkChatSessionViewController.currentSessionObject.isTop];
-                        [switch_top addTarget:self action:@selector(setTop:) forControlEvents:UIControlEventValueChanged];
-                        UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_SINGLECHAT_TOP_TAG];
-                        if (!subView) {
-                            [cell addSubview:switch_top];
-                        }
+                        UISwitch *switchState = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
+                        switchState.tag = SESSIONINFO_SWITCH_INVITE_PROMPT_TAG;
+                        [switchState setOn:((GroupChat *)self.rkChatSessionViewController.currentSessionObject).isEnableInvite];
+                        [switchState addTarget:self action:@selector(setInvate:) forControlEvents:UIControlEventValueChanged];
+                        [cell addSubview:switchState];
                     }
-                        break;
-                    case 1:
-                    {
-                        // 是否消息提醒
-                        cell.textLabel.text = NSLocalizedString(@"TITLE_MESSAGE_REMIND", "消息提醒");
-
-                        UISwitch *switch_remind = [[UISwitch alloc] initWithFrame:CGRectMake(floatXSwitch, 8.5, 76, 27)];
-                        switch_remind.tag = SESSIONINFO_SWITCH_SINGLECHAT_MESSAGE_PROMPT_TAG;
-                        [switch_remind setOn:self.rkChatSessionViewController.currentSessionObject.isRemindStatus];
-                        [switch_remind addTarget:self action:@selector(setRemind:) forControlEvents:UIControlEventValueChanged];
-                        UIView *subView = [cell viewWithTag:SESSIONINFO_SWITCH_SINGLECHAT_MESSAGE_PROMPT_TAG];
-                        if (!subView) {
-                            [cell addSubview:switch_remind];
-                        }
-                        
-                    }
-                        
-                        break;
-                    default:
-                        break;
                 }
+                    break;
+                    
+                default:
+                    break;
             }
         }
             break;
