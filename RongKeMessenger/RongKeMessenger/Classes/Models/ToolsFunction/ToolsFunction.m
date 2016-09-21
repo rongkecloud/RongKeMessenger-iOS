@@ -444,10 +444,9 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
 + (NSInteger)getCurrentiOSMajorVersion
 {
     // 获取设备信息
-    UIDevice* deviceInfo = [UIDevice currentDevice];
-    //NSLog(@"TOOLS: getCurrentiOSMajorVersion = %@", deviceInfo.systemVersion);
-    
-    NSInteger nMaxVersion = [[deviceInfo.systemVersion substringToIndex:1] intValue];
+    // 2016.09.21: 已兼容 iOS 10
+    NSInteger nMaxVersion = [[UIDevice currentDevice] systemVersion].integerValue;
+    NSLog(@"TOOLS: getCurrentiOSMajorVersion = %lu", nMaxVersion);
     
     return nMaxVersion;
 }
@@ -457,9 +456,9 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
 {
     // 获取设备信息
     UIDevice* deviceInfo = [UIDevice currentDevice];
-    //NSLog(@"TOOLS: getCurrentiOSVersion = %@", deviceInfo.systemVersion);
+    NSLog(@"TOOLS: getCurrentiOSVersion = %@", [deviceInfo systemVersion]);
     
-    return deviceInfo.systemVersion;
+    return [deviceInfo systemVersion];
 }
 
 // 判断是否是ios7之前的版本
