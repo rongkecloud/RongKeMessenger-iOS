@@ -22,6 +22,7 @@
 #import "NewFeatureView.h"
 #import "RKCloudChatMessageManager.h"
 #import "RKCloudChatBaseMessage.h"
+#import <UserNotifications/UserNotifications.h>
 
 #define IMAGE_SCALE_SHORTEST_LENGTH_720      720 // 普通图片缩放时最短边的长度
 
@@ -663,21 +664,32 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
 // 注册APNS Push通知
 + (void)registerAPNSNotifications
 {
-    // Gray.Wang:2014.08.14:兼容iOS8系统注册APNS通知API
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)])
+    if ([self getCurrentiOSMajorVersion] >= 10)
+    {
+        UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+        [center requestAuthorizationWithOptions:UNAuthorizationOptionBadge|UNAuthorizationOptionSound|UNAuthorizationOptionAlert|UNAuthorizationOptionCarPlay
+                              completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                  // Enable or disable features based on authorization.
+                                  if (granted) {
+                                      //如果用户权限申请成功，设置通知中心的代理
+                                      NSLog(@"申请通知权限成功");
+                                      [[UIApplication sharedApplication] registerForRemoteNotifications];
+                                      
+                                      [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+                                          NSLog(@"%@", settings);
+                                      }];
+                                  } else {
+                                      NSLog(@"申请通知权限失败");
+                                  }
+                              }];
+    }
+    else if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)])
     {
         // iOS8之后注册系统Push Notification
         UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil];
         [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
         
         [[UIApplication sharedApplication] registerForRemoteNotifications];
-    }
-    else
-    {
-        // iOS8之前注册系统Push Notification
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert
-                                                                               | UIRemoteNotificationTypeBadge
-                                                                               | UIRemoteNotificationTypeSound)];
     }
 }
 
