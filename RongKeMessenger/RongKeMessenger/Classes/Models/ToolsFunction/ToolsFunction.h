@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVAudioPlayer.h>
+#import <AVFoundation/AVFAudio.h>
 #import "Definition.h"
 #import <AVFoundation/AVAsset.h>
 

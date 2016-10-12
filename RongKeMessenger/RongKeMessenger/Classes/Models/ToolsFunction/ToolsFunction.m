@@ -446,7 +446,7 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     // 获取设备信息
     // 2016.09.21: 已兼容 iOS 10
     NSInteger nMaxVersion = [[UIDevice currentDevice] systemVersion].integerValue;
-    NSLog(@"TOOLS: getCurrentiOSMajorVersion = %lu", nMaxVersion);
+    NSLog(@"TOOLS: getCurrentiOSMajorVersion = %lu", (long)nMaxVersion);
     
     return nMaxVersion;
 }
@@ -687,21 +687,20 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     BOOL bDisableApnsNotifications = NO;
     UIApplication *application = [UIApplication sharedApplication];
     
+    
     // Gray.Wang:2014.08.14:兼容iOS8系统注册APNS通知API
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
     {
         UIUserNotificationSettings * notificationSettings = [application currentUserNotificationSettings];
-        if ((notificationSettings.types & UIRemoteNotificationTypeAlert) == NO ||
-            (notificationSettings.types & UIRemoteNotificationTypeBadge) == NO ||
-            (notificationSettings.types & UIRemoteNotificationTypeSound) == NO)
+        
+        if ((notificationSettings.types & UIUserNotificationTypeAlert) == NO ||
+            (notificationSettings.types & UIUserNotificationTypeBadge) == NO ||
+            (notificationSettings.types & UIUserNotificationTypeSound) == NO)
         {
             bDisableApnsNotifications = YES;
         }
-        
-        // 判断Push推送功能是否开启
-        NSLog(@"TOOLS: UIUserNotificationSettings notificationSettings.types = %lu", (long)notificationSettings.types);
     }
-    else {
+    /*else {
         UIRemoteNotificationType notifyType = [application enabledRemoteNotificationTypes];
         if ((notifyType & UIRemoteNotificationTypeAlert) == NO ||
             (notifyType & UIRemoteNotificationTypeBadge) == NO ||
@@ -713,7 +712,7 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
         // 判断Push推送功能是否开启
         NSLog(@"TOOLS: UIRemoteNotificationType notifyType = %lu", (long)notifyType);
     }
-    
+    */
     return bDisableApnsNotifications;
 }
 
@@ -727,19 +726,22 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
     {
         UIUserNotificationSettings * notificationSettings = [application currentUserNotificationSettings];
-        if (!notificationSettings.types || notificationSettings.types == UIRemoteNotificationTypeNone)
+        
+        NSLog(@"notificationSettings = %@", notificationSettings);
+        
+        if (!notificationSettings.types || notificationSettings.types == UIUserNotificationTypeNone)
         {
             isApnsNotificationsEnabled = NO;
         }
     }
-    else
+    /*else
     {
         UIRemoteNotificationType notifyType = [application enabledRemoteNotificationTypes];
         if (!notifyType || notifyType == UIRemoteNotificationTypeNone)
         {
             isApnsNotificationsEnabled = NO;
         }
-    }
+    }*/
     return isApnsNotificationsEnabled;
 }
 
@@ -1061,14 +1063,7 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     }
     CGSize size = CGSizeZero;
     
-    if ([stringText respondsToSelector:@selector(sizeWithAttributes:)])
-    {
-        size = [stringText sizeWithAttributes: [NSDictionary dictionaryWithObject:font forKey: NSFontAttributeName]];
-    }
-    else
-    {
-        size = [stringText sizeWithFont: font];
-    }
+    size = [stringText sizeWithAttributes: [NSDictionary dictionaryWithObject:font forKey: NSFontAttributeName]];
     
     return size;
 }
@@ -1082,15 +1077,8 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     }
     CGSize size = CGSizeZero;
     
-    if ([stringText respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)])
-    {
-        CGRect rect = [stringText boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:font forKey: NSFontAttributeName] context:nil];
-        size = CGSizeMake(rect.size.width, rect.size.height);
-    }
-    else
-    {
-        size = [stringText sizeWithFont:font constrainedToSize:maxSize];
-    }
+    CGRect rect = [stringText boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObject:font forKey: NSFontAttributeName] context:nil];
+    size = CGSizeMake(rect.size.width, rect.size.height);
     
     return size;
 }
@@ -1102,14 +1090,7 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
     {
         return;
     }
-    if ([textString respondsToSelector:@selector(drawInRect:withFont:)])
-    {
-        [textString drawInRect:textRect withFont:font];
-    }
-    else
-    {
-        [textString drawInRect:textRect withAttributes:[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName]];
-    }
+    [textString drawInRect:textRect withAttributes:[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName]];
 }
 
 //判断一段字符串是否全部为空格
@@ -1480,13 +1461,13 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
 /* Read a property list from resource file
  plistName - name of property list in resource
  */
-+ (NSDictionary *)loadPropertyList:(NSString *)plistName {
-    NSString *error = nil;
++ (NSDictionary *)loadPropertyList:(NSString *)plistName
+{
     NSPropertyListFormat format;
     
     NSString *plistpath = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
     NSData *plist = [[NSFileManager defaultManager] contentsAtPath:plistpath];
-    return (NSDictionary *) [NSPropertyListSerialization propertyListFromData:plist mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&error];
+    return (NSDictionary *)[NSPropertyListSerialization propertyListWithData:plist options:NSPropertyListMutableContainersAndLeaves format:&format error: nil];
 }
 
 // 读取plist资源数据
@@ -2294,7 +2275,7 @@ static void addRoundedRectToPath(CGContextRef context,
     NSString *famrtString = [[NSString alloc] initWithFormat:@"%@", [dataFormatter stringFromDate: date]];
     NSString *formatDate = nil;
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *weekdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: date];
+    NSDateComponents *weekdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: date];
     
     // 获取weekDay
     NSInteger weekDay = [weekdayComponents weekday];
@@ -2353,7 +2334,7 @@ static void addRoundedRectToPath(CGContextRef context,
     NSString *famrtString = nil;
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *weekdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: date];
+    NSDateComponents *weekdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: date];
     NSInteger month = [weekdayComponents month];
     NSInteger year = [weekdayComponents year];
     NSInteger day = [weekdayComponents day];
@@ -2362,7 +2343,7 @@ static void addRoundedRectToPath(CGContextRef context,
     // 当前日期
     // 通过给定的日期和今天的日期，来判断给定的日期与今天的日期相差的天数
     NSDate *todayDate = [NSDate date];
-    NSDateComponents *nowWeekdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: todayDate];
+    NSDateComponents *nowWeekdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: todayDate];
     NSInteger nowYear = [nowWeekdayComponents year];
     NSInteger nowMonth = [nowWeekdayComponents month];
     NSInteger nowDay = [nowWeekdayComponents day];
@@ -2371,7 +2352,7 @@ static void addRoundedRectToPath(CGContextRef context,
     // 昨天
     NSTimeInterval secondsPerDay = 24 * 60 * 60;
     NSDate *yesterdayDate =  [[NSDate alloc] initWithTimeIntervalSinceNow:-secondsPerDay];
-    NSDateComponents *yesterdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: yesterdayDate];
+    NSDateComponents *yesterdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: yesterdayDate];
     NSInteger yesterdayYear = [yesterdayComponents year];
     NSInteger yesterdayMonth = [yesterdayComponents month];
     NSInteger yesterdayDay = [yesterdayComponents day];
@@ -2504,7 +2485,7 @@ static void addRoundedRectToPath(CGContextRef context,
     
     NSString *comingDate = nil;
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *weekdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: date];
+    NSDateComponents *weekdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: date];
     NSInteger month = [weekdayComponents month];
     NSInteger year = [weekdayComponents year];
     NSInteger day = [weekdayComponents day];
@@ -2516,7 +2497,7 @@ static void addRoundedRectToPath(CGContextRef context,
     }
     
     // 当前日期
-    NSDateComponents *nowWeekdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: todayDate];
+    NSDateComponents *nowWeekdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: todayDate];
     NSInteger nowYear = [nowWeekdayComponents year];
     NSInteger nowMonth = [nowWeekdayComponents month];
     NSInteger nowDay = [nowWeekdayComponents day];
@@ -2597,7 +2578,7 @@ static void addRoundedRectToPath(CGContextRef context,
     
     NSString *comingDate = nil;
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *weekdayComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: date];
+    NSDateComponents *weekdayComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: date];
     NSInteger hour = [weekdayComponents hour];
     NSInteger minute = [weekdayComponents minute];
     
@@ -2616,8 +2597,8 @@ static void addRoundedRectToPath(CGContextRef context,
     
     BOOL flag = NO;
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *oneComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: oneDate];
-    NSDateComponents *otherComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: otherDate];
+    NSDateComponents *oneComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: oneDate];
+    NSDateComponents *otherComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: otherDate];
     
     NSInteger oneYear = [oneComponents year];
     NSInteger oneMonth = [oneComponents month];
@@ -2675,8 +2656,8 @@ static void addRoundedRectToPath(CGContextRef context,
     }
     
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *oneComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: newDate];
-    NSDateComponents *otherComponents = [gregorian components:(NSMonthCalendarUnit | NSYearCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate: oldDate];
+    NSDateComponents *oneComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: newDate];
+    NSDateComponents *otherComponents = [gregorian components:(NSCalendarUnitMinute | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitWeekday | NSCalendarUnitHour) fromDate: oldDate];
     
     NSInteger newYear  = [oneComponents year];
     NSInteger newMonth = [oneComponents month];
