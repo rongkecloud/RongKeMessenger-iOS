@@ -208,7 +208,10 @@
 	{
         if ([self.searchBarItem isFirstResponder]) {
             [self searchBarCancelButtonClicked:self.searchBarItem];
+            
+#ifndef __IPHONE_8_0
             [self.searchDisplayController setActive:NO];
+#endif
         }
         
 		RKCloudChatBaseChat *selectedSessionObject = (RKCloudChatBaseChat *)[arrayChatSession objectAtIndex:indexPath.row];
@@ -613,6 +616,29 @@
 	[titleField becomeFirstResponder];
 }
 
+#ifdef __IPHONE_8_0
+
+#pragma mark -
+#pragma mark UISearchControllerDelegate
+
+- (void)willPresentSearchController:(UISearchController *)searchController
+{
+    
+}
+- (void)didPresentSearchController:(UISearchController *)searchController
+{
+    
+}
+- (void)willDismissSearchController:(UISearchController *)searchController
+{
+    [self searchMMSByKeyWord:searchController.searchBar.text];
+}
+- (void)didDismissSearchController:(UISearchController *)searchController
+{
+    [self searchMMSByKeyWord:searchController.searchBar.text];
+}
+
+#else
 
 #pragma mark -
 #pragma mark UISearchDisplayDelegate
@@ -636,6 +662,7 @@
     [self searchMMSByKeyWord:controller.searchBar.text];
 }
 
+#endif
 
 #pragma mark -
 #pragma mark RKCloudChatDelegate - RKCloudChatSession

@@ -20,6 +20,9 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [super awakeFromNib];
+    
     [self.textContentTextView setFont:MESSAGE_TEXT_FONT];
     [self.textContentTextView setBackgroundColor:[UIColor clearColor]];
     

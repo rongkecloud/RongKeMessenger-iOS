@@ -27,7 +27,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
+    [super awakeFromNib];
     // 初始化所有UI控件
     [self initAllUIControl];
 }

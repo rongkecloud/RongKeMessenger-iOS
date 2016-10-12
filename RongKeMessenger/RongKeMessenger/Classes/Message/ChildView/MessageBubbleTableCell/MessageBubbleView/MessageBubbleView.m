@@ -383,7 +383,7 @@
             float stateStringOriginY = CGRectGetMaxY(self.bubbleRect) - CELL_DISTANCE_BETWEEN_SEND_AND_BOTTOM_OF_BUBBLE - stateSize.height;
             if (self.mmsObject.messageType != MESSAGE_TYPE_LOCAL)
             {
-                [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withFont:[UIFont systemFontOfSize:14]];
+                [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withAttributes:[NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:14] forKey:NSFontAttributeName]];
             }
         }
         
@@ -450,7 +450,10 @@
         NSString *videoDuration = [NSString stringWithFormat:@"%.2f",(float)((float)videoMessage.mediaDuration/100.00)];
         CGSize videoDurationStrsize = [ToolsFunction getSizeFromString:videoDuration withFont:[UIFont systemFontOfSize:10]];
         
-        [videoDuration drawAtPoint:CGPointMake(CGRectGetMaxX(self.bubbleRect) - videoDurationStrsize.width - 10, self.bubbleRect.origin.y + self.bubbleRect.size.height - videoDurationStrsize.height - 6) withFont:[UIFont systemFontOfSize:10]];
+        // [videoDuration drawAtPoint:CGPointMake(CGRectGetMaxX(self.bubbleRect) - videoDurationStrsize.width - 10, self.bubbleRect.origin.y + self.bubbleRect.size.height - videoDurationStrsize.height - 6) withFont:[UIFont systemFontOfSize:10]];
+        
+        [videoDuration drawAtPoint:CGPointMake(CGRectGetMaxX(self.bubbleRect) - videoDurationStrsize.width - 10, self.bubbleRect.origin.y + self.bubbleRect.size.height - videoDurationStrsize.height - 6) withAttributes:[NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:10] forKey:NSFontAttributeName]];
+
     }
     
     // 刷新状态

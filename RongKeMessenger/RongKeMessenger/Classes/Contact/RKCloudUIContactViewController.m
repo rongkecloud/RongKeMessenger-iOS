@@ -203,7 +203,7 @@
 
     // 初始化 Right Bar Button
     UIBarButtonItem *rightBarButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"add_friend_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                                                    style:UIBarButtonItemStyleBordered
+                                                                    style:UIBarButtonItemStylePlain
                                                                    target:self
                                                                    action:@selector(touchAddFriendButton)];
     self.navigationItem.rightBarButtonItem = rightBarButton;
@@ -579,7 +579,7 @@
 {
     if (indexPath.section - SECTION_DEFULT_NUMBER >= [self.friendGroupsArray count])
     {
-        NSLog(@"WARNING:RKCloudUIContactViewController-configContactCell: indexPath.section:%d, SECTION_DEFULT_NUMBER:%d, self.friendGroupsArray.count:%d", indexPath.section, SECTION_DEFULT_NUMBER, [self.friendGroupsArray count]);
+        NSLog(@"WARNING:RKCloudUIContactViewController-configContactCell: indexPath.section:%d, SECTION_DEFULT_NUMBER:%d, self.friendGroupsArray.count:%d", (int)indexPath.section, SECTION_DEFULT_NUMBER, (int)[self.friendGroupsArray count]);
 
         return;
     }

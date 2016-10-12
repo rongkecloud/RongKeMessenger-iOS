@@ -114,14 +114,14 @@
     groupChatSegmentControl.tintColor = COLOR_WITH_RGB(25, 174, 240);
     
     // 设置segment title未选中时的字体的样式
-    [groupChatSegmentControl setTitleTextAttributes:@{UITextAttributeTextColor:COLOR_WITH_RGB(25, 174, 240),
-                                                      UITextAttributeFont: [UIFont systemFontOfSize:16],
-                                                      UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)] }
+    [groupChatSegmentControl setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WITH_RGB(25, 174, 240),
+                                                      NSFontAttributeName: [UIFont systemFontOfSize:16],
+                                                      NSShadowAttributeName: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)] }
                                            forState:UIControlStateNormal];
     
-    [groupChatSegmentControl setTitleTextAttributes:@{UITextAttributeTextColor: COLOR_WITH_RGB(255, 255, 255),
-                                                      UITextAttributeFont: [UIFont systemFontOfSize:16],
-                                                      UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)]}
+    [groupChatSegmentControl setTitleTextAttributes:@{NSForegroundColorAttributeName: COLOR_WITH_RGB(255, 255, 255),
+                                                      NSFontAttributeName: [UIFont systemFontOfSize:16],
+                                                      NSShadowAttributeName: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)]}
                                            forState:UIControlStateSelected];
     
     groupChatSegmentControl.frame = CGRectMake(11, 11.5, self.view.frame.size.width - 22, 35);
@@ -292,7 +292,10 @@
         // 滚动tabview页面时将搜索键盘收起。
         if ([self.searchBarItem isFirstResponder]) {
             [self searchBarCancelButtonClicked:self.searchBarItem];
+            
+#ifndef __IPHONE_8_0
             [self.searchDisplayController setActive:NO];
+#endif
         }
         
         // 弹出到根视图

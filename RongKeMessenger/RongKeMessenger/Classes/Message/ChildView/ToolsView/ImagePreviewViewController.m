@@ -145,10 +145,12 @@
 	[super viewDidLoad];
     
     // FIXME: 屏蔽iOS7废除接口
-    if ([ToolsFunction iSiOS7Earlier])
+    /*if ([ToolsFunction iSiOS7Earlier])
     {
       self.wantsFullScreenLayout = YES;
-    }
+    }*/
+    
+    
 	[self.imageView setImage:self.displayImage];
 	
 	// 保存按钮初始化
@@ -558,9 +560,9 @@
         
         [self.graffitiToolBar setHidden:self.isShowNavgationAndStatusBar];
         
-        if (self.interfaceOrientation != UIDeviceOrientationPortrait) {
-            [self.graffitiToolBar setHidden: YES];
-        }
+//        if (self.interfaceOrientation != UIDeviceOrientationPortrait) {
+//            [self.graffitiToolBar setHidden: YES];
+//        }
     }
     
 	self.isShowNavgationAndStatusBar = !self.isShowNavgationAndStatusBar;

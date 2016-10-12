@@ -113,14 +113,16 @@
 + (void)checkAndShowPushNotificationDisableAlert
 {
     UIApplication *application = [UIApplication sharedApplication];
-    UIRemoteNotificationType notifyType = [application enabledRemoteNotificationTypes];
-    // 判断Push推送功能是否开启
-    NSLog(@"TOOLS: [application enabledRemoteNotificationTypes] = %lu", (unsigned long)notifyType);
     
-    // 判断系统的Notifications是否开启
-    if ((notifyType & UIRemoteNotificationTypeAlert) == NO ||
-        (notifyType & UIRemoteNotificationTypeBadge) == NO ||
-        (notifyType & UIRemoteNotificationTypeSound) == NO)
+    
+    UIUserNotificationSettings * notificationSettings = [application currentUserNotificationSettings];
+    NSLog(@"notificationSettings = %@", notificationSettings);
+    
+    
+    if ([application isRegisteredForRemoteNotifications] == NO ||
+        (notificationSettings.types & UIUserNotificationTypeAlert) == NO ||
+        (notificationSettings.types & UIUserNotificationTypeBadge) == NO ||
+        (notificationSettings.types & UIUserNotificationTypeSound) == NO)
     {
         // 提示用户开启Push通知
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"TITLE_PUSH_NOTIFICATIONS_DISABLED", nil)
@@ -131,6 +133,27 @@
         alert.tag = ALERT_PUSH_NOTIFICATIONS_TAG;
         [alert show];
     }
+    
+    /*
+     UIRemoteNotificationType notifyType = [application enabledRemoteNotificationTypes];
+     // 判断Push推送功能是否开启
+     NSLog(@"TOOLS: [application enabledRemoteNotificationTypes] = %lu", (unsigned long)notifyType);
+     
+     // 判断系统的Notifications是否开启
+     if ((notifyType & UIRemoteNotificationTypeAlert) == NO ||
+     (notifyType & UIRemoteNotificationTypeBadge) == NO ||
+     (notifyType & UIRemoteNotificationTypeSound) == NO)
+     {
+     // 提示用户开启Push通知
+     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"TITLE_PUSH_NOTIFICATIONS_DISABLED", nil)
+     message:NSLocalizedString(@"PROMPT_PUSH_NOTIFICATIONS_DISABLED", nil)
+     delegate:nil
+     cancelButtonTitle:NSLocalizedString(@"STR_OK", nil)
+     otherButtonTitles:nil];
+     alert.tag = ALERT_PUSH_NOTIFICATIONS_TAG;
+     [alert show];
+     }
+     */
 }
 
 // 显示一个创建新的群聊会话的弹出提示框

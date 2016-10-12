@@ -25,6 +25,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
     self.cellBottomSeparatorRightMargin = 0;
 }
 

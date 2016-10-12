@@ -18,12 +18,20 @@
 #import "FriendDetailViewController.h"
 #import "PersonalDetailViewController.h"
 
-
+#ifndef __IPHONE_8_0
 @interface SearchAddContactViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
-
+#else
+@interface SearchAddContactViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchControllerDelegate,UISearchResultsUpdating>
+#endif
 @property (nonatomic, strong) UITableView *searchContactTableView;
 @property (nonatomic, strong) UISearchBar *contactSearchBar;
+#ifndef __IPHONE_8_0
 @property (nonatomic, strong) UISearchDisplayController *strongSearchDisplayController;
+#else
+@property (nonatomic, strong) UISearchController *strongSearchDisplayController;
+
+#endif
+
 @property (nonatomic, assign) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *searchContactArray;  // 查找的联系人Array
 
@@ -64,12 +72,22 @@
 {
     [super viewWillAppear:animated];
 
+    self.contactSearchBar.hidden = NO;
     // 注册TextField通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear: animated];
+    
+    self.contactSearchBar.hidden = YES;
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
     [self setAutomaticallyAdjustsScrollViewInsets:YES];
     [self setExtendedLayoutIncludesOpaqueBars:YES];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
@@ -77,6 +95,9 @@
 - (void)dealloc
 {
     self.contactSearchBar.delegate = nil;
+    [self.contactSearchBar removeFromSuperview];
+    self.strongSearchDisplayController = nil;
+    self.searchContactTableView = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_UPDATE_FRIEND_LIST object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_SEARCH_AND_ADD_FRIEND_VERIFY_YES object:nil];
@@ -108,28 +129,57 @@
     self.searchContactTableView.delegate = self;
     self.searchContactTableView.dataSource = self;
     self.searchContactTableView.backgroundColor = COLOR_VIEW_BACKGROUND;
-    self.searchContactTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.searchContactTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:self.searchContactTableView];
 }
 
 - (void)addSearchBar
 {
+#ifndef __IPHONE_8_0
+    
     self.contactSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    
+    // 用 searchbar 初始化 SearchDisplayController 并把 searchDisplayController 和当前 controller 关联起来
+
+    self.strongSearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.contactSearchBar contentsController:self];
+    self.strongSearchDisplayController.searchResultsDataSource = self;
+    self.strongSearchDisplayController.searchResultsDelegate = self;
+    self.strongSearchDisplayController.delegate = self;
+    
+    // 添加 searchbar 到 headerview
+    [self.searchContactTableView setTableHeaderView:self.contactSearchBar];
+
+#else
+    
+    //创建UISearchController
+    self.strongSearchDisplayController = [[UISearchController alloc]initWithSearchResultsController:nil];
+    
+    //设置代理
+    self.strongSearchDisplayController.delegate = self;
+    self.strongSearchDisplayController.searchResultsUpdater = self;
+    self.strongSearchDisplayController.searchBar.frame = CGRectMake(0, 0, UISCREEN_BOUNDS_SIZE.width, 44.0);
+    
+    //设置UISearchController的显示属性，以下3个属性默认为YES
+    //搜索时，背景变暗色
+    self.strongSearchDisplayController.dimsBackgroundDuringPresentation = NO;
+    //搜索时，背景变模糊
+    self.strongSearchDisplayController.obscuresBackgroundDuringPresentation = NO;
+    //隐藏导航栏
+    self.strongSearchDisplayController.hidesNavigationBarDuringPresentation = NO;
+    
+    self.contactSearchBar = self.strongSearchDisplayController.searchBar;
+    
+    self.searchContactTableView.tableHeaderView = self.contactSearchBar;
+    
+#endif
+    
     self.contactSearchBar.placeholder = NSLocalizedString(@"TITLE_SEARCH_FRIEND", "搜索好友");
     // 设置键盘类型
     self.contactSearchBar.keyboardType = UIKeyboardTypeASCIICapable;
     
     self.contactSearchBar.delegate = self;
     
-    // 添加 searchbar 到 headerview
-    [self.searchContactTableView setTableHeaderView:self.contactSearchBar];
-    
-    // 用 searchbar 初始化 SearchDisplayController 并把 searchDisplayController 和当前 controller 关联起来
-    self.strongSearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.contactSearchBar contentsController:self];
-    
-    self.strongSearchDisplayController.searchResultsDataSource = self;
-    self.strongSearchDisplayController.searchResultsDelegate = self;
-    self.strongSearchDisplayController.delegate = self;
+
 }
 
 #pragma mark - UITableViewDataSource
@@ -141,15 +191,27 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#ifndef __IPHONE_8_0
     if (tableView == self.strongSearchDisplayController.searchResultsTableView) {
        return self.searchContactArray.count;
     }
+#else
+    if (self.strongSearchDisplayController.active)
+    {
+        return self.searchContactArray.count;
+    }
+#endif
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView == self.strongSearchDisplayController.searchResultsTableView) {
+#ifndef __IPHONE_8_0
+    if (tableView == self.strongSearchDisplayController.searchResultsTableView)
+#else 
+    if (self.strongSearchDisplayController.isActive)
+#endif
+    {
         SearchFriendTableViewCell *searchContactCell = [tableView dequeueReusableCellWithIdentifier:@"SearchContactCell"];
         
         if (searchContactCell == nil) {
@@ -166,6 +228,7 @@
         
         return searchContactCell;
     }
+
     
     RKTableViewCell *contactEditCell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell"];
     
@@ -207,8 +270,12 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FriendDetailViewController *vwcFriendDetail = [[FriendDetailViewController alloc] initWithNibName:nil bundle:nil];
-    
+
+#ifndef __IPHONE_8_0
     if (tableView == self.searchDisplayController.searchResultsTableView)
+#else
+    if (self.strongSearchDisplayController.isActive)
+#endif
     {
         if (self.searchContactArray == nil || [self.searchContactArray count] == 0)
         {
@@ -242,6 +309,34 @@
     }
 }
 
+#ifdef __IPHONE_8_0
+
+#pragma mark - UISearchResultsUpdating
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    
+}
+
+
+- (void)willPresentSearchController:(UISearchController *)searchController
+{
+//    self.searchContactTableView.frame = CGRectMake(0, 64, UISCREEN_BOUNDS_SIZE.width, UISCREEN_BOUNDS_SIZE.height - 20);;
+}
+- (void)didPresentSearchController:(UISearchController *)searchController
+{
+    
+}
+- (void)willDismissSearchController:(UISearchController *)searchController
+{
+//    self.searchContactTableView.frame = CGRectMake(0, 0, UISCREEN_BOUNDS_SIZE.width, UISCREEN_BOUNDS_SIZE.height-STATU_NAVIGATIONBAR_HEIGHT);
+}
+- (void)didDismissSearchController:(UISearchController *)searchController
+{
+    
+}
+
+#endif
 
 #pragma mark -
 #pragma mark - UISearchBar Delegate
@@ -289,9 +384,12 @@
                 }
                 
                 self.searchContactArray = arraySearchContact;
-                
+#ifndef __IPHONE_8_0
                 // 刷新SearchTable
                 [self.strongSearchDisplayController.searchResultsTableView reloadData];
+#else
+                [self.searchContactTableView reloadData];
+#endif
             }
         });
     });
@@ -302,7 +400,16 @@
     if (self.searchContactArray.count > 0) {
         [self.searchContactArray removeAllObjects];
     }
+#ifndef __IPHONE_8_0
+    // 刷新SearchTable
+    [self.strongSearchDisplayController.searchResultsTableView reloadData];
+#else
+    [self.searchContactTableView reloadData];
+#endif
+
 }
+
+#ifndef __IPHONE_8_0
 
 #pragma mark -
 #pragma mark - UISearchDisplayController Delegate
@@ -320,6 +427,7 @@
 //        searchContactCell = [[SearchFriendTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"SearchContactCell"];
 //    }
 }
+#endif
 
 #pragma mark -
 #pragma mark - SearchContactTableViewCellDelegate Delegate
@@ -335,7 +443,9 @@
 - (void)updateFriendListNoticeMethod:(NSNotification *)notice
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+#ifndef __IPHONE_8_0
         [self.strongSearchDisplayController.searchResultsTableView reloadData];
+#endif
     });
 }
 

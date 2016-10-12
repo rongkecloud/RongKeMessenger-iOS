@@ -104,7 +104,7 @@
 		toolbar.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 44 + (viewFrameOriginY - 20) , UISCREEN_BOUNDS_SIZE.width, 44);
         //创建toolbar button对象
 		UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"STR_CANCEL",nil)
-                                                                         style:UIBarButtonItemStyleBordered
+                                                                         style:UIBarButtonItemStylePlain
                                                                         target:self
                                                                         action:@selector(cancelCropping)];
         

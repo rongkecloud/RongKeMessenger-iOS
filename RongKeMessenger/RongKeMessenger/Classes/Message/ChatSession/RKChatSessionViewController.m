@@ -554,16 +554,17 @@
     
     // 增加导航栏右侧按钮，点击后进入会话信息管理页面
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:rightButtonImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                                                    style:UIBarButtonItemStyleBordered
+                                                                    style:UIBarButtonItemStylePlain
                                                                    target:self
                                                                    action:@selector(touchSessioninfoButton)];
     
-    UIBarButtonItem * summaryButton = [[UIBarButtonItem alloc]initWithTitle:@"摘要"
+    /*UIBarButtonItem * summaryButton = [[UIBarButtonItem alloc]initWithTitle:@"摘要"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(touchSummaryButton)];
     
-    //    self.navigationItem.rightBarButtonItems = @[rightButton, summaryButton];
+    self.navigationItem.rightBarButtonItems = @[rightButton, summaryButton];*/
+    
     self.navigationItem.rightBarButtonItem = rightButton;
     
     // 定制返回按钮

@@ -248,6 +248,7 @@
     
     // 被叫端-接送端的消息
     LocalMessage *callLocalMessage = [LocalMessage buildReceivedMsg:meetingInvitedInfoObject.extensionInfo withMsgContent:meetingInvitedInfoObject.meetingID forSenderName:meetingInvitedInfoObject.invitorAccount];
+    callLocalMessage.sendTime = meetingInvitedInfoObject.createTime;
     
     // 保存扩展信息: 多人语音
     callLocalMessage.extension = NSLocalizedString(@"RKCLOUD_MEETING_MSG_AUDIO_CALL", "多人语音");
