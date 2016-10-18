@@ -94,8 +94,18 @@
 }
 - (void)dealloc
 {
-    self.contactSearchBar.delegate = nil;
-    [self.contactSearchBar removeFromSuperview];
+    if (self.strongSearchDisplayController.isActive)
+    {
+        [self.strongSearchDisplayController.searchBar resignFirstResponder];
+    }
+    
+    self.strongSearchDisplayController.delegate = nil;
+    self.strongSearchDisplayController.searchResultsUpdater = nil;
+    
+    [self.strongSearchDisplayController dismissViewControllerAnimated:NO completion:^{
+        
+    }];
+    
     self.strongSearchDisplayController = nil;
     self.searchContactTableView = nil;
     
@@ -152,7 +162,7 @@
 #else
     
     //创建UISearchController
-    self.strongSearchDisplayController = [[UISearchController alloc]initWithSearchResultsController:nil];
+    self.strongSearchDisplayController = [[UISearchController alloc]initWithSearchResultsController: nil];
     
     //设置代理
     self.strongSearchDisplayController.delegate = self;
@@ -170,7 +180,6 @@
     self.contactSearchBar = self.strongSearchDisplayController.searchBar;
     
     self.searchContactTableView.tableHeaderView = self.contactSearchBar;
-    
 #endif
     
     self.contactSearchBar.placeholder = NSLocalizedString(@"TITLE_SEARCH_FRIEND", "搜索好友");

@@ -115,13 +115,11 @@
     
     // 设置segment title未选中时的字体的样式
     [groupChatSegmentControl setTitleTextAttributes:@{NSForegroundColorAttributeName:COLOR_WITH_RGB(25, 174, 240),
-                                                      NSFontAttributeName: [UIFont systemFontOfSize:16],
-                                                      NSShadowAttributeName: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)] }
+                                                      NSFontAttributeName: [UIFont systemFontOfSize:16]}
                                            forState:UIControlStateNormal];
     
     [groupChatSegmentControl setTitleTextAttributes:@{NSForegroundColorAttributeName: COLOR_WITH_RGB(255, 255, 255),
-                                                      NSFontAttributeName: [UIFont systemFontOfSize:16],
-                                                      NSShadowAttributeName: [NSValue valueWithUIOffset:UIOffsetMake(0, 0)]}
+                                                      NSFontAttributeName: [UIFont systemFontOfSize:16]}
                                            forState:UIControlStateSelected];
     
     groupChatSegmentControl.frame = CGRectMake(11, 11.5, self.view.frame.size.width - 22, 35);
