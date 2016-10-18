@@ -278,97 +278,91 @@
         return;
     }
     
-    // 本地的会议成员
-    NSArray *arrayOriginalMembers = [self.meetingMembersDic allKeys];
-    // 服务器最新成员
-    NSArray *arrayUpdateMembers = [meetingUserAccountTomeetingUserObjectDict allKeys];
     
-    // 本地数据小于服务器返回数据 有会议成员加入
-    if ([arrayOriginalMembers count] < [arrayUpdateMembers count])
-    {
-        // 遍历服务器返回数据
-        for (NSString *userAccount in arrayUpdateMembers)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // 本地的会议成员
+        NSArray *arrayOriginalMembers = [self.meetingMembersDic allKeys];
+        // 服务器最新成员
+        NSArray *arrayUpdateMembers = [meetingUserAccountTomeetingUserObjectDict allKeys];
+        
+        // 本地数据小于服务器返回数据 有会议成员加入
+        if ([arrayOriginalMembers count] < [arrayUpdateMembers count])
         {
-
-            // 若本地数据不包含服务器返回数据 提示有人加入会议室
-            if (![arrayOriginalMembers containsObject:userAccount])
+            // 遍历服务器返回数据
+            for (NSString *userAccount in arrayUpdateMembers)
             {
-                if ([userAccount isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+                
+                // 若本地数据不包含服务器返回数据 提示有人加入会议室
+                if ([arrayOriginalMembers containsObject:userAccount] == NO)
                 {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
+                    if ([userAccount isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+                    {
                         // 判断是否显示 “我加入会议” 的提示语
                         if ([AppDelegate appDelegate].meetingManager.isFirstInMeeting == YES)
                         {
                             [AppDelegate appDelegate].meetingManager.isFirstInMeeting = NO;
                             [UIAlertView showAutoHidePromptView:@"我加入会议" background:nil showTime:TIMER_PROMPT_MEETING_ROOM];
-                        }                        
-                    });
-                } else {
-                    RKCloudMeetingUserObject *rkCloudMeetingmeetingUserObject = [meetingUserAccountTomeetingUserObjectDict objectForKey:userAccount];
-                    
-                    // 其他会议人员 根据加入状态 显示提示语
-                    if (rkCloudMeetingmeetingUserObject.meetingConfMemberState == MEETING_USER_STATE_IN)
+                        }
+                    }
+                    else
                     {
-                        dispatch_async(dispatch_get_main_queue(), ^{
+                        RKCloudMeetingUserObject *rkCloudMeetingmeetingUserObject = [meetingUserAccountTomeetingUserObjectDict objectForKey:userAccount];
+                        
+                        // 其他会议人员 根据加入状态 显示提示语
+                        if (rkCloudMeetingmeetingUserObject.meetingConfMemberState == MEETING_USER_STATE_IN)
+                        {
                             [UIAlertView showAutoHidePromptView:[NSString stringWithFormat:@"%@加入会议", [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:userAccount]] background:nil showTime:TIMER_PROMPT_MEETING_ROOM];
-                        });
+                        }
                     }
                 }
             }
         }
-    }
-    // 本地数据大于服务器返回数据 有会议成员退出
-    else if ([arrayOriginalMembers count] > [arrayUpdateMembers count]) {
-        
-        // 遍历本地数据
-        for (NSString *userAccount in arrayOriginalMembers)
+        // 本地数据大于服务器返回数据 有会议成员退出
+        else if ([arrayOriginalMembers count] > [arrayUpdateMembers count])
         {
-            // 若服务器返回数据不包含本地数据 提示有人退出会议室
-            if (![arrayUpdateMembers containsObject:userAccount] && ![userAccount isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+            
+            // 遍历本地数据
+            for (NSString *userAccount in arrayOriginalMembers)
             {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [UIAlertView showAutoHidePromptView:[NSString stringWithFormat:@"%@退出会议", [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:userAccount]] background:nil showTime:TIMER_PROMPT_MEETING_ROOM];
-                });
+                // 若服务器返回数据不包含本地数据 提示有人退出会议室
+                if (![arrayUpdateMembers containsObject:userAccount] && ![userAccount isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+                {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [UIAlertView showAutoHidePromptView:[NSString stringWithFormat:@"%@退出会议", [[AppDelegate appDelegate].contactManager displayFriendHighGradeName:userAccount]] background:nil showTime:TIMER_PROMPT_MEETING_ROOM];
+                    });
+                }
             }
         }
-    }
-    
-    
-    [meetingMembersLock lock];
-    
-    // 参与者信息字典
-    self.meetingMembersDic = [[NSDictionary alloc] initWithDictionary:meetingUserAccountTomeetingUserObjectDict];
-    
-    // 根据用户状态 进行数据筛选
-    NSMutableArray *arraySiftMembers = [NSMutableArray arrayWithArray:[self.meetingMembersDic allValues]];
-    NSMutableArray *arrayMembers = [NSMutableArray array];
-    
-    // 剔除已退出成员
-    for (RKCloudMeetingUserObject *meetingUserObject in arraySiftMembers)
-    {
-        if (meetingUserObject.meetingConfMemberState != MEETING_USER_STATE_OUT)
+        
+        // 参与者信息字典
+        self.meetingMembersDic = [[NSDictionary alloc] initWithDictionary:meetingUserAccountTomeetingUserObjectDict];
+        
+        // 根据用户状态 进行数据筛选
+        NSMutableArray *arraySiftMembers = [NSMutableArray arrayWithArray:[self.meetingMembersDic allValues]];
+        NSMutableArray *arrayMembers = [NSMutableArray array];
+        
+        // 剔除已退出成员
+        for (RKCloudMeetingUserObject *meetingUserObject in arraySiftMembers)
         {
-            [arrayMembers addObject:meetingUserObject];
+            if (meetingUserObject.meetingConfMemberState != MEETING_USER_STATE_OUT)
+            {
+                [arrayMembers addObject:meetingUserObject];
+            }
         }
-    }
-    
-    // 将自己放在会议首位
-    for (RKCloudMeetingUserObject *meetingUserObject in arrayMembers)
-    {
-        if ([meetingUserObject.attendeeAccount isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+        
+        // 将自己放在会议首位
+        for (RKCloudMeetingUserObject *meetingUserObject in arrayMembers)
         {
-            [arrayMembers removeObject:meetingUserObject];
-            [arrayMembers insertObject:meetingUserObject atIndex:0];
-            break;
+            if ([meetingUserObject.attendeeAccount isEqualToString:[AppDelegate appDelegate].userProfilesInfo.userAccount])
+            {
+                [arrayMembers removeObject:meetingUserObject];
+                [arrayMembers insertObject:meetingUserObject atIndex:0];
+                break;
+            }
         }
-    }
-    
-    self.meetingMembersArray = arrayMembers;
-    
-    [meetingMembersLock unlock];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.meetingMembersArray = arrayMembers;
+        
         [self.meetingMembersCollectionView reloadData];
     });
 }
@@ -476,20 +470,16 @@
         [self.muteButton setImage:[UIImage imageNamed:@"call_opration_button_mute_nor"] forState:UIControlStateNormal];
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        int setMute = [RKCloudMeeting mute:isMute];
-        
-        if (setMute == 0)
-        {
-            NSLog(@"MEETING－MUTE: mute sucsess");
-        }else{
-            NSLog(@"MEETING－MUTE: mute sucsess Reason: %d", setMute);
-        }
-        
-        [self.meetingMembersCollectionView reloadData];
-        
-    });
+    int setMute = [RKCloudMeeting mute:isMute];
+    
+    if (setMute == 0)
+    {
+        NSLog(@"MEETING－MUTE: mute sucsess");
+    }else{
+        NSLog(@"MEETING－MUTE: mute sucsess Reason: %d", setMute);
+    }
+    
+    [self.meetingMembersCollectionView reloadData];
 }
 
 #pragma mark - Call Time Method

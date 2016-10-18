@@ -198,7 +198,7 @@
     [viewController.navigationController pushViewController:self.meetingRoomViewController animated:YES];
     
     // 更新参与者状态信息
-    [self.meetingRoomViewController updateUserMeetingInfo:self.meetingUserAccountToUserObjectDict];
+    [self.meetingRoomViewController updateUserMeetingInfo:[NSDictionary dictionaryWithDictionary: self.meetingUserAccountToUserObjectDict]];
 }
 
 
@@ -316,7 +316,7 @@
     
     // 更新参与者状态信息
     if (self.meetingRoomViewController) {
-        [self.meetingRoomViewController updateUserMeetingInfo:self.meetingUserAccountToUserObjectDict];
+        [self.meetingRoomViewController updateUserMeetingInfo:[NSDictionary dictionaryWithDictionary: self.meetingUserAccountToUserObjectDict]];
     }
 }
 
@@ -336,7 +336,7 @@
         
         // 更新参与者状态信息
         if (self.meetingRoomViewController) {
-            [self.meetingRoomViewController updateUserMeetingInfo:self.meetingUserAccountToUserObjectDict];
+            [self.meetingRoomViewController updateUserMeetingInfo:[NSDictionary dictionaryWithDictionary: self.meetingUserAccountToUserObjectDict]];
         }
     }
 }
@@ -366,7 +366,7 @@
                 
                 // 更新参与者状态信息
                 if (self.meetingRoomViewController) {
-                    [self.meetingRoomViewController updateUserMeetingInfo:self.meetingUserAccountToUserObjectDict];
+                    [self.meetingRoomViewController updateUserMeetingInfo:[NSDictionary dictionaryWithDictionary: self.meetingUserAccountToUserObjectDict]];
                 }
             }
         }

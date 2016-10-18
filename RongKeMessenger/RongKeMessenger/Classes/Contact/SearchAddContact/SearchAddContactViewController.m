@@ -173,7 +173,11 @@
     //搜索时，背景变暗色
     self.strongSearchDisplayController.dimsBackgroundDuringPresentation = NO;
     //搜索时，背景变模糊
-    self.strongSearchDisplayController.obscuresBackgroundDuringPresentation = NO;
+    if ([self.strongSearchDisplayController respondsToSelector: @selector(setObscuresBackgroundDuringPresentation:)])
+    {
+        self.strongSearchDisplayController.obscuresBackgroundDuringPresentation = NO;
+    }
+    
     //隐藏导航栏
     self.strongSearchDisplayController.hidesNavigationBarDuringPresentation = NO;
     
