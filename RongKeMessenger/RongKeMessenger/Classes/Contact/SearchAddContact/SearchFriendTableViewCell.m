@@ -112,6 +112,9 @@
             
             if (isSuccess == YES)
             {
+                self.accessoryView = nil;
+                // 显示已加为好友
+                self.detailTextLabel.text = NSLocalizedString(@"PROMPT_HAVED_BECOME_FRIEND", @"互为好友");
                 // 添加成功
                 [UIAlertView showAutoHidePromptView:NSLocalizedString(@"PROMPT_HAVED_ADD", nil) background:nil showTime:2];
                 
@@ -185,6 +188,9 @@
     if (buttonIndex == alertView.cancelButtonIndex) {
         return;
     }
+    
+    self.accessoryView = nil;       // 显示正在验证
+    self.detailTextLabel.text = NSLocalizedString(@"PROMPT_WAITING_VALIDATION_TITLE", "等待验证");
     
     UITextField *addFriendTextField = [alertView textFieldAtIndex:0];
     NSString *applyStr = [addFriendTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
