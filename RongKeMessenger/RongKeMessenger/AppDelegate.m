@@ -250,13 +250,14 @@
 
 #endif  // LAN_SERVER
     
+    // 注册APNS Push通知
+    [ToolsFunction registerAPNSNotifications];
+
+    
     // 注册云视互动SDK
     [RKCloudBase registerSDKWithAppKey:RKCLOUD_SDK_APPKEY withDelegate:self withAPNsCertificates:strAPNsCerName];
     // 设置启动RKCloud的host地址
     [RKCloudBase setRootHost:DEFAULT_RKCLOUD_ROOT_SERVER_ADDRESS withPort:DEFAULT_RKCLOUD_ROOT_SERVER_PORT];
-    
-    // 注册APNS Push通知
-    [ToolsFunction registerAPNSNotifications];
     
     // 数据库管理类
     self.databaseManager = [[DatabaseManager alloc] init];
