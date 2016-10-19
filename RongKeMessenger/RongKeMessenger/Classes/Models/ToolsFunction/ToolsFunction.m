@@ -2179,7 +2179,8 @@ static void addRoundedRectToPath(CGContextRef context,
     NSDate *currentDate = [[NSDate alloc] init];
     NSTimeInterval timeInterval = [currentDate timeIntervalSince1970];
     NSString *strTimeInterval = [NSString stringWithFormat:@"%lf", timeInterval];
-    
+    strTimeInterval = [strTimeInterval stringByReplacingOccurrencesOfString:@"." withString:@""];
+
     return strTimeInterval;
 }
 
