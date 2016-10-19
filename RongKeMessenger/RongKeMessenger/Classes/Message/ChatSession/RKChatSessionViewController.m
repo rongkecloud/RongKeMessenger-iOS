@@ -3638,7 +3638,13 @@
             if ([lastMessage.messageID isEqualToString:messageObject.messageID])
             {
                 [self.visibleSortMessageRecordArray replaceObjectAtIndex:i withObject:messageObject];
-                isScrollToBottom = YES;
+                
+                // 当是最后一条消息为图片，且从占位图变为缩略图时，滚动到底部
+                if (i == (int)[self.visibleSortMessageRecordArray count] - 1
+                    && lastMessage.messageType == MESSAGE_TYPE_IMAGE)
+                {
+                    isScrollToBottom = YES;
+                }
                 
                 [self voiceCellPlaying];
                 
