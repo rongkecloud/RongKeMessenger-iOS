@@ -383,7 +383,9 @@
             float stateStringOriginY = CGRectGetMaxY(self.bubbleRect) - CELL_DISTANCE_BETWEEN_SEND_AND_BOTTOM_OF_BUBBLE - stateSize.height;
             if (self.mmsObject.messageType != MESSAGE_TYPE_LOCAL)
             {
-                [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY) withAttributes:[NSDictionary dictionaryWithObject:[UIFont systemFontOfSize:14] forKey:NSFontAttributeName]];
+                [stateString drawAtPoint:CGPointMake(stateStringOriginX, stateStringOriginY)
+                          withAttributes:[NSDictionary dictionaryWithObjects:@[[UIFont systemFontOfSize:14], textColor]
+                                                                     forKeys:@[NSFontAttributeName, NSForegroundColorAttributeName]]];
             }
         }
         
