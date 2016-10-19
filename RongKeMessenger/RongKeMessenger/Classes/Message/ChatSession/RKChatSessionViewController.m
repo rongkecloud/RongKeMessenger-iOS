@@ -3623,6 +3623,8 @@
 {
     NSLog(@"CHAT-SESSION-DELEGATE: didMsgHasChanged: messageID = %@, sessionID = %@", messageObject.messageID, messageObject.sessionID);
     
+    BOOL isScrollToBottom = NO;
+    
     RKCloudChatBaseMessage *lastMessage = nil;
     id obj = nil;
     for (int i = (int)[self.visibleSortMessageRecordArray count] - 1; i >= 0; i--)
@@ -3636,8 +3638,8 @@
             if ([lastMessage.messageID isEqualToString:messageObject.messageID])
             {
                 [self.visibleSortMessageRecordArray replaceObjectAtIndex:i withObject:messageObject];
+                isScrollToBottom = YES;
                 
-                [self reloadTableView];
                 [self voiceCellPlaying];
                 
                 // 刷新显示大图界面
@@ -3658,6 +3660,9 @@
     }
     
     [self.messageSessionContentTableView reloadData];
+    if (isScrollToBottom) {
+        [self moveScrollToViewButtom];
+    }
 }
 
 /**
