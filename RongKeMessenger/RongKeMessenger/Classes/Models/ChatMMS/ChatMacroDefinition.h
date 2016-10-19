@@ -26,7 +26,7 @@ static const int CELL_DISTANCE_BETWEEN_TIME_AND_BOTTOM_OF_BUBBLE = 10; // 发送
 
 static const int CELL_MESSAGE_FILEICON_AND_TEXT_DISTANCE = 10; // 文本Icon和文字之间的距离
 static const int CELL_MESSAGE_FILE_ICON_WIDTH = 19; // 文件消息icon的宽度
-static const int CELL_MESSAGE_USER_NAME_HEIGHT = 14; // 消息中用户的名字高度
+static const int CELL_MESSAGE_USER_NAME_HEIGHT = 16; // 消息中用户的名字高度
 
 static const int CELL_TEXT_MIDDLE_SPACE_IOS7_EARLIER = 20; // 文本类型消息中间间距高度，上间距为10，下间距为10
 
