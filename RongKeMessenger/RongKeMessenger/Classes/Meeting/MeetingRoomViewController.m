@@ -424,8 +424,7 @@
     NSLog(@"MEETING－ROOM： quitMeeting success");
     
     // 添加本地消息
-    LocalMessage *callLocalMessage = [LocalMessage buildTipMsg:[AppDelegate appDelegate].meetingManager.currentSessionObject.sessionID withMsgContent:nil forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
-    callLocalMessage.textContent = @"PROMPT_QUIT_MEETING_MYSELF";
+    LocalMessage *callLocalMessage = [LocalMessage buildTipMsg:[AppDelegate appDelegate].meetingManager.currentSessionObject.sessionID withMsgContent:NSLocalizedString(@"PROMPT_QUIT_MEETING_MYSELF", "我退出多人语音") forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
     [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_GROUP_TYPE];
     
     // 给meetingManager的会话对象赋值 用于本地进出多人语音添加提示语
