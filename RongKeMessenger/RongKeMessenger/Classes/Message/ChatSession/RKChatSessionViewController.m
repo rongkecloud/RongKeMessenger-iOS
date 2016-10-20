@@ -2395,49 +2395,42 @@
     
     @autoreleasepool {
         //移除当前模态视图
-        [picker dismissViewControllerAnimated:YES completion:nil];
-        
-        NSString *mediaType = info[UIImagePickerControllerMediaType];
-        if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])  // 视频的处理
-        {
-            NSURL *videoURL = info[UIImagePickerControllerMediaURL];
-            AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:videoURL options:nil];
-            
-            CMTime audioDuration = avAsset.duration;
-            int audioDurationSeconds = (int)CMTimeGetSeconds(audioDuration);
-            
-            NSURL *videoMp4 = [ToolsFunction videoConvertToMp4:avAsset];
-            NSFileManager *fileman = [NSFileManager defaultManager];
-            if ([fileman fileExistsAtPath:videoURL.path]) {
-                NSError *error = nil;
-                [fileman removeItemAtURL:[videoURL URLByDeletingLastPathComponent] error:&error];
-                if (error) {
-                    NSLog(@"failed to remove file, error:%@.", error);
-                }
-            }
-            
-            // 发送视频消息
-            [self sendVedioMessage:videoMp4 withDurationSeconds:audioDurationSeconds];
-            
-        }else
-        {
-            // 判断当前所获取媒体类型为图片
-            if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.image"])
+        [picker dismissViewControllerAnimated:YES completion:^{
+            NSString *mediaType = info[UIImagePickerControllerMediaType];
+            if ([mediaType isEqualToString:(NSString *)kUTTypeMovie])  // 视频的处理
             {
-                // 获取当前摄像图片
-                UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-                // 若是拍照就不再显示预览页面，直接发送图片
-                if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+                NSURL *videoURL = info[UIImagePickerControllerMediaURL];
+                AVURLAsset *avAsset = [AVURLAsset URLAssetWithURL:videoURL options:nil];
+                
+                CMTime audioDuration = avAsset.duration;
+                int audioDurationSeconds = (int)CMTimeGetSeconds(audioDuration);
+                
+                NSURL *videoMp4 = [ToolsFunction videoConvertToMp4:avAsset];
+                
+                // 发送视频消息
+                [self sendVedioMessage:videoMp4 withDurationSeconds:audioDurationSeconds];
+                
+            }
+            else
+            {
+                // 判断当前所获取媒体类型为图片
+                if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.image"])
                 {
-                    [self saveAndSendImage:selectImage];
-                }
-                else
-                {
-                    // 加载图片预览页面
-                    [self performSelector:@selector(delayPushImagePreviewController:) withObject:selectImage afterDelay:0.5];
+                    // 获取当前摄像图片
+                    UIImage *selectImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+                    // 若是拍照就不再显示预览页面，直接发送图片
+                    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera)
+                    {
+                        [self saveAndSendImage:selectImage];
+                    }
+                    else
+                    {
+                        // 加载图片预览页面
+                        [self performSelector:@selector(delayPushImagePreviewController:) withObject:selectImage afterDelay:0.5];
+                    }
                 }
             }
-        }
+        }];
     }
 }
 
