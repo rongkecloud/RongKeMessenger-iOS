@@ -86,7 +86,7 @@
 
     isMute = NO; // 默认不静音
     isHandsFree = NO; // 关闭免提
-    
+    self.muteButton.enabled = NO; //会议未开始，禁用静音按钮
     meetingMembersLock = [[NSLock alloc] init];
     
     // 设置按钮类型
@@ -486,6 +486,8 @@
 // 启动检测通话时间定时器定时器
 - (void)startDetectTalkingTime
 {
+    //会议开始，启用静音按钮
+    [self performSelector:@selector(setMuteButtonEnabled) withObject:nil afterDelay:1];
     // 停止检测通话时间定时器
     [self stopDetectTalkingTime];
     
@@ -496,6 +498,11 @@
                                                            selector:@selector(detectTalkingTime)
                                                            userInfo:nil
                                                             repeats:YES];
+}
+
+//启动静音按钮
+- (void)setMuteButtonEnabled{
+    self.muteButton.enabled = YES;
 }
 
 // 停止检测通话时间定时器定时器
