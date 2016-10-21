@@ -375,7 +375,7 @@
     self.handFreeLabel.text = NSLocalizedString(@"TITLE_HANDS_FREE", nil);
     [self.handsFreeButton setImage:[UIImage imageNamed:@"call_opration_button_hands_free_normal"] forState:UIControlStateNormal];
     
-    [self.handsFreeButton addTarget:self action:@selector(touchAnswerOrHandsFreeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.handsFreeButton addTarget:self action:@selector(touchAnswerOrHandsFreeButton:) forControlEvents:UIControlEventTouchDown];
     
     [self.handUpButton addTarget:self action:@selector(touchHandUpButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.handUpButton setImage:[UIImage imageNamed:@"call_button_hangup_normal"] forState:UIControlStateNormal];
