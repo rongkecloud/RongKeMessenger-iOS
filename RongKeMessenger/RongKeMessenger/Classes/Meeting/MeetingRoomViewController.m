@@ -208,9 +208,9 @@
             [headerView addSubview:self.memberCountLabel];
         }
         
-        if ([self.meetingMembersDic count] >= 2)
+        if ([self.meetingMembersArray count] >= 2)
         {
-            self.memberCountLabel.text = [NSString stringWithFormat:@"(%lu人)", (unsigned long)[self.meetingMembersDic count]];
+            self.memberCountLabel.text = [NSString stringWithFormat:@"(%lu人)", (unsigned long)[self.meetingMembersArray count]];
         } else {
             self.memberCountLabel.text = @"";
         }
