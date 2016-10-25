@@ -36,6 +36,7 @@
 	<array>
 		<string>audio</string>
 		<string>fetch</string>
+		<string>newsstand-content</string>
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>

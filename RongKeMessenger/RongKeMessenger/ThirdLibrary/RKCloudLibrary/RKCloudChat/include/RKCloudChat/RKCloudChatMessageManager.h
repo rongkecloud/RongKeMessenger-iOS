@@ -537,7 +537,7 @@
                                                 forSession:(NSString *)sessionID;
 
 /**
- * @brief 根据当前消息时间获取其之前的消息对象列表，倒序排序(3.0以后作废)
+ * @brief 根据当前消息时间获取其之前的消息对象列表，倒序排序
  *
  * @param sessionID       会话ID
  * @param lastVisableDate 最后一条数据的创建时间，秒级UNIX时间戳

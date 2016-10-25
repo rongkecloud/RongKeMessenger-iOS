@@ -67,6 +67,51 @@ typedef enum : NSInteger {
 } RKAVVideoQuality;
 
 
+// 视频设置的Key字段枚举值
+typedef enum : NSInteger
+{
+    RKAVVideoResolutionKey = 1, // 设置分辨率KEY
+    RKAVVideoBitrateKey = 2, // 设置码率KEY
+    RKAVVideoFPSKey = 3, // 设置帧率KEY
+} RKAVVideoOptionsKey;
+
+// 视频分辨率支持枚举值
+typedef enum : NSInteger
+{
+    RKAVResolution_352 = 0, // "352 x 288"(默认)
+    RKAVResolution_640 = 1, // "640 x 480"
+    RKAVResolution_1280 = 2, // "1280 x 720"
+} RKAVVideoResolutionValue;
+
+// 视频码率支持枚举值
+typedef enum : NSInteger
+{
+    RKAVBitrate_60 = 1, // "60kbps（默认）"
+    RKAVBitrate_80 = 2, // "80kbps"
+    RKAVBitrate_100 = 3, // "100kbps"
+    RKAVBitrate_150 = 4, // "150kbps"
+    RKAVBitrate_200 = 5, // "200kbps"
+    RKAVBitrate_300 = 6, // "300kbps"
+    RKAVBitrate_500 = 7, // "500kbps"
+    RKAVBitrate_800 = 8, // "800kbps"
+    RKAVBitrate_1000 = 9, // "1Mbps"
+    RKAVBitrate_1500 = 10, // "1.5Mbps"
+    RKAVBitrate_2000 = 11, // "2Mbps"
+} RKAVVideoBitrateValue;
+
+// 视频帧率支持枚举
+typedef enum : NSInteger
+{
+    RKAVFPS_2 = 1, // "2 FPS"
+    RKAVFPS_4 = 2, // "4 FPS"
+    RKAVFPS_6 = 3, // "6 FPS"
+    RKAVFPS_8 = 4, // "8 FPS"
+    RKAVFPS_10 = 5, // "10FPS（默认）"
+    RKAVFPS_15 = 6, // "15FPS"
+    RKAVFPS_20 = 7, // "20FPS"
+    RKAVFPS_25 = 8, // "25FPS"
+} RKAVVideofpsValue;
+
 /*!
  *  @enum
  *  @brief RKCloudAV错误码（3001-4000）
@@ -229,8 +274,24 @@ typedef enum : NSInteger {
  */
 + (int)mute:(BOOL)mute;
 
+/*!
+	*  @brief 设置强制Relay通话模式打开或关闭
+	*
+	*  @param bOpenForceRelay TRUE=打开，FALSE=关闭
+	*/
++ (void)setForceRelayCallMode:(BOOL) bOpenForceRelay;
+
 
 #pragma mark - Video Call Control Interface
+
+/*!
+	*  @brief 设置视频的选项参数，在调用dial之前设置
+	*
+	*  @param videoOptionsKey 枚举值，视频设置的选项KEY，参考RKAVVideoOptionsKey枚举值
+	*  @param videoOptionsValue 枚举值，视频设置的选项值，参考RKAVVideoResolutionValue/RKAVVideoBitrateValue/RKAVVideoFPSValue枚举值
+	*/
++ (void)setVideoOptions:(RKAVVideoOptionsKey)videoOptionsKey videoOptionsValue:(int)videoOptionsValue;
+
 
 /*!
  *  @brief 设置视频的质量，在调用dial之前设置
