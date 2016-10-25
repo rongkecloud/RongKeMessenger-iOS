@@ -86,7 +86,7 @@
 
     isMute = NO; // 默认不静音
     isHandsFree = NO; // 关闭免提
-    
+    self.muteButton.enabled = NO; //会议未开始，禁用静音按钮
     meetingMembersLock = [[NSLock alloc] init];
     
     // 设置按钮类型
@@ -208,9 +208,9 @@
             [headerView addSubview:self.memberCountLabel];
         }
         
-        if ([self.meetingMembersDic count] >= 2)
+        if ([self.meetingMembersArray count] >= 2)
         {
-            self.memberCountLabel.text = [NSString stringWithFormat:@"(%lu人)", (unsigned long)[self.meetingMembersDic count]];
+            self.memberCountLabel.text = [NSString stringWithFormat:@"(%lu人)", (unsigned long)[self.meetingMembersArray count]];
         } else {
             self.memberCountLabel.text = @"";
         }
@@ -375,7 +375,7 @@
     self.handFreeLabel.text = NSLocalizedString(@"TITLE_HANDS_FREE", nil);
     [self.handsFreeButton setImage:[UIImage imageNamed:@"call_opration_button_hands_free_normal"] forState:UIControlStateNormal];
     
-    [self.handsFreeButton addTarget:self action:@selector(touchAnswerOrHandsFreeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.handsFreeButton addTarget:self action:@selector(touchAnswerOrHandsFreeButton:) forControlEvents:UIControlEventTouchDown];
     
     [self.handUpButton addTarget:self action:@selector(touchHandUpButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.handUpButton setImage:[UIImage imageNamed:@"call_button_hangup_normal"] forState:UIControlStateNormal];
@@ -424,8 +424,7 @@
     NSLog(@"MEETING－ROOM： quitMeeting success");
     
     // 添加本地消息
-    LocalMessage *callLocalMessage = [LocalMessage buildTipMsg:[AppDelegate appDelegate].meetingManager.currentSessionObject.sessionID withMsgContent:nil forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
-    callLocalMessage.textContent = @"PROMPT_QUIT_MEETING_MYSELF";
+    LocalMessage *callLocalMessage = [LocalMessage buildTipMsg:[AppDelegate appDelegate].meetingManager.currentSessionObject.sessionID withMsgContent:NSLocalizedString(@"PROMPT_QUIT_MEETING_MYSELF", "我退出多人语音") forSenderName:[AppDelegate appDelegate].userProfilesInfo.userAccount];
     [RKCloudChatMessageManager addLocalMsg:callLocalMessage withSessionType:SESSION_GROUP_TYPE];
     
     // 给meetingManager的会话对象赋值 用于本地进出多人语音添加提示语
@@ -487,6 +486,8 @@
 // 启动检测通话时间定时器定时器
 - (void)startDetectTalkingTime
 {
+    //会议开始，启用静音按钮
+    [self performSelector:@selector(setMuteButtonEnabled) withObject:nil afterDelay:1];
     // 停止检测通话时间定时器
     [self stopDetectTalkingTime];
     
@@ -497,6 +498,11 @@
                                                            selector:@selector(detectTalkingTime)
                                                            userInfo:nil
                                                             repeats:YES];
+}
+
+//启动静音按钮
+- (void)setMuteButtonEnabled{
+    self.muteButton.enabled = YES;
 }
 
 // 停止检测通话时间定时器定时器
