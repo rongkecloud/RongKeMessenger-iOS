@@ -178,6 +178,22 @@ FOUNDATION_EXPORT void RKCloudDebugLog(NSString *format, ...);
  */
 + (RKNetworkStatus)checkInternetReachabilityStatus;
 
+/*!
+ * @brief 设置发送者在对方通知栏中显示的名字
+ *
+ * @attention 发送消息或者拨打语音电话时，对方通知栏上显示的名字
+ *
+ * @param displayName 显示的名字
+ */
++ (void)setNotificationDisplayName:(NSString *)displayName;
+
+
+/*!
+ * @brief 获取发送者在对方通知栏中显示的名字
+ *
+ * @return NSString 发送者在对方通知栏中显示的名字
+ */
++ (NSString *)notificationDisplayName;
 
 #pragma mark -
 #pragma mark RKCloudBase User Profile Interface
