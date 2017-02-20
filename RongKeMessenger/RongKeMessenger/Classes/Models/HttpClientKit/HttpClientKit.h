@@ -11,8 +11,7 @@
 #import "httpResult.h"
 #import "HttpProgress.h"
 
-#define RKCLOUD_URL_HTTPS_TYPE				@"https"
-#define RKCLOUD_URL_HTTP_TYPE				@"http"
+#define RKCLOUD_URL_HTTP_TYPE				@"https"
 #define RKCLOUD_HTTP_GET                    @"GET"
 #define RKCLOUD_HTTP_POST					@"POST"
 #define RKCLOUD_HTTP_BODY_SEPARATOR         @"----------7db220630e70"

@@ -541,11 +541,11 @@ static HttpClientKit * instanceHttpKit = nil;
     [sendASIRequest setResponseEncoding:NSUTF8StringEncoding];
     [sendASIRequest setDefaultResponseEncoding:NSUTF8StringEncoding];
     
-    /* Gray.Wang:2015.03.14: 使用HTTPS加密传输
+    // TODO: HTTPS Gray.Wang:2015.03.14: 使用HTTPS加密传输
      [sendASIRequest setShouldPresentCredentialsBeforeChallenge:YES];
      // 是否验证服务器端证书，如果此项为yes那么服务器端证书必须为合法的证书机构颁发的，而不能是自己用openssl 或java生成的证书
      [sendASIRequest setValidatesSecureCertificate:NO];
-     */
+     
     
     /* Gray.Wang:2015.03.14: 使用加密证书
      SecIdentityRef secIdentityRef = NULL;
@@ -670,6 +670,12 @@ static HttpClientKit * instanceHttpKit = nil;
         NSMutableDictionary * userInfoDict = [[NSMutableDictionary alloc] init];
         [userInfoDict setObject:rkRequest forKey:@"request"];
         [request setUserInfo:userInfoDict];
+        
+        
+        [request setShouldPresentCredentialsBeforeChallenge:YES];
+        // 是否验证服务器端证书，如果此项为yes那么服务器端证书必须为合法的证书机构颁发的，而不能是自己用openssl 或java生成的证书
+        [request setValidatesSecureCertificate:NO];
+
         
         // User-Agent: AppName/2.9.5.139 (31003998; iPhone; iPhone OS 6.1; zh_CN)
         [request setUserAgentString:[HttpClientKit defaultHTTPUserAgentString]];
