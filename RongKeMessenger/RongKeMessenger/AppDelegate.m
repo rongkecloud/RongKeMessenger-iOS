@@ -116,7 +116,7 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
-    NSLog(@"APNS: didRegisterForRemoteNotificationsWithDeviceToken: deviceToken = %@", deviceToken);
+    NSLog(@"APP-APNS: didRegisterForRemoteNotificationsWithDeviceToken: deviceToken = %@", deviceToken);
 }
 
 #ifdef __IPHONE_8_0
@@ -222,7 +222,7 @@
     strAPNsCerName = @"dev_RongKeMessenger";
 #else
     // 开发版本证书名称
-    strAPNsCerName = @"dev_RongKeMessengerLan";
+    strAPNsCerName = @"dev_RongKeMessengerLan";//@"dev_RongKeMessengerLan";
 
 #endif  // WAN_TEST_SERVER
     

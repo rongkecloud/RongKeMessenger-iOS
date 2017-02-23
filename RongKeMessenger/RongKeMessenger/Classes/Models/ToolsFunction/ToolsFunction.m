@@ -672,14 +672,14 @@ static UIWindow *statusBarWindow = nil;  // 全局对象，用于在任何页面
                                   // Enable or disable features based on authorization.
                                   if (granted) {
                                       //如果用户权限申请成功，设置通知中心的代理
-                                      NSLog(@"申请通知权限成功");
+                                      NSLog(@"APP-APNS: 申请通知权限成功");
                                       [[UIApplication sharedApplication] registerForRemoteNotifications];
                                       
                                       [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
-                                          NSLog(@"%@", settings);
+                                          NSLog(@"APP-APNS: settings = %@", settings);
                                       }];
                                   } else {
-                                      NSLog(@"申请通知权限失败");
+                                      NSLog(@"APP-APNS: 申请通知权限失败");
                                   }
                               }];
     }
